@@ -4,42 +4,682 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Hello World</title>
+    <title>TrustiScore - Reprenez votre souveraineté numérique</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background-color: #0f172a;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 300;
         }
         
         .container {
-            text-align: center;
-            color: white;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
         }
         
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        section {
+            background: #1e293b;
+            margin: 2rem 0;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+        }
+        
+        h2 {
+            color: #60a5fa;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #93c5fd;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
         }
         
         p {
-            font-size: 1.5rem;
-            margin-top: 1rem;
-            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-align: justify;
+            color: #cbd5e1;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+            color: #cbd5e1;
+        }
+        
+        strong {
+            color: #e0f2fe;
+        }
+        
+        .grade-scale {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .grade-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 5px solid;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.8));
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .grade-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .grade-a { border-left-color: #10b981; }
+        .grade-b { border-left-color: #06b6d4; }
+        .grade-c { border-left-color: #f59e0b; }
+        .grade-d { border-left-color: #f97316; }
+        .grade-e { border-left-color: #ef4444; }
+        
+        .grade-card h4 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .grade-a h4 { color: #10b981; }
+        .grade-b h4 { color: #06b6d4; }
+        .grade-c h4 { color: #f59e0b; }
+        .grade-d h4 { color: #f97316; }
+        .grade-e h4 { color: #ef4444; }
+        
+        .grade-card h5 {
+            color: #e0f2fe;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .grade-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+        
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .criteria-item {
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            transition: transform 0.3s ease;
+        }
+        
+        .criteria-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .criteria-item strong {
+            color: #93c5fd;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .criteria-item p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.4), rgba(30, 64, 175, 0.4));
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 5px solid #3b82f6;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .highlight-box strong {
+            color: #93c5fd;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 2px solid #334155;
+        }
+        
+        footer p {
+            color: #94a3b8;
+            margin: 0.5rem 0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            margin: 3rem 0;
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+            border: 2px solid #60a5fa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            border: none;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cta-section p {
+            color: #e0f2fe;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            color: #1e3a8a;
+            padding: 1.5rem 3rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(30, 58, 138, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            background: #f0f9ff;
+        }
+        
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-icon {
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+        
+        .cta-feature {
+            color: white;
+        }
+        
+        .cta-feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta-feature h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: #e0f2fe;
+        }
+        
+        .cta-feature p {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin: 0;
+        }
+        
+        .inline-cta {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(59, 130, 246, 0.3));
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            border-left: 5px solid #3b82f6;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .inline-cta-text {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .inline-cta-text p {
+            color: #e0f2fe;
+            font-size: 1.1rem;
+            margin: 0;
+            text-align: left;
+        }
+        
+        .inline-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #3b82f6;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .inline-cta-button:hover {
+            background: #2563eb;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .logo-container img {
+                max-width: 140px;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="TrustiScore - Chevalier de la souveraineté numérique">
+            </div>
+            <h1>TRUSTISCORE</h1>
+            <p>Reprenez votre souveraineté numérique européenne</p>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Hello World!</h1>
-        <p>Bienvenue sur votre premier site web</p>
+        <section>
+            <h2>Pourquoi TrustiScore existe-t-il ?</h2>
+            
+            <p>
+                À l'ère du numérique, nous utilisons quotidiennement des dizaines d'applications et de services en ligne. 
+                Mais savez-vous réellement ce que ces applications font de vos données ? Où sont-elles stockées ? 
+                Qui y a accès ? Comment sont-elles utilisées ?
+            </p>
+            
+            <div class="highlight-box">
+                <strong>Le problème :</strong> La majorité des utilisateurs européens utilisent des services numériques 
+                sans connaître les risques réels pour leur vie privée et leur souveraineté numérique.
+            </div>
+            
+            <h3>Les enjeux majeurs</h3>
+            <ul>
+                <li><strong>Perte de souveraineté :</strong> Vos données personnelles sont souvent hébergées hors d'Europe, 
+                    soumises à des législations étrangères comme le Cloud Act américain</li>
+                <li><strong>Surveillance massive :</strong> De nombreux services collectent et analysent vos comportements 
+                    à des fins commerciales ou de surveillance</li>
+                <li><strong>Manque de transparence :</strong> Les conditions d'utilisation sont complexes et opaques, 
+                    rendant difficile l'évaluation des risques réels</li>
+                <li><strong>Non-respect du RGPD :</strong> Certains services ne respectent pas pleinement la réglementation 
+                    européenne sur la protection des données</li>
+            </ul>
+            
+            <p>
+                <strong>TrustiScore a été créé pour donner aux citoyens européens un outil simple et objectif</strong> 
+                permettant d'évaluer la fiabilité et le respect de la vie privée des applications qu'ils utilisent. 
+                Notre mission est de redonner le pouvoir aux utilisateurs en leur fournissant une information claire 
+                et accessible sur leurs outils numériques.
+            </p>
+            
+            <div class="inline-cta">
+                <div class="inline-cta-text">
+                    <p>💡 <strong>Prêt à découvrir quelles applications respectent votre vie privée ?</strong> Consultez nos évaluations détaillées maintenant.</p>
+                </div>
+                <a href="https://trusti-alpha.vercel.app/" target="_blank" class="inline-cta-button">
+                    🔍 Découvrir les TrustiApps
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <h2>À quoi servent les notations TrustiScore ?</h2>
+            
+            <p>
+                Les notations TrustiScore vous permettent de <strong>prendre des décisions éclairées</strong> 
+                sur les applications que vous utilisez au quotidien. Chaque service est évalué selon 12 critères 
+                objectifs et reçoit une note de A à E.
+            </p>
+
+            <h3>L'échelle de notation</h3>
+            <div class="grade-scale">
+                <div class="grade-card grade-a">
+                    <h4>Note A</h4>
+                    <h5>Souverain & Privé</h5>
+                    <p>Hébergement en Europe, open-source, aucun profilage commercial. Protection maximale de votre vie privée.</p>
+                </div>
+                
+                <div class="grade-card grade-b">
+                    <h4>Note B</h4>
+                    <h5>Sécurisé</h5>
+                    <p>Excellent chiffrement et sécurité, mais juridiction potentiellement soumise au Cloud Act US.</p>
+                </div>
+                
+                <div class="grade-card grade-c">
+                    <h4>Note C</h4>
+                    <h5>Usage Hybride</h5>
+                    <p>Service utile mais collecte de métadonnées à des fins publicitaires. Utilisation avec précaution.</p>
+                </div>
+                
+                <div class="grade-card grade-d">
+                    <h4>Note D</h4>
+                    <h5>Risque Élevé</h5>
+                    <p>Collecte massive de données et profilage comportemental actif. Alternatives recommandées.</p>
+                </div>
+                
+                <div class="grade-card grade-e">
+                    <h4>Note E</h4>
+                    <h5>Critique</h5>
+                    <p>Opacité totale, transfert hors RGPD ou failles de sécurité majeures. À éviter absolument.</p>
+                </div>
+            </div>
+
+            <h3>Utilité concrète des notations</h3>
+            <ul>
+                <li><strong>Comparer les alternatives :</strong> Identifiez des services plus respectueux de votre vie privée</li>
+                <li><strong>Sensibiliser votre entourage :</strong> Partagez des informations fiables sur les risques numériques</li>
+                <li><strong>Faire pression sur les entreprises :</strong> Encouragez les services à améliorer leurs pratiques</li>
+                <li><strong>Protéger vos données sensibles :</strong> Choisissez les applications appropriées selon la nature de vos données</li>
+                <li><strong>Respecter les obligations professionnelles :</strong> Assurez-vous que vos outils sont conformes au RGPD</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>La démarche TrustiScore : 12 critères objectifs</h2>
+            
+            <p>
+                Chaque application est évaluée selon <strong>12 critères fondamentaux</strong> qui couvrent tous les aspects 
+                de la souveraineté numérique et de la protection de la vie privée :
+            </p>
+
+            <div class="criteria-grid">
+                <div class="criteria-item">
+                    <strong>1. Conformité RGPD</strong>
+                    <p>Respect du règlement européen sur la protection des données personnelles</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>2. Cloud Act</strong>
+                    <p>Évaluation de l'exposition à la législation américaine sur l'accès aux données</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>3. Open Source</strong>
+                    <p>Transparence du code source et possibilité d'audit indépendant</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>4. Localisation des données</strong>
+                    <p>Hébergement physique des serveurs et des données utilisateurs</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>5. Chiffrement</strong>
+                    <p>Niveau de chiffrement des données en transit et au repos</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>6. Collecte de données</strong>
+                    <p>Volume et nature des données personnelles collectées</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>7. Profilage commercial</strong>
+                    <p>Utilisation des données pour le ciblage publicitaire ou la revente</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>8. Partage avec des tiers</strong>
+                    <p>Transmission de données à des entreprises partenaires ou affiliées</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>9. Durée de conservation</strong>
+                    <p>Politique de rétention et suppression des données personnelles</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>10. Transparence</strong>
+                    <p>Clarté des conditions d'utilisation et de la politique de confidentialité</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>11. Droits des utilisateurs</strong>
+                    <p>Facilité d'exercer ses droits (accès, rectification, suppression, portabilité)</p>
+                </div>
+                
+                <div class="criteria-item">
+                    <strong>12. Historique de sécurité</strong>
+                    <p>Antécédents en matière de fuites de données et réactivité aux failles</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Méthodologie rigoureuse :</strong> Chaque critère est évalué de manière objective sur la base 
+                de documents publics, d'analyses techniques et d'audits indépendants. Les notations sont régulièrement 
+                mises à jour pour refléter l'évolution des pratiques des entreprises.
+            </div>
+        </section>
+
+        <section>
+            <h2>Notre engagement</h2>
+            
+            <p>
+                TrustiScore s'engage à fournir des évaluations <strong>indépendantes, objectives et transparentes</strong>. 
+                Nous ne sommes affiliés à aucune entreprise et ne recevons aucune rémunération des services évalués.
+            </p>
+
+            <h3>Nos principes</h3>
+            <ol>
+                <li><strong>Indépendance totale :</strong> Aucun conflit d'intérêt avec les entreprises évaluées</li>
+                <li><strong>Objectivité :</strong> Évaluations basées uniquement sur des faits vérifiables</li>
+                <li><strong>Transparence :</strong> Méthodologie publique et explications détaillées pour chaque note</li>
+                <li><strong>Mise à jour continue :</strong> Réévaluation régulière pour suivre l'évolution des services</li>
+                <li><strong>Respect de la vie privée :</strong> Nous pratiquons ce que nous prêchons</li>
+            </ol>
+
+            <p>
+                <strong>Rejoignez le mouvement pour une souveraineté numérique européenne.</strong> 
+                En utilisant TrustiScore, vous participez activement à la construction d'un Internet plus respectueux 
+                de vos droits et de votre vie privée.
+            </p>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>🚀 Passez à l'action dès maintenant</h2>
+                <p>
+                    Ne laissez plus vos données entre les mains d'entreprises opaques. 
+                    Découvrez quelles applications respectent vraiment votre vie privée et reprenez le contrôle.
+                </p>
+                
+                <a href="https://trusti-alpha.vercel.app/" target="_blank" class="cta-button">
+                    <span class="cta-icon">🛡️</span>
+                    <span>Accéder à l'application TrustiScore</span>
+                </a>
+                
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <div class="cta-feature-icon">✅</div>
+                        <h4>Évaluations instantanées</h4>
+                        <p>Consultez les notes de milliers d'applications</p>
+                    </div>
+                    <div class="cta-feature">
+                        <div class="cta-feature-icon">🔍</div>
+                        <h4>Détails complets</h4>
+                        <p>Critères détaillés pour chaque service</p>
+                    </div>
+                    <div class="cta-feature">
+                        <div class="cta-feature-icon">🌍</div>
+                        <h4>Alternatives souveraines</h4>
+                        <p>Découvrez des solutions européennes</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <footer>
+        <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
+        <p>Données hébergées en Europe | Conformité RGPD | Open Source</p>
+    </footer>
 </body>
 </html>
