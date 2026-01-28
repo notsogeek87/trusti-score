@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Simulateur TrustiScore - Calculez votre note</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background-color: #0f172a;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            position: relative;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .logo-container img {
+            max-width: 120px;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        .nav-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro-section {
+            background: #1e293b;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+            text-align: center;
+        }
+        
+        .intro-section h2 {
+            color: #60a5fa;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .intro-section p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .simulator-container {
+            background: #1e293b;
+            margin: 2rem 0;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+        }
+        
+        .criteria-form {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .criterion-item {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(30, 64, 175, 0.3));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .criterion-title {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .criterion-title h3 {
+            color: #93c5fd;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .criterion-title p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+        
+        .criterion-select {
+            min-width: 200px;
+        }
+        
+        .criterion-select label {
+            display: block;
+            color: #93c5fd;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .criterion-select select {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            background: #0f172a;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .criterion-select select:hover {
+            border-color: #3b82f6;
+        }
+        
+        .criterion-select select:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .star-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background: #0f172a;
+            border: 2px solid #334155;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            min-height: 100px;
+        }
+        
+        .star-option:hover {
+            transform: translateY(-3px);
+            border-color: #3b82f6;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .star-option.selected {
+            border-color: #60a5fa;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.3));
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .star-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2rem;
+            line-height: 1;
+        }
+        
+        .star-option:hover .star-icon {
+            transform: scale(1.2);
+        }
+        
+        .star-option.selected .star-icon {
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+        
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        .star-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .star-option.selected .star-label {
+            color: #e0f2fe;
+            font-weight: 600;
+        }
+        
+        .star-value-5 .star-icon { color: #10b981; }
+        .star-value-4 .star-icon { color: #06b6d4; }
+        .star-value-3 .star-icon { color: #f59e0b; }
+        .star-value-2 .star-icon { color: #f97316; }
+        .star-value-1 .star-icon { color: #ef4444; }
+        
+        input[type="radio"] {
+            display: none;
+        }
+        
+        .score-excellent { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2)); border-left-color: #10b981; }
+        .score-good { background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(14, 165, 233, 0.2)); border-left-color: #06b6d4; }
+        .score-average { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 146, 60, 0.2)); border-left-color: #f59e0b; }
+        .score-poor { background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.2)); border-left-color: #f97316; }
+        .score-critical { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2)); border-left-color: #ef4444; }
+        
+        .calculate-button {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 1.2rem 2rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .calculate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+        
+        .calculate-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .result-container {
+            background: #1e293b;
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-score {
+            font-size: 6rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-grade-a { color: #10b981; }
+        .result-grade-b { color: #06b6d4; }
+        .result-grade-c { color: #f59e0b; }
+        .result-grade-d { color: #f97316; }
+        .result-grade-e { color: #ef4444; }
+        
+        .result-title {
+            color: #93c5fd;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-description {
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .result-details {
+            background: rgba(30, 58, 138, 0.3);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .result-details h3 {
+            color: #60a5fa;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .breakdown-item {
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .breakdown-item strong {
+            color: #93c5fd;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .breakdown-item span {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 2px solid #334155;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .criterion-header {
+                flex-direction: column;
+            }
+            
+            .result-score {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="TrustiScore Logo">
+            </div>
+            <h1>Simulateur TrustiScore</h1>
+            <p>Évaluez le niveau de confiance d'une application</p>
+            <a href="index.html" class="nav-link">← Retour à l'accueil</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro-section">
+            <h2>Comment utiliser le simulateur ?</h2>
+            <p>Évaluez chaque critère selon votre connaissance de l'application.</p>
+            <p>Le TrustiScore sera calculé automatiquement en fonction de vos réponses.</p>
+        </div>
+
+        <div class="simulator-container">
+            <form id="trustiScoreForm" class="criteria-form">
+                <div class="criterion-item" data-criterion="rgpd">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>1. Conformité RGPD</h3>
+                            <p>Respect du règlement européen sur la protection des données personnelles</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="rgpd" value="5" required>
+                                    <div class="star-icon">🛡️</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="rgpd" value="4">
+                                    <div class="star-icon">✅</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="rgpd" value="3">
+                                    <div class="star-icon">⚠️</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="rgpd" value="2">
+                                    <div class="star-icon">❌</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="rgpd" value="1">
+                                    <div class="star-icon">🚨</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="cloudact">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>2. Cloud Act</h3>
+                            <p>Exposition à la législation américaine sur l'accès aux données</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="cloudact" value="5" required>
+                                    <div class="star-icon">🇪🇺</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="cloudact" value="4">
+                                    <div class="star-icon">📜</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="cloudact" value="3">
+                                    <div class="star-icon">⚖️</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="cloudact" value="2">
+                                    <div class="star-icon">🇺🇸</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="cloudact" value="1">
+                                    <div class="star-icon">👁️</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="opensource">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>3. Open Source</h3>
+                            <p>Transparence du code source et possibilité d'audit indépendant</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="opensource" value="5" required>
+                                    <div class="star-icon">💎</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="opensource" value="4">
+                                    <div class="star-icon">🔓</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="opensource" value="3">
+                                    <div class="star-icon">📖</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="opensource" value="2">
+                                    <div class="star-icon">🔒</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="opensource" value="1">
+                                    <div class="star-icon">⚫</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="localisation">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>4. Localisation des données</h3>
+                            <p>Hébergement physique des serveurs et des données utilisateurs</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="localisation" value="5" required>
+                                    <div class="star-icon">🏰</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="localisation" value="4">
+                                    <div class="star-icon">🗺️</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="localisation" value="3">
+                                    <div class="star-icon">🌍</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="localisation" value="2">
+                                    <div class="star-icon">🌐</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="localisation" value="1">
+                                    <div class="star-icon">❓</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="chiffrement">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>5. Chiffrement</h3>
+                            <p>Niveau de chiffrement des données en transit et au repos</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="chiffrement" value="5" required>
+                                    <div class="star-icon">🔐</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="chiffrement" value="4">
+                                    <div class="star-icon">🔑</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="chiffrement" value="3">
+                                    <div class="star-icon">🗝️</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="chiffrement" value="2">
+                                    <div class="star-icon">🔓</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="chiffrement" value="1">
+                                    <div class="star-icon">📭</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="collecte">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>6. Collecte de données</h3>
+                            <p>Volume et nature des données personnelles collectées</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="collecte" value="5" required>
+                                    <div class="star-icon">🤏</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="collecte" value="4">
+                                    <div class="star-icon">📋</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="collecte" value="3">
+                                    <div class="star-icon">📊</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="collecte" value="2">
+                                    <div class="star-icon">🗃️</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="collecte" value="1">
+                                    <div class="star-icon">🎯</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="profilage">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>7. Profilage commercial</h3>
+                            <p>Utilisation des données pour le ciblage publicitaire ou la revente</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="profilage" value="5" required>
+                                    <div class="star-icon">🚫</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="profilage" value="4">
+                                    <div class="star-icon">👤</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="profilage" value="3">
+                                    <div class="star-icon">📈</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="profilage" value="2">
+                                    <div class="star-icon">🎭</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="profilage" value="1">
+                                    <div class="star-icon">🕵️</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="partage">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>8. Partage avec des tiers</h3>
+                            <p>Transmission de données à des entreprises partenaires ou affiliées</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="partage" value="5" required>
+                                    <div class="star-icon">🔒</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="partage" value="4">
+                                    <div class="star-icon">🔧</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="partage" value="3">
+                                    <div class="star-icon">🤝</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="partage" value="2">
+                                    <div class="star-icon">🔗</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="partage" value="1">
+                                    <div class="star-icon">💸</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="conservation">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>9. Durée de conservation</h3>
+                            <p>Politique de rétention et suppression des données personnelles</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="conservation" value="5" required>
+                                    <div class="star-icon">⏱️</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="conservation" value="4">
+                                    <div class="star-icon">📅</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="conservation" value="3">
+                                    <div class="star-icon">📆</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="conservation" value="2">
+                                    <div class="star-icon">🗓️</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="conservation" value="1">
+                                    <div class="star-icon">♾️</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="transparence">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>10. Transparence</h3>
+                            <p>Clarté des conditions d'utilisation et de la politique de confidentialité</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="transparence" value="5" required>
+                                    <div class="star-icon">💎</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="transparence" value="4">
+                                    <div class="star-icon">🔍</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="transparence" value="3">
+                                    <div class="star-icon">📄</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="transparence" value="2">
+                                    <div class="star-icon">🌫️</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="transparence" value="1">
+                                    <div class="star-icon">⬛</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="droits">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>11. Droits des utilisateurs</h3>
+                            <p>Facilité d'exercer ses droits (accès, rectification, suppression, portabilité)</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="droits" value="5" required>
+                                    <div class="star-icon">⚡</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="droits" value="4">
+                                    <div class="star-icon">✔️</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="droits" value="3">
+                                    <div class="star-icon">📧</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="droits" value="2">
+                                    <div class="star-icon">🧩</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="droits" value="1">
+                                    <div class="star-icon">🚪</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="criterion-item" data-criterion="historique">
+                    <div class="criterion-header">
+                        <div class="criterion-title">
+                            <h3>12. Historique de sécurité</h3>
+                            <p>Antécédents en matière de fuites de données et réactivité aux failles</p>
+                        </div>
+                        <div class="criterion-select">
+                            <label>Évaluation :</label>
+                            <div class="star-rating">
+                                <label class="star-option star-value-5">
+                                    <input type="radio" name="historique" value="5" required>
+                                    <div class="star-icon">🏆</div>
+                                    <div class="star-label">Excellent</div>
+                                </label>
+                                <label class="star-option star-value-4">
+                                    <input type="radio" name="historique" value="4">
+                                    <div class="star-icon">🔧</div>
+                                    <div class="star-label">Bon</div>
+                                </label>
+                                <label class="star-option star-value-3">
+                                    <input type="radio" name="historique" value="3">
+                                    <div class="star-icon">⚙️</div>
+                                    <div class="star-label">Moyen</div>
+                                </label>
+                                <label class="star-option star-value-2">
+                                    <input type="radio" name="historique" value="2">
+                                    <div class="star-icon">🔥</div>
+                                    <div class="star-label">Faible</div>
+                                </label>
+                                <label class="star-option star-value-1">
+                                    <input type="radio" name="historique" value="1">
+                                    <div class="star-icon">💥</div>
+                                    <div class="star-label">Critique</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="calculate-button">🧮 Calculer le TrustiScore</button>
+            </form>
+        </div>
+
+        <div id="resultContainer" class="result-container">
+            <h2 class="result-title">Votre TrustiScore</h2>
+            <div id="resultScore" class="result-score">-</div>
+            <div id="resultDescription" class="result-description"></div>
+            
+            <div class="result-details">
+                <h3>Détails de l'évaluation</h3>
+                <div id="resultBreakdown" class="result-breakdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
+        <p><a href="index.html" style="color: #60a5fa; text-decoration: none;">Retour à l'accueil</a></p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('trustiScoreForm');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultScore = document.getElementById('resultScore');
+        const resultDescription = document.getElementById('resultDescription');
+        const resultBreakdown = document.getElementById('resultBreakdown');
+
+        // Descriptions des notes
+        const gradeDescriptions = {
+            'A': {
+                title: 'Souverain & Privé',
+                description: 'Cette application offre une protection maximale de votre vie privée. Hébergement européen, transparence totale et respect absolu de vos données. Recommandé sans réserve.',
+                class: 'result-grade-a'
+            },
+            'B': {
+                title: 'Sécurisé',
+                description: 'Excellente sécurité et chiffrement robuste. Quelques points d\'attention concernant la juridiction, mais globalement fiable pour un usage courant.',
+                class: 'result-grade-b'
+            },
+            'C': {
+                title: 'Usage Hybride',
+                description: 'Service fonctionnel mais avec collecte de métadonnées à des fins commerciales. À utiliser avec précaution et en limitant les données sensibles.',
+                class: 'result-grade-c'
+            },
+            'D': {
+                title: 'Risque Élevé',
+                description: 'Collecte massive de données et profilage actif. Privilégiez des alternatives plus respectueuses de votre vie privée.',
+                class: 'result-grade-d'
+            },
+            'E': {
+                title: 'Critique',
+                description: 'Opacité majeure, non-conformité RGPD ou failles de sécurité graves. À éviter absolument pour toute donnée personnelle ou sensible.',
+                class: 'result-grade-e'
+            }
+        };
+
+        // Noms des critères pour l'affichage
+        const criteriaNames = {
+            'rgpd': 'Conformité RGPD',
+            'cloudact': 'Cloud Act',
+            'opensource': 'Open Source',
+            'localisation': 'Localisation',
+            'chiffrement': 'Chiffrement',
+            'collecte': 'Collecte de données',
+            'profilage': 'Profilage commercial',
+            'partage': 'Partage avec tiers',
+            'conservation': 'Durée de conservation',
+            'transparence': 'Transparence',
+            'droits': 'Droits utilisateurs',
+            'historique': 'Historique sécurité'
+        };
+
+        // Gestion de la soumission du formulaire
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupération des valeurs
+            const formData = new FormData(form);
+            let totalScore = 0;
+            let criteriaCount = 0;
+            const scores = {};
+            
+            for (let [key, value] of formData.entries()) {
+                const score = parseInt(value);
+                totalScore += score;
+                criteriaCount++;
+                scores[key] = score;
+            }
+            
+            // Calcul de la moyenne
+            const averageScore = totalScore / criteriaCount;
+            
+            // Détermination de la note
+            let grade;
+            if (averageScore >= 4.5) {
+                grade = 'A';
+            } else if (averageScore >= 3.5) {
+                grade = 'B';
+            } else if (averageScore >= 2.5) {
+                grade = 'C';
+            } else if (averageScore >= 1.5) {
+                grade = 'D';
+            } else {
+                grade = 'E';
+            }
+            
+            // Affichage des résultats
+            displayResults(grade, averageScore, scores);
+            
+            // Mise à jour visuelle des critères
+            updateCriteriaVisuals(scores);
+            
+            // Scroll vers les résultats
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        function displayResults(grade, averageScore, scores) {
+            const gradeInfo = gradeDescriptions[grade];
+            
+            // Affichage de la note
+            resultScore.textContent = grade;
+            resultScore.className = 'result-score ' + gradeInfo.class;
+            
+            // Affichage de la description
+            resultDescription.innerHTML = `
+                <strong>${gradeInfo.title}</strong><br>
+                ${gradeInfo.description}<br>
+                <small style="color: #94a3b8; margin-top: 1rem; display: block;">
+                    Score moyen : ${averageScore.toFixed(2)} / 5.00
+                </small>
+            `;
+            
+            // Affichage du détail par critère
+            let breakdownHTML = '';
+            for (let [key, score] of Object.entries(scores)) {
+                const stars = '★'.repeat(score) + '☆'.repeat(5 - score);
+                breakdownHTML += `
+                    <div class="breakdown-item">
+                        <strong>${criteriaNames[key]}</strong>
+                        <span>${stars} (${score}/5)</span>
+                    </div>
+                `;
+            }
+            resultBreakdown.innerHTML = breakdownHTML;
+            
+            // Affichage du container
+            resultContainer.classList.add('show');
+        }
+
+        function updateCriteriaVisuals(scores) {
+            for (let [key, score] of Object.entries(scores)) {
+                const criterionItem = document.querySelector(`[data-criterion="${key}"]`);
+                
+                // Suppression des classes précédentes
+                criterionItem.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+                
+                // Ajout de la nouvelle classe
+                if (score === 5) {
+                    criterionItem.classList.add('score-excellent');
+                } else if (score === 4) {
+                    criterionItem.classList.add('score-good');
+                } else if (score === 3) {
+                    criterionItem.classList.add('score-average');
+                } else if (score === 2) {
+                    criterionItem.classList.add('score-poor');
+                } else {
+                    criterionItem.classList.add('score-critical');
+                }
+            }
+        }
+
+        // Validation en temps réel et gestion des clics sur les étoiles
+        form.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const criterionItem = this.closest('.criterion-item');
+                const score = parseInt(this.value);
+                const starRating = this.closest('.star-rating');
+                
+                // Retirer la classe 'selected' de toutes les options du même groupe
+                starRating.querySelectorAll('.star-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Ajouter la classe 'selected' à l'option cliquée
+                this.closest('.star-option').classList.add('selected');
+                
+                // Mise à jour visuelle du critère
+                if (score) {
+                    criterionItem.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+                    
+                    if (score === 5) {
+                        criterionItem.classList.add('score-excellent');
+                    } else if (score === 4) {
+                        criterionItem.classList.add('score-good');
+                    } else if (score === 3) {
+                        criterionItem.classList.add('score-average');
+                    } else if (score === 2) {
+                        criterionItem.classList.add('score-poor');
+                    } else {
+                        criterionItem.classList.add('score-critical');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
