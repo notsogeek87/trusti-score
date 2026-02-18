@@ -1,0 +1,146 @@
+# Configuration Nginx pour TrustiScore
+# Protection contre DDoS et Rate Limiting
+
+# Dans le bloc http {} de nginx.conf
+
+# Zone de rate limiting pour l'admin
+limit_req_zone $binary_remote_addr zone=admin_zone:10m rate=1r/s;
+limit_req_zone $binary_remote_addr zone=general_zone:10m rate=10r/s;
+
+# Zone pour limiter les connexions simultanées
+limit_conn_zone $binary_remote_addr zone=conn_limit:10m;
+
+server {
+    listen 80;
+    server_name votre-domaine.com;
+    
+    # Redirection HTTPS forcée (recommandé)
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name votre-domaine.com;
+    
+    # Certificat SSL (Let's Encrypt recommandé)
+    ssl_certificate /etc/letsencrypt/live/votre-domaine.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/votre-domaine.com/privkey.pem;
+    
+    # Configuration SSL sécurisée
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    
+    root /var/www/trusti-score;
+    index index.html;
+    
+    # Headers de sécurité
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Content-Security-Policy "default-src 'self' 'unsafe-inline'; img-src 'self' data:;" always;
+    
+    # Limite de connexions simultanées par IP
+    limit_conn conn_limit 10;
+    
+    # Rate limiting général
+    location / {
+        limit_req zone=general_zone burst=20 nodelay;
+        try_files $uri $uri/ =404;
+    }
+    
+    # Protection spéciale pour admin.html
+    location = /admin.html {
+        # Rate limiting strict pour l'admin
+        limit_req zone=admin_zone burst=5 nodelay;
+        limit_req_status 429;
+        
+        # Authentification HTTP Basic (double protection)
+        auth_basic "Administration TrustiScore";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        
+        # Restriction par IP (optionnel - décommenter et ajuster)
+        # allow 192.168.1.0/24;     # Réseau local
+        # allow VOTRE.IP.PUBLIQUE;  # Votre IP publique
+        # deny all;
+        
+        # Restriction géographique (nécessite module geoip2)
+        # if ($geoip2_country_code !~ ^(FR|BE|CH)$) {
+        #     return 403;
+        # }
+        
+        # Bloquer les user-agents de bots connus
+        if ($http_user_agent ~* (bot|crawler|spider|scraper)) {
+            return 403;
+        }
+    }
+    
+    # Bloquer l'accès direct au fichier de configuration
+    location ~ ^/assets/config\.json$ {
+        # Autoriser les requêtes AJAX seulement
+        if ($request_method != GET) {
+            return 405;
+        }
+        
+        # Vérifier le referer (doit venir du site lui-même)
+        valid_referers server_names;
+        if ($invalid_referer) {
+            return 403;
+        }
+        
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+    }
+    
+    # Optimisation et cache pour les assets statiques
+    location /assets/ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Bloquer les requêtes vers des fichiers sensibles
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+    
+    location ~ \.(md|json|example)$ {
+        deny all;
+        access_log off;
+    }
+    
+    # Bloquer les méthodes HTTP non nécessaires
+    if ($request_method !~ ^(GET|HEAD|POST)$ ) {
+        return 405;
+    }
+    
+    # Protection contre les requêtes vides ou malformées
+    if ($request_uri ~* "(%0|%A|%B|%C|%D|%E|%F)") {
+        return 400;
+    }
+    
+    # Logs
+    access_log /var/log/nginx/trusti-score-access.log;
+    error_log /var/log/nginx/trusti-score-error.log warn;
+}
+
+# Configuration fail2ban pour nginx (à ajouter dans /etc/fail2ban/jail.d/nginx-custom.conf)
+# [nginx-admin-limit]
+# enabled = true
+# port = http,https
+# filter = nginx-admin-limit
+# logpath = /var/log/nginx/trusti-score-access.log
+# maxretry = 5
+# findtime = 300
+# bantime = 3600
+
+# Créer le filtre dans /etc/fail2ban/filter.d/nginx-admin-limit.conf :
+# [Definition]
+# failregex = ^<HOST> .* "(?:GET|POST) /admin\.html
+# ignoreregex =
+
+# Commandes utiles :
+# sudo nginx -t                    # Tester la configuration
+# sudo systemctl reload nginx      # Recharger nginx
+# sudo tail -f /var/log/nginx/trusti-score-access.log | grep admin.html  # Surveiller l'admin

@@ -1,2 +1,10 @@
 User-agent: *
+Disallow: /admin.html
+Disallow: /assets/config.json
+Allow: /
+
+# Bloquer les bots agressifs
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
 Disallow: /

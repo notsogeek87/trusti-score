@@ -1,0 +1,417 @@
+{
+  "siteName": "TrustiScore",
+  "siteTagline": "Reprenez votre souveraineté numérique européenne",
+  "footer": {
+    "copyright": "© 2026 TrustiScore - Pour une souveraineté numérique européenne",
+    "additionalInfo": "Données hébergées en Europe | Conformité RGPD | Open Source"
+  },
+  "gradeThresholds": {
+    "A": 80,
+    "B": 60,
+    "C": 40,
+    "D": 20
+  },
+  "gradeDescriptions": {
+    "A": {
+      "title": "Souverain & Privé",
+      "description": "Cette application offre une protection maximale de votre vie privée. Hébergement européen, transparence totale et respect absolu de vos données. Recommandé sans réserve.",
+      "shortDescription": "Ex : Siège/actionnaires en France ou en Union européenne, 100% en Union européenne (cloud souverain qualifié), Open source, réversible, sans dépendance GAFAM, RGPD complet, rapports détaillés."
+    },
+    "B": {
+      "title": "Bon",
+      "description": "Bonnes pratiques générales. Quelques points d'amélioration possibles mais globalement fiable pour un usage courant.",
+      "shortDescription": "Bonnes pratiques générales avec quelques points d'amélioration concernant la souveraineté ou la transparence."
+    },
+    "C": {
+      "title": "Moyen",
+      "description": "Service acceptable mais avec des risques modérés. Des améliorations sont nécessaires sur certains aspects de la souveraineté numérique.",
+      "shortDescription": "Service utile mais présence de risques modérés. Attention nécessaire sur certains points."
+    },
+    "D": {
+      "title": "Faible",
+      "description": "Problèmes significatifs en termes de souveraineté et de protection des données. Des alternatives plus respectueuses sont recommandées.",
+      "shortDescription": "Problèmes significatifs en termes de souveraineté et/ou de protection des données. Alternatives recommandées."
+    },
+    "E": {
+      "title": "Critique",
+      "description": "Risques majeurs pour la souveraineté numérique. Non-conformité RGPD, exposition au Cloud Act ou opacité totale. À éviter absolument.",
+      "shortDescription": "Ex : Siège aux USA, en Chine, risques extraterritoriaux, Stockage mondial sans garanties RGPD, Services critiques aux USA, Chine…, Infos minimales ou absentes, CGU opaques."
+    }
+  },
+  "criteria": {
+    "gouvernance": {
+      "name": "Gouvernance et Juridiction",
+      "weight": 20,
+      "description": "Localisation du siège social, actionnariat et exposition aux lois extraterritoriales",
+      "detailedDescription": "🗺️ Gouvernance & Juridiction (20%)",
+      "gradeAExample": "Siège/actionnaires en France ou en Union européenne, pas de lois intrusives",
+      "gradeEExample": "Siège aux USA, en Chine, risques extraterritoriaux",
+      "options": [
+        {
+          "value": 4,
+          "icon": "🛡️",
+          "label": "4 pts - FR/UE",
+          "description": "Société française ou Union européenne, actionnariat européen majoritaire, pas de risques extraterritoriaux"
+        },
+        {
+          "value": 3,
+          "icon": "🇪🇺",
+          "label": "3 pts - UE mixte",
+          "description": "Filiale européenne d'un groupe mixte, protection partielle contre les lois extraterritoriales"
+        },
+        {
+          "value": 2,
+          "icon": "⚠️",
+          "label": "2 pts - Filiale",
+          "description": "Filiale européenne d'un groupe étranger, exposition modérée aux lois extraterritoriales"
+        },
+        {
+          "value": 1,
+          "icon": "📜",
+          "label": "1 pt - Garanties",
+          "description": "Société étrangère avec quelques garanties contractuelles minimales"
+        },
+        {
+          "value": 0,
+          "icon": "🚨",
+          "label": "0 pt - Cloud Act",
+          "description": "Société soumise au Cloud Act ou lois extraterritoriales, sans protections"
+        }
+      ]
+    },
+    "localisation": {
+      "name": "Localisation des données",
+      "weight": 25,
+      "description": "Lieu physique de stockage des données et respect des normes européennes",
+      "detailedDescription": "💾 Localisation des données (25%)",
+      "gradeAExample": "100% en Union européenne (cloud souverain qualifié)",
+      "gradeEExample": "Stockage mondial sans garanties RGPD",
+      "options": [
+        {
+          "value": 4,
+          "icon": "🇪🇺",
+          "label": "4 pts - 100% UE",
+          "description": "Toutes les données stockées exclusivement dans l'Union européenne"
+        },
+        {
+          "value": 3,
+          "icon": "📍",
+          "label": "3 pts - ≥90% UE",
+          "description": "Au moins 90% des données en UE, données critiques uniquement en UE"
+        },
+        {
+          "value": 2,
+          "icon": "🌍",
+          "label": "2 pts - ≥70% UE",
+          "description": "Au moins 70% des données en UE, certaines données hors UE avec garanties"
+        },
+        {
+          "value": 1,
+          "icon": "🌐",
+          "label": "1 pt - <50% UE",
+          "description": "Moins de 50% des données en UE, stockage multi-régional"
+        },
+        {
+          "value": 0,
+          "icon": "❌",
+          "label": "0 pt - Mondial",
+          "description": "Données stockées principalement hors UE, pas de garanties"
+        }
+      ]
+    },
+    "controle": {
+      "name": "Contrôle technique",
+      "weight": 20,
+      "description": "Open source, réversibilité et indépendance vis-à-vis des GAFAM",
+      "detailedDescription": "🔧 Contrôle technique (20%)",
+      "gradeAExample": "Open source, réversible, sans dépendance GAFAM (Google, Apple, Facebook, Amazon, Microsoft)",
+      "gradeEExample": "Services critiques aux USA, Chine…",
+      "options": [
+        {
+          "value": 4,
+          "icon": "💎",
+          "label": "4 pts - Open total",
+          "description": "Code 100% open source, réversibilité totale, pile indépendante"
+        },
+        {
+          "value": 3,
+          "icon": "🔓",
+          "label": "3 pts - Open partiel",
+          "description": "Briques principales open source, export standard des données"
+        },
+        {
+          "value": 2,
+          "icon": "🔗",
+          "label": "2 pts - Dép. mineures",
+          "description": "Dépendances mineures envers GAFAM, export possible avec efforts"
+        },
+        {
+          "value": 1,
+          "icon": "🔒",
+          "label": "1 pt - Dép. fortes",
+          "description": "Dépendances fortes envers infrastructures étrangères"
+        },
+        {
+          "value": 0,
+          "icon": "⛓️",
+          "label": "0 pt - Captif",
+          "description": "Écosystème totalement propriétaire, aucune réversibilité"
+        }
+      ]
+    },
+    "conformite": {
+      "name": "Conformité et Certifications",
+      "weight": 20,
+      "description": "Respect du RGPD, présence d'un DPO, certifications (SecNumCloud, ISO 27001...)",
+      "detailedDescription": "✅ Conformité & Certifications (20%)",
+      "gradeAExample": "RGPD complet (DPO, DPIA), Normes telles que SecNumCloud/ISO",
+      "gradeEExample": "Infos minimales ou absentes",
+      "options": [
+        {
+          "value": 4,
+          "icon": "🏆",
+          "label": "4 pts - RGPD+Certif",
+          "description": "RGPD complet (DPO, DPIA), certifications SecNumCloud, ISO 27001, HDS"
+        },
+        {
+          "value": 3,
+          "icon": "✅",
+          "label": "3 pts - RGPD base",
+          "description": "RGPD respecté, DPO nommé, certifications basiques (ISO 27001)"
+        },
+        {
+          "value": 2,
+          "icon": "📝",
+          "label": "2 pts - Minimal",
+          "description": "Conformité RGPD minimale, documentation incomplète"
+        },
+        {
+          "value": 1,
+          "icon": "❓",
+          "label": "1 pt - Incomplet",
+          "description": "Conformité partielle, informations insuffisantes"
+        },
+        {
+          "value": 0,
+          "icon": "🚫",
+          "label": "0 pt - Non conforme",
+          "description": "Pas de conformité RGPD visible, absence de DPO"
+        }
+      ]
+    },
+    "transparence": {
+      "name": "Transparence",
+      "weight": 15,
+      "description": "Clarté des CGU, rapports annuels, procédures de droit à l'oubli",
+      "detailedDescription": "📜 Transparence (15%)",
+      "gradeAExample": "Rapports détaillés, procédures de droit à l'oubli connues",
+      "gradeEExample": "CGU opaques, pas d'engagements",
+      "options": [
+        {
+          "value": 4,
+          "icon": "💎",
+          "label": "4 pts - Rapports détaillés",
+          "description": "Rapports de transparence réguliers, CGU claires, procédures documentées"
+        },
+        {
+          "value": 3,
+          "icon": "🔍",
+          "label": "3 pts - CGU claires",
+          "description": "CGU compréhensibles, informations accessibles, droit à l'oubli respecté"
+        },
+        {
+          "value": 2,
+          "icon": "📄",
+          "label": "2 pts - Standards",
+          "description": "Documentation standard, informations minimales conformes"
+        },
+        {
+          "value": 1,
+          "icon": "🌫️",
+          "label": "1 pt - Opaques",
+          "description": "CGU complexes, procédures peu claires"
+        },
+        {
+          "value": 0,
+          "icon": "⬛",
+          "label": "0 pt - Aucune info",
+          "description": "Absence totale de transparence, pas de CGU accessibles"
+        }
+      ]
+    }
+  },
+  "simulator": {
+    "title": "Simulateur TrustiScore",
+    "subtitle": "Calculez votre note",
+    "introTitle": "🧮 Testez votre application !",
+    "introDescription": [
+      "<strong>Développeurs, c'est pour vous !</strong> Utilisez ce simulateur gratuit pour évaluer votre propre projet pendant le développement.",
+      "Répondez à quelques questions simples (5 min max) sur vos choix tech/juridiques et obtenez un score instantané A-E pour valider que votre appli respecte au mieux les principes UE (RGPD, data UE).",
+      "<strong>🚀 Passez de C à A en un sprint !</strong> Identifiez vos points d'amélioration et boostez votre note avant le lancement."
+    ],
+    "submitButton": "🧮 Calculer le TrustiScore",
+    "resultTitle": "Votre TrustiScore",
+    "resultDetailsTitle": "Détails de l'évaluation"
+  },
+  "homepage": {
+    "sections": [
+      {
+        "id": "why",
+        "title": "🎯 Pourquoi TrustiScore existe-t-il ?",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "À l'ère du numérique, nous dépendons d'applications et services en ligne pour tout : communications, travail, loisirs. Mais <strong>savons-nous vraiment où finissent nos données personnelles ?</strong>"
+          },
+          {
+            "type": "highlight",
+            "text": "<strong>L'enjeu est crucial :</strong> La majorité des éditeurs non-européens (GAFAM en tête) stockent nos informations hors UE, sous des lois extraterritoriales comme le <strong>Cloud Act américain</strong> (accès forcé aux données par les autorités US, même hébergées en Europe). Résultat ? Une perte de contrôle sur nos photos, messages, historiques..."
+          },
+          {
+            "type": "subtitle",
+            "text": "Comment tout a commencé ?"
+          },
+          {
+            "type": "paragraph",
+            "text": "Tout part d'un défi personnel – créer un smartphone \"purgé\" au maximum des « applications GAFAM ». Après des tests intensifs, l'idée émerge d'approfondir l'expérience en la partageant : Pourquoi ne pas créer <strong>une appli qui note objectivement la \"souveraineté numérique\" des autres applis ?</strong>"
+          },
+          {
+            "type": "paragraph",
+            "text": "Un peu de travail acharné plus tard, voici <strong>TrustiScore</strong> : une appli open source, appelée à grandir <strong>avec la communauté</strong> (contributions GitHub bienvenues !). Notre mission ? Vous aider à choisir des outils respectueux de votre vie privée et de la souveraineté européenne."
+          },
+          {
+            "type": "subtitle",
+            "text": "Mais déjà, c'est quoi la souveraineté numérique?"
+          },
+          {
+            "type": "paragraph",
+            "text": "<strong>La souveraineté numérique,</strong> c'est la capacité d'un État, d'un service, d'une personne, d'une appli etc… à conserver un contrôle juridique, technique et économique sur ses propres données sans avoir de dépendance excessive envers des puissances étrangères."
+          },
+          {
+            "type": "paragraph",
+            "text": "Donc pour l'Europe et la France, cela nécessite le respect du Règlement général sur la protection des données (RGPD), la localisation des données en UE, la limitation des risques d'applications de réglementations étrangères comme le Cloud Act etc…"
+          },
+          {
+            "type": "paragraph",
+            "text": "Ça paraît compliqué ? <strong>Trustiscore simplifie cela pour vous !</strong>"
+          }
+        ]
+      },
+      {
+        "id": "how",
+        "title": "🔍 Comment ça marche ? (Simple et efficace)",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Pas de complication :"
+          },
+          {
+            "type": "list",
+            "ordered": true,
+            "items": [
+              "<strong>Recherchez une app ou service</strong> (ex: ProtonMail, ChatGPT, Vinted…).",
+              "<strong>Découvrez son score TrustiScore</strong> : Une note globale de <strong>A à E</strong>, avec badges colorés (🟢 A = excellent, 🔴 E = risque).",
+              "<strong>Accédez aux détails</strong> : Explications complètes, Justification de la note.",
+              "<strong>Pensez à une alternative</strong> : Des propositions d'applis plus respectueuses de la souveraineté numérique avec leur Trustiscore.",
+              "<strong>Partagez vos expériences</strong> : Proposez vous aussi des applis avec un Trustiscore basé sur la grille de notation."
+            ]
+          },
+          {
+            "type": "highlight",
+            "text": "<strong>Après le Nutriscore…le Trustiscore</strong> : De la même manière, un coup d'œil suffit pour se décider. Pas besoin d'être expert – TrustiScore démocratise l'accès à l'info sur le respect de la souveraineté numérique par les applis."
+          },
+          {
+            "type": "subtitle",
+            "text": "Exemples concrets"
+          },
+          {
+            "type": "list",
+            "ordered": false,
+            "items": [
+              "<strong>ProtonMail (A)</strong> : Données en UE, transparence maximum",
+              "<strong>TikTok (E)</strong> : Pratiques de transferts de données hors UE, opacité sur la gestion des données"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "notation",
+        "title": "Le système de notation (transparent et équilibré)",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Nous évaluons <strong>chaque appli sur 5 critères clés</strong>, notés de <strong>0 à 4 points</strong> (pondérés pour un score sur 100 et converti en A-E). Cette méthode rigoureuse est directement inspirée des standards européens (SecNumCloud, ISO 27001)."
+          },
+          {
+            "type": "highlight",
+            "text": "<strong>Méthodologie rigoureuse :</strong> Chaque critère est évalué de manière objective sur la base de documents publics, d'analyses techniques et d'audits indépendants. Les notations sont régulièrement mises à jour pour refléter l'évolution des pratiques des entreprises."
+          }
+        ]
+      },
+      {
+        "id": "simulator-promo",
+        "title": "🧮 Et dans l'autre sens….Testez votre application avec le Simulateur !",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "<strong>Développeurs, c'est pour vous !</strong> Utilisez notre <strong>simulateur gratuit</strong> pour évaluer votre propre projet pendant le développement. Répondez à quelques questions simples (5 min max) sur vos choix tech/juridiques :"
+          },
+          {
+            "type": "subtitle",
+            "text": "Pourquoi c'est génial ?"
+          },
+          {
+            "type": "list",
+            "ordered": false,
+            "items": [
+              "<strong>Auto-vérif souveraineté :</strong> Score instantané A-E pour valider que votre appli respecte au mieux les principes UE (RGPD, data UE).",
+              "<strong>Bonnes pratiques immédiates :</strong> Conseils personnalisés (ex: \"Passez à un cloud SecNumCloud pour +15 pts !\").",
+              "<strong>Amélioration continue :</strong> Identifiez au plus tôt les faiblesses et boostez votre note avant le lancement."
+            ]
+          },
+          {
+            "type": "highlight",
+            "text": "<strong>🚀 Passez de C à A en un sprint !</strong> Exemples :<ul style=\"margin-top: 0.5rem; margin-bottom: 0;\"><li>Hébergement sur OVHcloud (FR) = +Gouvernance.</li><li>Ajoutez un DPO visible = +Conformité.</li></ul>"
+          }
+        ]
+      },
+      {
+        "id": "community",
+        "title": "🤝 Rejoignez la communauté !",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "TrustiScore est <strong>open source</strong> : signalez des applis, proposez des mises à jour, votez les critères. Ensemble, construisons l'outil n°1 pour une <strong>privacy souveraine en France et en Europe</strong>."
+          },
+          {
+            "type": "subtitle",
+            "text": "Notre engagement"
+          },
+          {
+            "type": "paragraph",
+            "text": "TrustiScore s'engage à fournir des évaluations <strong>indépendantes, objectives et transparentes</strong>. Nous ne sommes affiliés à aucune entreprise et ne recevons aucune rémunération des services évalués."
+          },
+          {
+            "type": "subtitle",
+            "text": "Nos principes"
+          },
+          {
+            "type": "list",
+            "ordered": true,
+            "items": [
+              "<strong>Indépendance totale :</strong> Aucun conflit d'intérêt avec les entreprises évaluées",
+              "<strong>Objectivité :</strong> Évaluations basées uniquement sur des faits vérifiables",
+              "<strong>Transparence :</strong> Méthodologie publique et explications détaillées pour chaque note",
+              "<strong>Mise à jour continue :</strong> Réévaluation régulière pour suivre l'évolution des services",
+              "<strong>Respect de la vie privée :</strong> Nous pratiquons ce que nous prêchons"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "<strong>Rejoignez le mouvement pour une souveraineté numérique européenne.</strong> En utilisant TrustiScore, vous participez activement à la construction d'un Internet plus respectueux de vos droits et de votre vie privée."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -499,210 +499,12 @@
     <div class="container">
         <div class="intro-section">
             <h2>🧮 Testez votre application !</h2>
-            <p><strong>Développeurs, c'est pour vous !</strong> Utilisez ce simulateur gratuit pour évaluer votre propre projet pendant le développement.</p>
-            <p>Répondez à quelques questions simples (5 min max) sur vos choix tech/juridiques et obtenez un score instantané A-E 
-               pour valider que votre appli respecte au mieux les principes UE (RGPD, data UE).</p>
-            <p><strong>🚀 Passez de C à A en un sprint !</strong> Identifiez vos points d'amélioration et boostez votre note avant le lancement.</p>
+            <!-- Les paragraphes seront générés dynamiquement -->
         </div>
 
         <div class="simulator-container">
             <form id="trustiScoreForm" class="criteria-form">
-                <div class="criterion-item" data-criterion="gouvernance">
-                    <div class="criterion-header">
-                        <div class="criterion-title">
-                            <h3>1. Gouvernance et Juridiction (20%)</h3>
-                            <p>Localisation du siège social, actionnariat et exposition aux lois extraterritoriales</p>
-                        </div>
-                        <div class="criterion-select">
-                            <label>Évaluation :</label>
-                            <div class="star-rating">
-                                <label class="star-option star-value-5">
-                                    <input type="radio" name="gouvernance" value="4" required>
-                                    <div class="star-icon">🛡️</div>
-                                    <div class="star-label">4 pts - FR/UE</div>
-                                </label>
-                                <label class="star-option star-value-4">
-                                    <input type="radio" name="gouvernance" value="3">
-                                    <div class="star-icon">🇪🇺</div>
-                                    <div class="star-label">3 pts - UE mixte</div>
-                                </label>
-                                <label class="star-option star-value-3">
-                                    <input type="radio" name="gouvernance" value="2">
-                                    <div class="star-icon">⚠️</div>
-                                    <div class="star-label">2 pts - Filiale</div>
-                                </label>
-                                <label class="star-option star-value-2">
-                                    <input type="radio" name="gouvernance" value="1">
-                                    <div class="star-icon">📜</div>
-                                    <div class="star-label">1 pt - Garanties</div>
-                                </label>
-                                <label class="star-option star-value-1">
-                                    <input type="radio" name="gouvernance" value="0">
-                                    <div class="star-icon">🚨</div>
-                                    <div class="star-label">0 pt - Cloud Act</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="criterion-item" data-criterion="localisation">
-                    <div class="criterion-header">
-                        <div class="criterion-title">
-                            <h3>2. Localisation des données (25%)</h3>
-                            <p>Lieu physique de stockage des données et respect des normes européennes</p>
-                        </div>
-                        <div class="criterion-select">
-                            <label>Évaluation :</label>
-                            <div class="star-rating">
-                                <label class="star-option star-value-5">
-                                    <input type="radio" name="localisation" value="4" required>
-                                    <div class="star-icon">🇪🇺</div>
-                                    <div class="star-label">4 pts - 100% UE</div>
-                                </label>
-                                <label class="star-option star-value-4">
-                                    <input type="radio" name="localisation" value="3">
-                                    <div class="star-icon">📍</div>
-                                    <div class="star-label">3 pts - ≥90% UE</div>
-                                </label>
-                                <label class="star-option star-value-3">
-                                    <input type="radio" name="localisation" value="2">
-                                    <div class="star-icon">🌍</div>
-                                    <div class="star-label">2 pts - ≥70% UE</div>
-                                </label>
-                                <label class="star-option star-value-2">
-                                    <input type="radio" name="localisation" value="1">
-                                    <div class="star-icon">🌐</div>
-                                    <div class="star-label">1 pt - <50% UE</div>
-                                </label>
-                                <label class="star-option star-value-1">
-                                    <input type="radio" name="localisation" value="0">
-                                    <div class="star-icon">❌</div>
-                                    <div class="star-label">0 pt - Mondial</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="criterion-item" data-criterion="controle">
-                    <div class="criterion-header">
-                        <div class="criterion-title">
-                            <h3>3. Contrôle technique (20%)</h3>
-                            <p>Open source, réversibilité et indépendance vis-à-vis des GAFAM</p>
-                        </div>
-                        <div class="criterion-select">
-                            <label>Évaluation :</label>
-                            <div class="star-rating">
-                                <label class="star-option star-value-5">
-                                    <input type="radio" name="controle" value="4" required>
-                                    <div class="star-icon">💎</div>
-                                    <div class="star-label">4 pts - Open total</div>
-                                </label>
-                                <label class="star-option star-value-4">
-                                    <input type="radio" name="controle" value="3">
-                                    <div class="star-icon">🔓</div>
-                                    <div class="star-label">3 pts - Open partiel</div>
-                                </label>
-                                <label class="star-option star-value-3">
-                                    <input type="radio" name="controle" value="2">
-                                    <div class="star-icon">🔗</div>
-                                    <div class="star-label">2 pts - Dép. mineures</div>
-                                </label>
-                                <label class="star-option star-value-2">
-                                    <input type="radio" name="controle" value="1">
-                                    <div class="star-icon">🔒</div>
-                                    <div class="star-label">1 pt - Dép. fortes</div>
-                                </label>
-                                <label class="star-option star-value-1">
-                                    <input type="radio" name="controle" value="0">
-                                    <div class="star-icon">⛓️</div>
-                                    <div class="star-label">0 pt - Captif</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="criterion-item" data-criterion="conformite">
-                    <div class="criterion-header">
-                        <div class="criterion-title">
-                            <h3>4. Conformité et Certifications (20%)</h3>
-                            <p>Respect du RGPD, présence d'un DPO, certifications (SecNumCloud, ISO 27001...)</p>
-                        </div>
-                        <div class="criterion-select">
-                            <label>Évaluation :</label>
-                            <div class="star-rating">
-                                <label class="star-option star-value-5">
-                                    <input type="radio" name="conformite" value="4" required>
-                                    <div class="star-icon">🏆</div>
-                                    <div class="star-label">4 pts - RGPD+Certif</div>
-                                </label>
-                                <label class="star-option star-value-4">
-                                    <input type="radio" name="conformite" value="3">
-                                    <div class="star-icon">✅</div>
-                                    <div class="star-label">3 pts - RGPD base</div>
-                                </label>
-                                <label class="star-option star-value-3">
-                                    <input type="radio" name="conformite" value="2">
-                                    <div class="star-icon">📝</div>
-                                    <div class="star-label">2 pts - Minimal</div>
-                                </label>
-                                <label class="star-option star-value-2">
-                                    <input type="radio" name="conformite" value="1">
-                                    <div class="star-icon">❓</div>
-                                    <div class="star-label">1 pt - Incomplet</div>
-                                </label>
-                                <label class="star-option star-value-1">
-                                    <input type="radio" name="conformite" value="0">
-                                    <div class="star-icon">🚫</div>
-                                    <div class="star-label">0 pt - Non conforme</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="criterion-item" data-criterion="transparence">
-                    <div class="criterion-header">
-                        <div class="criterion-title">
-                            <h3>5. Transparence (15%)</h3>
-                            <p>Clarté des CGU, rapports annuels, procédures de droit à l'oubli</p>
-                        </div>
-                        <div class="criterion-select">
-                            <label>Évaluation :</label>
-                            <div class="star-rating">
-                                <label class="star-option star-value-5">
-                                    <input type="radio" name="transparence" value="4" required>
-                                    <div class="star-icon">💎</div>
-                                    <div class="star-label">4 pts - Rapports détaillés</div>
-                                </label>
-                                <label class="star-option star-value-4">
-                                    <input type="radio" name="transparence" value="3">
-                                    <div class="star-icon">🔍</div>
-                                    <div class="star-label">3 pts - CGU claires</div>
-                                </label>
-                                <label class="star-option star-value-3">
-                                    <input type="radio" name="transparence" value="2">
-                                    <div class="star-icon">📄</div>
-                                    <div class="star-label">2 pts - Standards</div>
-                                </label>
-                                <label class="star-option star-value-2">
-                                    <input type="radio" name="transparence" value="1">
-                                    <div class="star-icon">🌫️</div>
-                                    <div class="star-label">1 pt - Opaques</div>
-                                </label>
-                                <label class="star-option star-value-1">
-                                    <input type="radio" name="transparence" value="0">
-                                    <div class="star-icon">⬛</div>
-                                    <div class="star-label">0 pt - Aucune info</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="calculate-button">🧮 Calculer le TrustiScore</button>
+                <!-- Les critères seront générés dynamiquement par JavaScript -->
             </form>
         </div>
 
@@ -723,6 +525,7 @@
         <p><a href="index.html" style="color: #60a5fa; text-decoration: none;">Retour à l'accueil</a></p>
     </footer>
 
+    <script src="assets/config-loader.js"></script>
     <script>
         const form = document.getElementById('trustiScoreForm');
         const resultContainer = document.getElementById('resultContainer');
@@ -730,113 +533,163 @@
         const resultDescription = document.getElementById('resultDescription');
         const resultBreakdown = document.getElementById('resultBreakdown');
 
-        // Descriptions des notes
-        const gradeDescriptions = {
-            'A': {
-                title: 'Souverain & Privé',
-                description: 'Cette application offre une protection maximale de votre vie privée. Hébergement européen, transparence totale et respect absolu de vos données. Recommandé sans réserve.',
-                class: 'result-grade-a'
-            },
-            'B': {
-                title: 'Bon',
-                description: 'Bonnes pratiques générales. Quelques points d\'amélioration possibles mais globalement fiable pour un usage courant.',
-                class: 'result-grade-b'
-            },
-            'C': {
-                title: 'Moyen',
-                description: 'Service acceptable mais avec des risques modérés. Des améliorations sont nécessaires sur certains aspects de la souveraineté numérique.',
-                class: 'result-grade-c'
-            },
-            'D': {
-                title: 'Faible',
-                description: 'Problèmes significatifs en termes de souveraineté et de protection des données. Des alternatives plus respectueuses sont recommandées.',
-                class: 'result-grade-d'
-            },
-            'E': {
-                title: 'Critique',
-                description: 'Risques majeurs pour la souveraineté numérique. Non-conformité RGPD, exposition au Cloud Act ou opacité totale. À éviter absolument.',
-                class: 'result-grade-e'
+        // Chargement de la configuration et initialisation
+        async function initSimulator() {
+            try {
+                await trustiConfig.load();
+                
+                // Appliquer la configuration au header et footer
+                trustiConfig.applyToHeader();
+                trustiConfig.applyToFooter();
+                
+                // Générer les critères du formulaire
+                generateCriteriaForm();
+                
+                // Mettre à jour les textes du simulateur
+                updateSimulatorTexts();
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation:', error);
+                alert('Erreur lors du chargement de la configuration. Veuillez rafraîchir la page.');
             }
-        };
+        }
 
-        // Noms et pondérations des critères
-        const criteriaInfo = {
-            'gouvernance': { name: 'Gouvernance & Juridiction', weight: 20 },
-            'localisation': { name: 'Localisation des données', weight: 25 },
-            'controle': { name: 'Contrôle technique', weight: 20 },
-            'conformite': { name: 'Conformité & Certifications', weight: 20 },
-            'transparence': { name: 'Transparence', weight: 15 }
-        };
+        function updateSimulatorTexts() {
+            const simConfig = trustiConfig.getSimulatorConfig();
+            
+            // Mettre à jour le titre et sous-titre dans le header
+            const headerTitle = document.querySelector('header h1');
+            const headerSubtitle = document.querySelector('header p');
+            if (headerTitle && simConfig.title) {
+                headerTitle.textContent = simConfig.title;
+            }
+            
+            // Mettre à jour l'intro
+            const introTitle = document.querySelector('.intro-section h2');
+            const introParagraphs = document.querySelector('.intro-section');
+            
+            if (introTitle && simConfig.introTitle) {
+                introTitle.textContent = simConfig.introTitle;
+            }
+            
+            if (introParagraphs && simConfig.introDescription) {
+                // Supprimer les anciens paragraphes (garder le titre)
+                const existingP = introParagraphs.querySelectorAll('p');
+                existingP.forEach(p => p.remove());
+                
+                // Ajouter les nouveaux paragraphes
+                simConfig.introDescription.forEach(text => {
+                    const p = document.createElement('p');
+                    p.innerHTML = text;
+                    introParagraphs.appendChild(p);
+                });
+            }
+            
+            // Mettre à jour le bouton
+            const submitBtn = document.querySelector('.calculate-button');
+            if (submitBtn && simConfig.submitButton) {
+                submitBtn.textContent = simConfig.submitButton;
+            }
+            
+            // Mettre à jour le titre des résultats
+            const resultTitle = document.querySelector('.result-title');
+            if (resultTitle && simConfig.resultTitle) {
+                resultTitle.textContent = simConfig.resultTitle;
+            }
+        }
+
+        function generateCriteriaForm() {
+            const criteria = trustiConfig.getCriteria();
+            const criteriaKeys = Object.keys(criteria);
+            
+            let html = '';
+            criteriaKeys.forEach((key, index) => {
+                html += trustiConfig.generateSimulatorCriterion(key, index + 1);
+            });
+            
+            form.innerHTML = html + `
+                <button type="submit" class="calculate-button">${trustiConfig.getSimulatorConfig().submitButton || '🧮 Calculer le TrustiScore'}</button>
+            `;
+            
+            // Réattacher les événements
+            attachEventListeners();
+        }
+
+        function attachEventListeners() {
+            // Validation en temps réel et gestion des clics
+            form.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const criterionItem = this.closest('.criterion-item');
+                    const score = parseInt(this.value);
+                    const starRating = this.closest('.star-rating');
+                    
+                    // Retirer la classe 'selected' de toutes les options du même groupe
+                    starRating.querySelectorAll('.star-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    
+                    // Ajouter la classe 'selected' à l'option cliquée
+                    this.closest('.star-option').classList.add('selected');
+                    
+                    // Mise à jour visuelle du critère
+                    updateCriterionVisual(criterionItem, score);
+                });
+            });
+        }
+
+        function updateCriterionVisual(criterionItem, score) {
+            criterionItem.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+            
+            if (score === 4) {
+                criterionItem.classList.add('score-excellent');
+            } else if (score === 3) {
+                criterionItem.classList.add('score-good');
+            } else if (score === 2) {
+                criterionItem.classList.add('score-average');
+            } else if (score === 1) {
+                criterionItem.classList.add('score-poor');
+            } else {
+                criterionItem.classList.add('score-critical');
+            }
+        }
 
         // Gestion de la soumission du formulaire
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Récupération des valeurs
             const formData = new FormData(form);
-            let totalScore = 0;
-            const scores = {};
+            const results = trustiConfig.calculateScore(formData);
             
-            // Calcul du score pondéré sur 100
-            for (let [key, value] of formData.entries()) {
-                const score = parseInt(value);
-                const weight = criteriaInfo[key].weight;
-                const weightedScore = (score / 4) * weight; // score sur 4 points * pondération
-                totalScore += weightedScore;
-                scores[key] = { raw: score, weighted: weightedScore };
-            }
-            
-            // Le score est déjà sur 100
-            const finalScore = Math.round(totalScore);
-            
-            // Détermination de la note selon le nouveau barème
-            let grade;
-            if (finalScore >= 80) {
-                grade = 'A';
-            } else if (finalScore >= 60) {
-                grade = 'B';
-            } else if (finalScore >= 40) {
-                grade = 'C';
-            } else if (finalScore >= 20) {
-                grade = 'D';
-            } else {
-                grade = 'E';
-            }
-            
-            // Affichage des résultats
-            displayResults(grade, finalScore, scores);
-            
-            // Mise à jour visuelle des critères
-            updateCriteriaVisuals(scores);
+            displayResults(results);
+            updateCriteriaVisuals(results.details);
             
             // Scroll vers les résultats
             resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
-        function displayResults(grade, finalScore, scores) {
-            const gradeInfo = gradeDescriptions[grade];
+        function displayResults(results) {
+            const { score, grade, gradeData, details } = results;
             
             // Affichage de la note
             resultScore.textContent = grade;
-            resultScore.className = 'result-score ' + gradeInfo.class;
+            resultScore.className = 'result-score result-grade-' + grade.toLowerCase();
             
             // Affichage de la description
             resultDescription.innerHTML = `
-                <strong>${gradeInfo.title}</strong><br>
-                ${gradeInfo.description}<br>
+                <strong>${gradeData.title}</strong><br>
+                ${gradeData.description}<br>
                 <small style="color: #94a3b8; margin-top: 1rem; display: block;">
-                    Score final : ${finalScore} / 100
+                    Score final : ${score} / 100
                 </small>
             `;
             
             // Affichage du détail par critère
             let breakdownHTML = '';
-            for (let [key, scoreData] of Object.entries(scores)) {
-                const info = criteriaInfo[key];
+            for (let [key, scoreData] of Object.entries(details)) {
                 const stars = '★'.repeat(scoreData.raw) + '☆'.repeat(4 - scoreData.raw);
                 breakdownHTML += `
                     <div class="breakdown-item">
-                        <strong>${info.name} (${info.weight}%)</strong>
+                        <strong>${scoreData.criterion.name} (${scoreData.criterion.weight}%)</strong>
                         <span>${stars} (${scoreData.raw}/4)</span>
                         <div style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.3rem;">
                             ${scoreData.weighted.toFixed(1)} pts
@@ -850,60 +703,18 @@
             resultContainer.classList.add('show');
         }
 
-        function updateCriteriaVisuals(scores) {
-            for (let [key, scoreData] of Object.entries(scores)) {
+        function updateCriteriaVisuals(details) {
+            for (let [key, scoreData] of Object.entries(details)) {
                 const criterionItem = document.querySelector(`[data-criterion="${key}"]`);
-                
-                // Suppression des classes précédentes
-                criterionItem.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
-                
-                // Ajout de la nouvelle classe
-                const rawScore = scoreData.raw;
-                if (rawScore === 4) {
-                    criterionItem.classList.add('score-excellent');
-                } else if (rawScore === 3) {
-                    criterionItem.classList.add('score-good');
-                } else if (rawScore === 2) {
-                    criterionItem.classList.add('score-average');
-                } else if (rawScore === 1) {
-                    criterionItem.classList.add('score-poor');
-                } else {
-                    criterionItem.classList.add('score-critical');
+                if (criterionItem) {
+                    updateCriterionVisual(criterionItem, scoreData.raw);
                 }
             }
         }
 
-        // Validation en temps réel et gestion des clics sur les étoiles
-        form.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const criterionItem = this.closest('.criterion-item');
-                const score = parseInt(this.value);
-                const starRating = this.closest('.star-rating');
-                
-                // Retirer la classe 'selected' de toutes les options du même groupe
-                starRating.querySelectorAll('.star-option').forEach(option => {
-                    option.classList.remove('selected');
-                });
-                
-                // Ajouter la classe 'selected' à l'option cliquée
-                this.closest('.star-option').classList.add('selected');
-                
-                // Mise à jour visuelle du critère
-                criterionItem.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
-                
-                if (score === 4) {
-                    criterionItem.classList.add('score-excellent');
-                } else if (score === 3) {
-                    criterionItem.classList.add('score-good');
-                } else if (score === 2) {
-                    criterionItem.classList.add('score-average');
-                } else if (score === 1) {
-                    criterionItem.classList.add('score-poor');
-                } else {
-                    criterionItem.classList.add('score-critical');
-                }
-            });
-        });
+        // Initialiser au chargement de la page
+        initSimulator();
     </script>
 </body>
 </html>
+

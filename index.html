@@ -731,5 +731,45 @@
         <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
         <p>Données hébergées en Europe | Conformité RGPD | Open Source</p>
     </footer>
+
+    <script src="assets/config-loader.js"></script>
+    <script>
+        // Chargement de la configuration et initialisation
+        async function initHomepage() {
+            try {
+                await trustiConfig.load();
+                
+                // Appliquer la configuration au header et footer
+                trustiConfig.applyToHeader();
+                trustiConfig.applyToFooter();
+                
+                // Générer l'échelle de notation
+                generateGradeScale();
+                
+                // Générer la grille de critères
+                generateCriteriaGrid();
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation:', error);
+            }
+        }
+
+        function generateGradeScale() {
+            const gradeScaleContainer = document.querySelector('.grade-scale');
+            if (gradeScaleContainer) {
+                gradeScaleContainer.innerHTML = trustiConfig.generateGradeScale().replace('<div class="grade-scale">', '').replace('</div>', '');
+            }
+        }
+
+        function generateCriteriaGrid() {
+            const criteriaGridContainer = document.querySelector('.criteria-grid');
+            if (criteriaGridContainer) {
+                criteriaGridContainer.innerHTML = trustiConfig.generateCriteriaGrid().replace('<div class="criteria-grid">', '').replace('</div>', '');
+            }
+        }
+
+        // Initialiser au chargement de la page
+        initHomepage();
+    </script>
 </body>
 </html>

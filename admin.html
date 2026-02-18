@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>TrustiScore - Interface d'Administration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background-color: #0f172a;
+            padding: 2rem;
+        }
+        
+        /* Écran de connexion */
+        #loginScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        #loginScreen.hidden {
+            display: none;
+        }
+        
+        .login-box {
+            background: #1e293b;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 2px solid #334155;
+            max-width: 450px;
+            width: 90%;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .login-title {
+            color: #60a5fa;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .login-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .login-label {
+            color: #93c5fd;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .login-input {
+            padding: 1rem;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .login-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .login-button {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+        
+        .login-button:active {
+            transform: translateY(0);
+        }
+        
+        .login-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+            color: #fca5a5;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .login-error.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .login-info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid #3b82f6;
+            color: #93c5fd;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
+        #adminContent {
+            display: none;
+        }
+        
+        #adminContent.unlocked {
+            display: block;
+        }
+        
+        .logout-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(239, 68, 68, 0.8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logout-button:hover {
+            background: rgba(220, 38, 38, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: #60a5fa;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+        }
+        
+        h3 {
+            color: #93c5fd;
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .section {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            color: #93c5fd;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .criteria-option {
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #10b981, #059669);
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-load {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-load:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-export {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            min-width: 200px;
+        }
+        
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            min-width: 200px;
+        }
+        
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10b981;
+            color: #6ee7b7;
+        }
+        
+        .alert-info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid #3b82f6;
+            color: #93c5fd;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 2px solid #f59e0b;
+            color: #fbbf24;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 0.8rem 1.5rem;
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-color: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            border-color: #3b82f6;
+            color: #e2e8f0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .help-text {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Écran de connexion -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="login-icon">🔐</div>
+                <h1 class="login-title">Accès Sécurisé</h1>
+                <p class="login-subtitle">Interface d'Administration TrustiScore</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="login-error" id="loginError">
+                    ❌ Mot de passe incorrect
+                </div>
+                
+                <div class="login-input-group">
+                    <label for="password" class="login-label">Mot de passe</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="login-input" 
+                        placeholder="Entrez le mot de passe"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="login-button">
+                    🔓 Se connecter
+                </button>
+                
+                <div class="login-info">
+                    💡 Mot de passe par défaut : <strong>admin123</strong><br>
+                    <small>Modifiable dans le code source (ligne ~810)</small>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Bouton de déconnexion -->
+    <button id="logoutButton" class="logout-button" style="display: none;">
+        🚪 Se déconnecter
+    </button>
+    
+    <!-- Contenu principal (caché jusqu'à authentification) -->
+    <div id="adminContent">
+    <div class="container">
+        <header>
+            <h1>⚙️ TrustiScore - Administration</h1>
+            <p>Interface de configuration des textes et paramètres du site</p>
+        </header>
+        
+        <div id="alertContainer"></div>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('general')">Général</div>
+            <div class="nav-tab" onclick="switchTab('grades')">Notes (A-E)</div>
+            <div class="nav-tab" onclick="switchTab('criteria')">Critères</div>
+            <div class="nav-tab" onclick="switchTab('simulator')">Simulateur</div>
+            <div class="nav-tab" onclick="switchTab('homepage')">Page d'accueil</div>
+        </div>
+        
+        <!-- Onglet Général -->
+        <div id="tab-general" class="tab-content active">
+            <div class="section">
+                <h2>Configuration Générale</h2>
+                
+                <div class="form-group">
+                    <label>Nom du site</label>
+                    <input type="text" id="siteName" placeholder="TrustiScore">
+                    <div class="help-text">Nom affiché dans le header et les métadonnées</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Slogan</label>
+                    <input type="text" id="siteTagline" placeholder="Reprenez votre souveraineté numérique européenne">
+                    <div class="help-text">Texte affiché sous le titre principal</div>
+                </div>
+                
+                <h3>Footer</h3>
+                <div class="form-group">
+                    <label>Copyright</label>
+                    <input type="text" id="footerCopyright" placeholder="© 2026 TrustiScore...">
+                </div>
+                
+                <div class="form-group">
+                    <label>Informations additionnelles</label>
+                    <input type="text" id="footerInfo" placeholder="Données hébergées en Europe...">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Notes -->
+        <div id="tab-grades" class="tab-content">
+            <div class="section">
+                <h2>Configuration des Notes (A à E)</h2>
+                
+                <h3>Seuils de notation (en %)</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Seuil pour A (≥)</label>
+                        <input type="number" id="thresholdA" min="0" max="100" placeholder="80">
+                    </div>
+                    <div class="form-group">
+                        <label>Seuil pour B (≥)</label>
+                        <input type="number" id="thresholdB" min="0" max="100" placeholder="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Seuil pour C (≥)</label>
+                        <input type="number" id="thresholdC" min="0" max="100" placeholder="40">
+                    </div>
+                    <div class="form-group">
+                        <label>Seuil pour D (≥)</label>
+                        <input type="number" id="thresholdD" min="0" max="100" placeholder="20">
+                    </div>
+                </div>
+                
+                <div id="gradesContainer"></div>
+            </div>
+        </div>
+        
+        <!-- Onglet Critères -->
+        <div id="tab-criteria" class="tab-content">
+            <div class="section">
+                <h2>Configuration des Critères</h2>
+                <div id="criteriaContainer"></div>
+            </div>
+        </div>
+        
+        <!-- Onglet Simulateur -->
+        <div id="tab-simulator" class="tab-content">
+            <div class="section">
+                <h2>Configuration du Simulateur</h2>
+                
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" id="simTitle" placeholder="Simulateur TrustiScore">
+                </div>
+                
+                <div class="form-group">
+                    <label>Sous-titre</label>
+                    <input type="text" id="simSubtitle" placeholder="Calculez votre note">
+                </div>
+                
+                <div class="form-group">
+                    <label>Titre de l'introduction</label>
+                    <input type="text" id="simIntroTitle" placeholder="🧮 Testez votre application !">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description de l'introduction (une ligne par paragraphe)</label>
+                    <textarea id="simIntroDesc" rows="5"></textarea>
+                    <div class="help-text">Chaque ligne sera un paragraphe séparé. Utilisez &lt;strong&gt; pour le texte en gras.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Texte du bouton de soumission</label>
+                    <input type="text" id="simSubmitBtn" placeholder="🧮 Calculer le TrustiScore">
+                </div>
+                
+                <div class="form-group">
+                    <label>Titre des résultats</label>
+                    <input type="text" id="simResultTitle" placeholder="Votre TrustiScore">
+                </div>
+                
+                <div class="form-group">
+                    <label>Titre du détail</label>
+                    <input type="text" id="simResultDetailsTitle" placeholder="Détails de l'évaluation">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Page d'accueil -->
+        <div id="tab-homepage" class="tab-content">
+            <div class="section">
+                <h2>Sections de la Page d'Accueil</h2>
+                <div class="alert alert-info">
+                    Note : L'édition avancée du contenu de la page d'accueil est disponible en exportant et modifiant le fichier JSON directement.
+                    Cette interface permet de modifier les titres principaux.
+                </div>
+                <div id="homepageContainer"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Actions</h2>
+            <div class="button-group">
+                <button class="btn-save" onclick="saveConfig()">💾 Sauvegarder la Configuration</button>
+                <button class="btn-load" onclick="loadConfig()">🔄 Recharger depuis le Fichier</button>
+                <button class="btn-export" onclick="exportConfig()">📥 Exporter la Configuration</button>
+                <button class="btn-reset" onclick="resetToDefault()">⚠️ Réinitialiser par Défaut</button>
+            </div>
+        </div>
+    </div>
+    </div> <!-- Fin adminContent -->
+
+    <script>
+        // ========================================
+        // SYSTÈME D'AUTHENTIFICATION
+        // ========================================
+        
+        // 🔑 MODIFIER LE MOT DE PASSE ICI
+        const ADMIN_PASSWORD = '9xWL5JVP$Nj1l6'; // Mot de passe sécurisé
+        
+        // Protection contre le brute force
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_TIME = 15 * 60 * 1000; // 15 minutes
+        let loginAttempts = 0;
+        let lockoutUntil = null;
+        
+        const loginScreen = document.getElementById('loginScreen');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const adminContent = document.getElementById('adminContent');
+        const logoutButton = document.getElementById('logoutButton');
+        const passwordInput = document.getElementById('password');
+        
+        // Générer un token de session sécurisé
+        function generateSecureToken() {
+            return Array.from(crypto.getRandomValues(new Uint8Array(32)))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+        
+        // Hash simple du mot de passe (pour obscurcir un peu)
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password + 'trustiscore-salt-2026');
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        // Vérifier le statut de verrouillage
+        function checkLockout() {
+            const storedLockout = localStorage.getItem('trustiAdminLockout');
+            if (storedLockout) {
+                lockoutUntil = parseInt(storedLockout);
+                const now = Date.now();
+                
+                if (now < lockoutUntil) {
+                    const remainingMinutes = Math.ceil((lockoutUntil - now) / 60000);
+                    loginError.textContent = `🔒 Trop de tentatives échouées. Réessayez dans ${remainingMinutes} minute(s).`;
+                    loginError.classList.add('show');
+                    passwordInput.disabled = true;
+                    return true;
+                }
+                
+                // Expiration du verrouillage
+                localStorage.removeItem('trustiAdminLockout');
+                localStorage.removeItem('trustiAdminAttempts');
+                lockoutUntil = null;
+                loginAttempts = 0;
+            }
+            
+            // Récupérer le nombre de tentatives
+            const storedAttempts = localStorage.getItem('trustiAdminAttempts');
+            if (storedAttempts) {
+                loginAttempts = parseInt(storedAttempts);
+            }
+            
+            return false;
+        }
+        
+        // Enregistrer une tentative échouée
+        function recordFailedAttempt() {
+            loginAttempts++;
+            localStorage.setItem('trustiAdminAttempts', loginAttempts.toString());
+            
+            if (loginAttempts >= MAX_ATTEMPTS) {
+                lockoutUntil = Date.now() + LOCKOUT_TIME;
+                localStorage.setItem('trustiAdminLockout', lockoutUntil.toString());
+                
+                loginError.textContent = `🔒 Trop de tentatives échouées. Compte verrouillé pendant 15 minutes.`;
+                passwordInput.disabled = true;
+                
+                // Log de sécurité (dans la console)
+                console.warn('⚠️ SÉCURITÉ : Multiples tentatives de connexion échouées détectées à', new Date().toISOString());
+            } else {
+                const remaining = MAX_ATTEMPTS - loginAttempts;
+                loginError.textContent = `❌ Mot de passe incorrect (${remaining} tentative${remaining > 1 ? 's' : ''} restante${remaining > 1 ? 's' : ''})`;
+            }
+        }
+        
+        // Réinitialiser les tentatives après succès
+        function resetAttempts() {
+            loginAttempts = 0;
+            localStorage.removeItem('trustiAdminAttempts');
+            localStorage.removeItem('trustiAdminLockout');
+            passwordInput.disabled = false;
+        }
+        
+        // Vérifier si déjà connecté
+        function checkAuth() {
+            const token = sessionStorage.getItem('trustiAdminToken');
+            const timestamp = sessionStorage.getItem('trustiAdminTime');
+            
+            if (token && timestamp) {
+                // Vérifier que la session n'a pas expiré (4 heures max)
+                const now = Date.now();
+                const sessionAge = now - parseInt(timestamp);
+                const MAX_SESSION_AGE = 4 * 60 * 60 * 1000; // 4 heures
+                
+                if (sessionAge < MAX_SESSION_AGE) {
+                    unlockAdmin();
+                } else {
+                    // Session expirée
+                    lockAdmin();
+                }
+            }
+        }
+        
+        // Déverrouiller l'interface
+        function unlockAdmin() {
+            loginScreen.classList.add('hidden');
+            adminContent.classList.add('unlocked');
+            logoutButton.style.display = 'block';
+            
+            // Charger la configuration après authentification
+            loadConfig();
+        }
+        
+        // Verrouiller l'interface
+        function lockAdmin() {
+            sessionStorage.removeItem('trustiAdminToken');
+            sessionStorage.removeItem('trustiAdminTime');
+            loginScreen.classList.remove('hidden');
+            adminContent.classList.remove('unlocked');
+            logoutButton.style.display = 'none';
+            passwordInput.value = '';
+            loginError.classList.remove('show');
+        }
+        
+        // Gestion de la soumission du formulaire
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Vérifier le verrouillage
+            if (checkLockout()) {
+                return;
+            }
+            
+            const enteredPassword = passwordInput.value;
+            
+            // Ajouter un délai artificiel pour ralentir les attaques brute force
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            if (enteredPassword === ADMIN_PASSWORD) {
+                // Mot de passe correct
+                const token = generateSecureToken();
+                sessionStorage.setItem('trustiAdminToken', token);
+                sessionStorage.setItem('trustiAdminTime', Date.now().toString());
+                
+                resetAttempts();
+                loginError.classList.remove('show');
+                
+                // Log de sécurité
+                console.log('✅ Connexion admin réussie à', new Date().toISOString());
+                
+                unlockAdmin();
+            } else {
+                // Mot de passe incorrect
+                recordFailedAttempt();
+                loginError.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Log de sécurité
+                console.warn('⚠️ Tentative de connexion échouée à', new Date().toISOString());
+                
+                // Retirer l'animation après 5s
+                setTimeout(() => {
+                    if (loginAttempts < MAX_ATTEMPTS) {
+                        loginError.classList.remove('show');
+                    }
+                }, 5000);
+            }
+        });
+        
+        // Gestion du bouton de déconnexion
+        logoutButton.addEventListener('click', function() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                console.log('ℹ️ Déconnexion admin à', new Date().toISOString());
+                lockAdmin();
+            }
+        });
+        
+        // Vérifier l'authentification au chargement
+        checkLockout();
+        checkAuth();
+        
+        // ========================================
+        // CODE EXISTANT DE L'ADMIN
+        // ========================================
+        
+        let config = {};
+        
+        // Chargement de la configuration au démarrage - DÉSACTIVÉ jusqu'à auth
+        
+        function switchTab(tabName) {
+            // Masquer tous les contenus
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Désactiver tous les onglets
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activer l'onglet et le contenu sélectionnés
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        async function loadConfig() {
+            try {
+                const response = await fetch('assets/config.json');
+                if (!response.ok) throw new Error('Erreur de chargement');
+                
+                config = await response.json();
+                populateForm();
+                showAlert('Configuration chargée avec succès', 'success');
+            } catch (error) {
+                showAlert('Erreur lors du chargement de la configuration : ' + error.message, 'warning');
+                // Tenter de charger depuis le localStorage
+                const saved = localStorage.getItem('trustiScoreConfig');
+                if (saved) {
+                    config = JSON.parse(saved);
+                    populateForm();
+                    showAlert('Configuration chargée depuis le cache local', 'info');
+                }
+            }
+        }
+        
+        function populateForm() {
+            // Général
+            document.getElementById('siteName').value = config.siteName || '';
+            document.getElementById('siteTagline').value = config.siteTagline || '';
+            document.getElementById('footerCopyright').value = config.footer?.copyright || '';
+            document.getElementById('footerInfo').value = config.footer?.additionalInfo || '';
+            
+            // Seuils
+            document.getElementById('thresholdA').value = config.gradeThresholds?.A || 80;
+            document.getElementById('thresholdB').value = config.gradeThresholds?.B || 60;
+            document.getElementById('thresholdC').value = config.gradeThresholds?.C || 40;
+            document.getElementById('thresholdD').value = config.gradeThresholds?.D || 20;
+            
+            // Notes
+            populateGrades();
+            
+            // Critères
+            populateCriteria();
+            
+            // Simulateur
+            document.getElementById('simTitle').value = config.simulator?.title || '';
+            document.getElementById('simSubtitle').value = config.simulator?.subtitle || '';
+            document.getElementById('simIntroTitle').value = config.simulator?.introTitle || '';
+            document.getElementById('simIntroDesc').value = (config.simulator?.introDescription || []).join('\n');
+            document.getElementById('simSubmitBtn').value = config.simulator?.submitButton || '';
+            document.getElementById('simResultTitle').value = config.simulator?.resultTitle || '';
+            document.getElementById('simResultDetailsTitle').value = config.simulator?.resultDetailsTitle || '';
+            
+            // Page d'accueil
+            populateHomepage();
+        }
+        
+        function populateGrades() {
+            const container = document.getElementById('gradesContainer');
+            container.innerHTML = '';
+            
+            const grades = ['A', 'B', 'C', 'D', 'E'];
+            grades.forEach(grade => {
+                const gradeData = config.gradeDescriptions?.[grade] || {};
+                const section = document.createElement('div');
+                section.innerHTML = `
+                    <h3>Note ${grade}</h3>
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" id="grade${grade}Title" value="${gradeData.title || ''}" placeholder="Titre de la note ${grade}">
+                    </div>
+                    <div class="form-group">
+                        <label>Description (simulateur)</label>
+                        <textarea id="grade${grade}Desc" placeholder="Description complète pour le simulateur">${gradeData.description || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Description courte (page d'accueil)</label>
+                        <textarea id="grade${grade}ShortDesc" placeholder="Description courte pour la page d'accueil">${gradeData.shortDescription || ''}</textarea>
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+        
+        function populateCriteria() {
+            const container = document.getElementById('criteriaContainer');
+            container.innerHTML = '';
+            
+            const criteriaKeys = Object.keys(config.criteria || {});
+            criteriaKeys.forEach(key => {
+                const criterion = config.criteria[key];
+                const section = document.createElement('div');
+                section.innerHTML = `
+                    <h3>${criterion.name}</h3>
+                    <div class="form-group">
+                        <label>Nom du critère</label>
+                        <input type="text" id="crit${key}Name" value="${criterion.name || ''}" placeholder="Nom du critère">
+                    </div>
+                    <div class="form-group">
+                        <label>Pondération (%)</label>
+                        <input type="number" id="crit${key}Weight" value="${criterion.weight || 0}" min="0" max="100" placeholder="20">
+                    </div>
+                    <div class="form-group">
+                        <label>Description courte</label>
+                        <textarea id="crit${key}Desc" placeholder="Description affichée sous le titre">${criterion.description || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Description détaillée (page d'accueil)</label>
+                        <textarea id="crit${key}DetailDesc">${criterion.detailedDescription || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Exemple Note A</label>
+                        <input type="text" id="crit${key}ExA" value="${criterion.gradeAExample || ''}" placeholder="Exemple pour une note A">
+                    </div>
+                    <div class="form-group">
+                        <label>Exemple Note E</label>
+                        <input type="text" id="crit${key}ExE" value="${criterion.gradeEExample || ''}" placeholder="Exemple pour une note E">
+                    </div>
+                    <h4>Options de notation (0 à 4 points)</h4>
+                    <div id="crit${key}Options"></div>
+                `;
+                container.appendChild(section);
+                
+                // Ajouter les options
+                const optionsContainer = document.getElementById(`crit${key}Options`);
+                criterion.options.forEach((option, idx) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'criteria-option';
+                    optionDiv.innerHTML = `
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Icône</label>
+                                <input type="text" id="crit${key}Opt${idx}Icon" value="${option.icon || ''}" placeholder="🛡️">
+                            </div>
+                            <div class="form-group">
+                                <label>Label court</label>
+                                <input type="text" id="crit${key}Opt${idx}Label" value="${option.label || ''}" placeholder="${option.value} pts - ...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description complète</label>
+                            <textarea id="crit${key}Opt${idx}Desc">${option.description || ''}</textarea>
+                        </div>
+                    `;
+                    optionsContainer.appendChild(optionDiv);
+                });
+            });
+        }
+        
+        function populateHomepage() {
+            const container = document.getElementById('homepageContainer');
+            container.innerHTML = '';
+            
+            (config.homepage?.sections || []).forEach((section, idx) => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <h3>${section.title}</h3>
+                    <div class="form-group">
+                        <label>Titre de la section</label>
+                        <input type="text" id="home${idx}Title" value="${section.title || ''}" placeholder="Titre">
+                    </div>
+                    <div class="alert alert-info">
+                        Le contenu de cette section contient ${section.content?.length || 0} éléments. 
+                        Exportez le fichier JSON pour une édition avancée.
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        function saveConfig() {
+            try {
+                // Récupérer les valeurs du formulaire
+                config.siteName = document.getElementById('siteName').value;
+                config.siteTagline = document.getElementById('siteTagline').value;
+                
+                config.footer = {
+                    copyright: document.getElementById('footerCopyright').value,
+                    additionalInfo: document.getElementById('footerInfo').value
+                };
+                
+                config.gradeThresholds = {
+                    A: parseInt(document.getElementById('thresholdA').value),
+                    B: parseInt(document.getElementById('thresholdB').value),
+                    C: parseInt(document.getElementById('thresholdC').value),
+                    D: parseInt(document.getElementById('thresholdD').value)
+                };
+                
+                // Notes
+                ['A', 'B', 'C', 'D', 'E'].forEach(grade => {
+                    if (!config.gradeDescriptions[grade]) config.gradeDescriptions[grade] = {};
+                    config.gradeDescriptions[grade].title = document.getElementById(`grade${grade}Title`).value;
+                    config.gradeDescriptions[grade].description = document.getElementById(`grade${grade}Desc`).value;
+                    config.gradeDescriptions[grade].shortDescription = document.getElementById(`grade${grade}ShortDesc`).value;
+                });
+                
+                // Critères
+                Object.keys(config.criteria).forEach(key => {
+                    config.criteria[key].name = document.getElementById(`crit${key}Name`).value;
+                    config.criteria[key].weight = parseInt(document.getElementById(`crit${key}Weight`).value);
+                    config.criteria[key].description = document.getElementById(`crit${key}Desc`).value;
+                    config.criteria[key].detailedDescription = document.getElementById(`crit${key}DetailDesc`).value;
+                    config.criteria[key].gradeAExample = document.getElementById(`crit${key}ExA`).value;
+                    config.criteria[key].gradeEExample = document.getElementById(`crit${key}ExE`).value;
+                    
+                    // Options
+                    config.criteria[key].options.forEach((option, idx) => {
+                        option.icon = document.getElementById(`crit${key}Opt${idx}Icon`).value;
+                        option.label = document.getElementById(`crit${key}Opt${idx}Label`).value;
+                        option.description = document.getElementById(`crit${key}Opt${idx}Desc`).value;
+                    });
+                });
+                
+                // Simulateur
+                config.simulator = {
+                    title: document.getElementById('simTitle').value,
+                    subtitle: document.getElementById('simSubtitle').value,
+                    introTitle: document.getElementById('simIntroTitle').value,
+                    introDescription: document.getElementById('simIntroDesc').value.split('\n').filter(l => l.trim()),
+                    submitButton: document.getElementById('simSubmitBtn').value,
+                    resultTitle: document.getElementById('simResultTitle').value,
+                    resultDetailsTitle: document.getElementById('simResultDetailsTitle').value
+                };
+                
+                // Page d'accueil
+                (config.homepage?.sections || []).forEach((section, idx) => {
+                    const titleInput = document.getElementById(`home${idx}Title`);
+                    if (titleInput) {
+                        section.title = titleInput.value;
+                    }
+                });
+                
+                // Sauvegarder dans le localStorage
+                localStorage.setItem('trustiScoreConfig', JSON.stringify(config));
+                
+                showAlert('Configuration sauvegardée avec succès dans le navigateur ! Pour appliquer les changements au site, exportez et remplacez le fichier config.json', 'success');
+            } catch (error) {
+                showAlert('Erreur lors de la sauvegarde : ' + error.message, 'warning');
+            }
+        }
+        
+        function exportConfig() {
+            const dataStr = JSON.stringify(config, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'config.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showAlert('Configuration exportée ! Placez le fichier dans le dossier assets/ pour l\'appliquer au site.', 'success');
+        }
+        
+        async function resetToDefault() {
+            if (!confirm('Êtes-vous sûr de vouloir réinitialiser la configuration ? Toutes les modifications seront perdues.')) {
+                return;
+            }
+            
+            localStorage.removeItem('trustiScoreConfig');
+            await loadConfig();
+            showAlert('Configuration réinitialisée depuis le fichier par défaut', 'info');
+        }
+        
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            container.innerHTML = '';
+            container.appendChild(alert);
+            
+            // Auto-masquer après 5 secondes
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s';
+                setTimeout(() => alert.remove(), 500);
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+# Protection de l'interface d'administration
+# Copiez ce fichier à la racine de votre site web
+
+# Protéger admin.html avec authentification HTTP Basic
+<Files "admin.html">
+    AuthType Basic
+    AuthName "Administration TrustiScore - Accès Réservé"
+    AuthUserFile /chemin/absolu/vers/.htpasswd
+    Require valid-user
+</Files>
+
+# OU Bloquer complètement l'accès à admin.html
+# <Files "admin.html">
+#     Order Allow,Deny
+#     Deny from all
+# </Files>
+
+# OU Autoriser uniquement certaines IPs
+# <Files "admin.html">
+#     Order Deny,Allow
+#     Deny from all
+#     Allow from 192.168.1.0/24
+#     Allow from VOTRE.IP.PUBLIQUE
+# </Files>
+
+# Protection du dossier assets contre le listing
+<Directory "assets">
+    Options -Indexes
+</Directory>
+
+# Empêcher l'accès direct au fichier de configuration
+<Files "config.json">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Forcer HTTPS (si certificat SSL disponible)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Headers de sécurité
+<IfModule mod_headers.c>
+    # Empêcher l'inclusion dans des iframes
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Protection XSS
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Empêcher le sniffing MIME
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Politique de sécurité du contenu
+    Header set Content-Security-Policy "default-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+</IfModule>
+
+# Créer le fichier .htpasswd avec la commande :
+# htpasswd -c .htpasswd admin
+# Puis entrez le mot de passe quand demandé
