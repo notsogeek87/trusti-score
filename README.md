@@ -70,5 +70,59 @@ TrustiScore est **open source** : signalez des applis, proposez des mises à jou
 
 ---
 
+## 🛠️ Architecture Technique
+
+### Stack Moderne avec Base de Données
+
+TrustiScore utilise une architecture moderne et scalable :
+
+- **Frontend** : HTML5/CSS3/JavaScript vanilla (responsive)
+- **Backend API** : Node.js + Express.js
+- **Base de données** : PostgreSQL (Neon.tech cloud)
+- **Authentification** : Bcrypt + Sessions sécurisées
+- **Protection** : Rate limiting, brute force protection
+
+### Fonctionnalités Admin
+
+- ⚙️ **Interface d'administration** complète
+- 📝 **Configuration dynamique** de tous les textes et paramètres
+- 💾 **Sauvegarde automatique** en base de données
+- 📊 **Historique** des modifications (audit trail)
+- 🔒 **Authentification sécurisée** avec protection anti-brute-force
+
+### Démarrage Rapide
+
+```powershell
+# 1. Démarrer le système
+.\start.ps1
+
+# Ou manuellement :
+
+# Terminal 1 - Backend
+cd backend
+npm install
+npm start
+
+# Terminal 2 - Frontend
+python -m http.server 8000
+```
+
+**Interface admin :** http://localhost:8000/admin.html
+
+### Documentation
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Guide de démarrage rapide
+- **[NEON-SETUP.md](NEON-SETUP.md)** - Configuration base de données
+- **[STATUS.md](STATUS.md)** - État du système et utilisation
+- **[CLOUDFLARE-SETUP.md](CLOUDFLARE-SETUP.md)** - Déploiement production
+
+### Tests
+
+```powershell
+.\test-system.ps1
+```
+
+---
+
 **© 2026 TrustiScore - Pour une souveraineté numérique européenne**  
 Données hébergées en Europe | Conformité RGPD | Open Source

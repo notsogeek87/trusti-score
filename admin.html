@@ -625,11 +625,14 @@
 
     <script>
         // ========================================
-        // SYSTÈME D'AUTHENTIFICATION
+        // CONFIGURATION API
         // ========================================
         
-        // 🔑 MODIFIER LE MOT DE PASSE ICI
-        const ADMIN_PASSWORD = '9xWL5JVP$Nj1l6'; // Mot de passe sécurisé
+        const API_URL = 'http://localhost:3001'; // URL de l'API backend
+        
+        // ========================================
+        // SYSTÈME D'AUTHENTIFICATION
+        // ========================================
         
         // Protection contre le brute force
         const MAX_ATTEMPTS = 5;
@@ -774,28 +777,48 @@
             // Ajouter un délai artificiel pour ralentir les attaques brute force
             await new Promise(resolve => setTimeout(resolve, 1000));
             
-            if (enteredPassword === ADMIN_PASSWORD) {
-                // Mot de passe correct
-                const token = generateSecureToken();
-                sessionStorage.setItem('trustiAdminToken', token);
-                sessionStorage.setItem('trustiAdminTime', Date.now().toString());
+            try {
+                console.log('🔐 Tentative de connexion via API...');
                 
-                resetAttempts();
-                loginError.classList.remove('show');
+                // Appel à l'API d'authentification
+                const response = await fetch(`${API_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password: enteredPassword })
+                });
                 
-                // Log de sécurité
-                console.log('✅ Connexion admin réussie à', new Date().toISOString());
+                if (response.ok) {
+                    // Authentification réussie
+                    const data = await response.json();
+                    
+                    // Stocker le token et l'expiration
+                    sessionStorage.setItem('trustiAdminToken', data.token);
+                    sessionStorage.setItem('trustiAdminTime', Date.now().toString());
+                    sessionStorage.setItem('trustiTokenExpires', data.expiresAt.toString());
+                    
+                    resetAttempts();
+                    loginError.classList.remove('show');
+                    
+                    // Log de sécurité
+                    console.log('✅ Connexion admin réussie à', new Date().toISOString());
+                    
+                    unlockAdmin();
+                } else {
+                    // Authentification échouée
+                    throw new Error('Mot de passe incorrect');
+                }
                 
-                unlockAdmin();
-            } else {
+            } catch (error) {
+                console.warn('⚠️ Tentative de connexion échouée:', error.message);
+                
                 // Mot de passe incorrect
                 recordFailedAttempt();
+                loginError.textContent = '❌ Mot de passe incorrect';
                 loginError.classList.add('show');
                 passwordInput.value = '';
                 passwordInput.focus();
-                
-                // Log de sécurité
-                console.warn('⚠️ Tentative de connexion échouée à', new Date().toISOString());
                 
                 // Retirer l'animation après 5s
                 setTimeout(() => {
@@ -807,9 +830,25 @@
         });
         
         // Gestion du bouton de déconnexion
-        logoutButton.addEventListener('click', function() {
+        logoutButton.addEventListener('click', async function() {
             if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
                 console.log('ℹ️ Déconnexion admin à', new Date().toISOString());
+                
+                // Appeler l'API de déconnexion
+                const token = sessionStorage.getItem('trustiAdminToken');
+                if (token) {
+                    try {
+                        await fetch(`${API_URL}/api/auth/logout`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
+                    } catch (error) {
+                        console.log('Erreur lors de la déconnexion API (ignorée):', error);
+                    }
+                }
+                
                 lockAdmin();
             }
         });
@@ -843,43 +882,69 @@
         }
         
         async function loadConfig() {
+            console.log('🔄 Début du chargement de la configuration...');
             try {
-                const response = await fetch('assets/config.json');
-                if (!response.ok) throw new Error('Erreur de chargement');
+                // Essayer d'abord de charger depuis l'API
+                console.log('📡 Tentative de chargement depuis l\'API...');
+                const response = await fetch(`${API_URL}/api/config`);
+                console.log('📡 Réponse API reçue:', response.status, response.statusText);
+                
+                if (!response.ok) throw new Error('Erreur API: ' + response.status);
                 
                 config = await response.json();
+                console.log('✅ Configuration API parsée:', config);
+                
                 populateForm();
-                showAlert('Configuration chargée avec succès', 'success');
+                console.log('✅ Formulaire rempli');
+                
+                showAlert('✅ Configuration chargée depuis la base de données', 'success');
+                
             } catch (error) {
-                showAlert('Erreur lors du chargement de la configuration : ' + error.message, 'warning');
-                // Tenter de charger depuis le localStorage
-                const saved = localStorage.getItem('trustiScoreConfig');
-                if (saved) {
-                    config = JSON.parse(saved);
+                console.warn('⚠️ Erreur lors du chargement depuis l\'API:', error.message);
+                console.log('🔄 Tentative de chargement depuis le fichier local...');
+                
+                try {
+                    // Fallback : charger depuis le fichier JSON local
+                    const response = await fetch('assets/config.json');
+                    if (!response.ok) throw new Error('Erreur fichier: ' + response.status);
+                    
+                    config = await response.json();
                     populateForm();
-                    showAlert('Configuration chargée depuis le cache local', 'info');
+                    
+                    showAlert('⚠️ Configuration chargée depuis le fichier local (API indisponible)', 'warning');
+                    
+                } catch (fileError) {
+                    console.error('❌ Erreur lors du chargement depuis le fichier:', fileError);
+                    showAlert('❌ Impossible de charger la configuration : ' + fileError.message, 'error');
                 }
             }
         }
         
         function populateForm() {
+            console.log('📝 Début du remplissage du formulaire...');
+            console.log('   Config actuelle:', config);
+            
             // Général
             document.getElementById('siteName').value = config.siteName || '';
             document.getElementById('siteTagline').value = config.siteTagline || '';
             document.getElementById('footerCopyright').value = config.footer?.copyright || '';
             document.getElementById('footerInfo').value = config.footer?.additionalInfo || '';
+            console.log('   ✓ Général rempli');
             
             // Seuils
             document.getElementById('thresholdA').value = config.gradeThresholds?.A || 80;
             document.getElementById('thresholdB').value = config.gradeThresholds?.B || 60;
             document.getElementById('thresholdC').value = config.gradeThresholds?.C || 40;
             document.getElementById('thresholdD').value = config.gradeThresholds?.D || 20;
+            console.log('   ✓ Seuils remplis');
             
             // Notes
             populateGrades();
+            console.log('   ✓ Notes remplies');
             
             // Critères
             populateCriteria();
+            console.log('   ✓ Critères remplis');
             
             // Simulateur
             document.getElementById('simTitle').value = config.simulator?.title || '';
@@ -889,9 +954,12 @@
             document.getElementById('simSubmitBtn').value = config.simulator?.submitButton || '';
             document.getElementById('simResultTitle').value = config.simulator?.resultTitle || '';
             document.getElementById('simResultDetailsTitle').value = config.simulator?.resultDetailsTitle || '';
+            console.log('   ✓ Simulateur rempli');
             
             // Page d'accueil
             populateHomepage();
+            console.log('   ✓ Page d\'accueil remplie');
+            console.log('✅ Formulaire complètement rempli!');
         }
         
         function populateGrades() {
@@ -1069,12 +1137,64 @@
                     }
                 });
                 
-                // Sauvegarder dans le localStorage
-                localStorage.setItem('trustiScoreConfig', JSON.stringify(config));
+                // Sauvegarder via l'API
+                saveConfigToAPI(config);
                 
-                showAlert('Configuration sauvegardée avec succès dans le navigateur ! Pour appliquer les changements au site, exportez et remplacez le fichier config.json', 'success');
             } catch (error) {
-                showAlert('Erreur lors de la sauvegarde : ' + error.message, 'warning');
+                console.error('Erreur lors de la préparation de la config:', error);
+                showAlert('Erreur lors de la sauvegarde : ' + error.message, 'error');
+            }
+        }
+        
+        async function saveConfigToAPI(configData) {
+            const token = sessionStorage.getItem('trustiAdminToken');
+            
+            if (!token) {
+                showAlert('⚠️ Session expirée. Veuillez vous reconnecter.', 'warning');
+                lockAdmin();
+                return;
+            }
+            
+            try {
+                console.log('💾 Sauvegarde de la configuration vers l\'API...');
+                
+                const response = await fetch(`${API_URL}/api/config`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(configData)
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Session expirée');
+                    }
+                    throw new Error(`Erreur API: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                console.log('✅ Configuration sauvegardée:', result);
+                
+                showAlert('✅ Configuration sauvegardée dans la base de données !', 'success');
+                
+                // Aussi sauvegarder en localStorage comme backup
+                localStorage.setItem('trustiScoreConfig', JSON.stringify(configData));
+                
+            } catch (error) {
+                console.error('❌ Erreur lors de la sauvegarde API:', error);
+                
+                if (error.message === 'Session expirée') {
+                    showAlert('⚠️ Session expirée. Veuillez vous reconnecter.', 'warning');
+                    lockAdmin();
+                } else {
+                    // Fallback : sauvegarder en localStorage
+                    localStorage.setItem('trustiScoreConfig', JSON.stringify(configData));
+                    showAlert('⚠️ Erreur API. Configuration sauvegardée localement seulement.', 'warning');
+                }
+            }
+        }
             }
         }
         
@@ -1104,6 +1224,7 @@
         }
         
         function showAlert(message, type) {
+            console.log(`🔔 Alerte: [${type}] ${message}`);
             const container = document.getElementById('alertContainer');
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;
@@ -1111,12 +1232,15 @@
             container.innerHTML = '';
             container.appendChild(alert);
             
-            // Auto-masquer après 5 secondes
+            // Scroll vers l'alerte pour la rendre visible
+            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Auto-masquer après 10 secondes (au lieu de 5)
             setTimeout(() => {
                 alert.style.opacity = '0';
                 alert.style.transition = 'opacity 0.5s';
                 setTimeout(() => alert.remove(), 500);
-            }, 5000);
+            }, 10000);
         }
     </script>
 </body>
