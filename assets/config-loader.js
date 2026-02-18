@@ -7,36 +7,70 @@ class TrustiScoreConfig {
     constructor() {
         this.config = null;
         this.loaded = false;
+        // Détection automatique de l'URL de l'API
+        this.apiUrl = this.getApiUrl();
     }
 
     /**
-     * Charge la configuration depuis le fichier JSON ou le localStorage
+     * Détermine l'URL de l'API selon l'environnement
+     * @returns {string} URL de l'API
+     */
+    getApiUrl() {
+        // En production, utiliser l'URL de votre API déployée
+        // Pour l'instant, détection automatique local/prod
+        const hostname = window.location.hostname;
+        
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return 'http://localhost:3001';
+        }
+        
+        // TODO: Remplacer par votre URL API en production
+        // return 'https://api.trustiscore.com';
+        return 'http://localhost:3001'; // Par défaut pour l'instant
+    }
+
+    /**
+     * Charge la configuration depuis l'API (BDD) avec fallback sur fichier local
      * @returns {Promise<Object>} Configuration chargée
      */
     async load() {
         try {
-            // Tenter de charger depuis le localStorage d'abord (priorité aux modifications admin)
-            const localConfig = localStorage.getItem('trustiScoreConfig');
-            if (localConfig) {
-                this.config = JSON.parse(localConfig);
+            // 1. PRIORITÉ : Charger depuis l'API (Base de données)
+            console.log('🔄 Tentative de chargement depuis l\'API...');
+            const apiResponse = await fetch(`${this.apiUrl}/api/config`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (apiResponse.ok) {
+                this.config = await apiResponse.json();
                 this.loaded = true;
-                console.log('Configuration chargée depuis le cache local');
+                console.log('✅ Configuration chargée depuis la base de données');
                 return this.config;
             }
 
-            // Sinon charger depuis le fichier
-            const response = await fetch('assets/config.json');
-            if (!response.ok) {
-                throw new Error('Erreur de chargement du fichier config.json');
-            }
+            throw new Error(`API returned ${apiResponse.status}`);
 
-            this.config = await response.json();
-            this.loaded = true;
-            console.log('Configuration chargée depuis le fichier');
-            return this.config;
-        } catch (error) {
-            console.error('Erreur lors du chargement de la configuration:', error);
-            throw error;
+        } catch (apiError) {
+            // 2. FALLBACK : Charger depuis le fichier local
+            console.warn('⚠️ API non disponible, chargement depuis le fichier local...', apiError.message);
+            
+            try {
+                const fileResponse = await fetch('assets/config.json');
+                if (!fileResponse.ok) {
+                    throw new Error('Erreur de chargement du fichier config.json');
+                }
+
+                this.config = await fileResponse.json();
+                this.loaded = true;
+                console.log('📄 Configuration chargée depuis le fichier local (fallback)');
+                return this.config;
+            } catch (fileError) {
+                console.error('❌ Erreur lors du chargement de la configuration:', fileError);
+                throw fileError;
+            }
         }
     }
 

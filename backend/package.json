@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "init": "node init-database.js",
+    "force-init": "node force-init-database.js"
   },
   "keywords": ["trustiscore", "api", "postgresql", "neon"],
   "author": "",

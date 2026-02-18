@@ -33,6 +33,27 @@ node -e "import('bcrypt').then(bcrypt => console.log(bcrypt.hashSync('VotreMotDe
 
 ## 🚀 Démarrage
 
+### Première fois : Initialiser la base de données
+
+**⚠️ Important :** Avant d'utiliser le système, vous devez initialiser la base de données avec la configuration par défaut.
+
+```powershell
+npm run init
+```
+
+Ce script :
+- ✅ Lit `assets/config.json`
+- ✅ Se connecte à PostgreSQL
+- ✅ Insère la configuration en BDD
+- ✅ Vérifie que tout fonctionne
+
+**Si la BDD est déjà initialisée :** Le script ne fait rien pour éviter d'écraser vos modifications.
+
+**Pour réinitialiser complètement (⚠️ ÉCRASE tout) :**
+```powershell
+npm run force-init
+```
+
 ### Mode développement
 ```powershell
 npm start
