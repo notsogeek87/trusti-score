@@ -113,8 +113,11 @@ python -m http.server 8000
 
 - **[QUICKSTART.md](QUICKSTART.md)** - Guide de démarrage rapide
 - **[NEON-SETUP.md](NEON-SETUP.md)** - Configuration base de données
-- **[STATUS.md](STATUS.md)** - État du système et utilisation
+- **[VERCEL-UPDATE.md](VERCEL-UPDATE.md)** - ⚡ Mise à jour Vercel (déjà déployé)
+- **[VERCEL-DEPLOY.md](VERCEL-DEPLOY.md)** - Déploiement Vercel complet
 - **[CLOUDFLARE-SETUP.md](CLOUDFLARE-SETUP.md)** - Déploiement production
+- **[STATUS.md](STATUS.md)** - État du système et utilisation
+- **[COMMANDS.md](COMMANDS.md)** - Commandes rapides
 
 ### Tests
 
