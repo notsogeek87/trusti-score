@@ -16,17 +16,22 @@ class TrustiScoreConfig {
      * @returns {string} URL de l'API
      */
     getApiUrl() {
-        // En production, utiliser l'URL de votre API déployée
-        // Pour l'instant, détection automatique local/prod
         const hostname = window.location.hostname;
         
+        // Environnement local
         if (hostname === 'localhost' || hostname === '127.0.0.1') {
             return 'http://localhost:3001';
         }
         
-        // TODO: Remplacer par votre URL API en production
-        // return 'https://api.trustiscore.com';
-        return 'http://localhost:3001'; // Par défaut pour l'instant
+        // Production sur Vercel
+        if (hostname.includes('vercel.app')) {
+            // Utiliser la même base URL que le frontend
+            return window.location.origin;
+        }
+        
+        // Domaine personnalisé ou autre
+        // Par défaut, utiliser la même base URL que le frontend
+        return window.location.origin;
     }
 
     /**
