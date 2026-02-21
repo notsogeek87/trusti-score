@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Vercel - TrustiScore</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        h1 { color: #60a5fa; }
+        .test {
+            background: #1e293b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #334155;
+        }
+        .success { border-color: #22c55e; }
+        .error { border-color: #ef4444; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #2563eb; }
+        pre {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .status { font-weight: bold; margin: 10px 0; }
+        input {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test API Vercel - TrustiScore</h1>
+    
+    <div class="test" id="test1">
+        <h2>Test 1 : Health Check</h2>
+        <button onclick="testHealth()">Tester /api/health</button>
+        <div id="healthResult"></div>
+    </div>
+
+    <div class="test" id="test2">
+        <h2>Test 2 : Authentification</h2>
+        <input type="password" id="password" placeholder="Mot de passe" value="9xWL5JVP$Nj1l6">
+        <button onclick="testAuth()">Tester /api/auth/login</button>
+        <div id="authResult"></div>
+    </div>
+
+    <div class="test" id="test3">
+        <h2>Test 3 : Configuration</h2>
+        <button onclick="testConfig()">Tester /api/config</button>
+        <div id="configResult"></div>
+    </div>
+
+    <div class="test">
+        <h2>📊 Résumé</h2>
+        <div id="summary"></div>
+    </div>
+
+    <script>
+        // Déterminer l'URL de l'API
+        const hostname = window.location.hostname;
+        let API_URL;
+        
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            API_URL = 'http://localhost:3001';
+        } else {
+            API_URL = window.location.origin;
+        }
+
+        document.getElementById('summary').innerHTML = `
+            <div class="status">🌐 Hostname: ${hostname}</div>
+            <div class="status">🔗 API URL: ${API_URL}</div>
+            <div class="status">📍 Navigateur: ${navigator.userAgent}</div>
+        `;
+
+        async function testHealth() {
+            const resultDiv = document.getElementById('healthResult');
+            const testDiv = document.getElementById('test1');
+            
+            resultDiv.innerHTML = '<p>⏳ Test en cours...</p>';
+            
+            try {
+                const response = await fetch(`${API_URL}/api/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    testDiv.className = 'test success';
+                    resultDiv.innerHTML = `
+                        <div class="status">✅ Succès (${response.status})</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                testDiv.className = 'test error';
+                resultDiv.innerHTML = `
+                    <div class="status">❌ Erreur: ${error.message}</div>
+                    <pre>${error.stack}</pre>
+                `;
+            }
+        }
+
+        async function testAuth() {
+            const resultDiv = document.getElementById('authResult');
+            const testDiv = document.getElementById('test2');
+            const password = document.getElementById('password').value;
+            
+            resultDiv.innerHTML = '<p>⏳ Test en cours...</p>';
+            
+            try {
+                const response = await fetch(`${API_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    testDiv.className = 'test success';
+                    resultDiv.innerHTML = `
+                        <div class="status">✅ Authentification réussie (${response.status})</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>Token généré:</strong> ${data.token.substring(0, 20)}...</p>
+                    `;
+                } else {
+                    testDiv.className = 'test error';
+                    resultDiv.innerHTML = `
+                        <div class="status">❌ Authentification échouée (${response.status})</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>Cause probable:</strong> Variable ADMIN_PASSWORD_HASH non configurée sur Vercel</p>
+                    `;
+                }
+            } catch (error) {
+                testDiv.className = 'test error';
+                resultDiv.innerHTML = `
+                    <div class="status">❌ Erreur: ${error.message}</div>
+                    <pre>${error.stack}</pre>
+                `;
+            }
+        }
+
+        async function testConfig() {
+            const resultDiv = document.getElementById('configResult');
+            const testDiv = document.getElementById('test3');
+            
+            resultDiv.innerHTML = '<p>⏳ Test en cours...</p>';
+            
+            try {
+                const response = await fetch(`${API_URL}/api/config`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    testDiv.className = 'test success';
+                    resultDiv.innerHTML = `
+                        <div class="status">✅ Configuration chargée (${response.status})</div>
+                        <p><strong>Nom du site:</strong> ${data.siteName}</p>
+                        <p><strong>Nombre de critères:</strong> ${Object.keys(data.criteria || {}).length}</p>
+                        <pre>${JSON.stringify(data, null, 2).substring(0, 500)}...</pre>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                testDiv.className = 'test error';
+                resultDiv.innerHTML = `
+                    <div class="status">❌ Erreur: ${error.message}</div>
+                    <pre>${error.stack}</pre>
+                `;
+            }
+        }
+
+        // Auto-test au chargement
+        window.addEventListener('load', () => {
+            testHealth();
+        });
+    </script>
+</body>
+</html>
