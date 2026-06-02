@@ -488,20 +488,158 @@
         }
         
         @media (max-width: 768px) {
+            header {
+                padding: 2.5rem 1rem;
+            }
+
             header h1 {
                 font-size: 2rem;
             }
 
             header p {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
             }
 
             .logo-container img {
-                max-width: 140px;
+                max-width: 110px;
+            }
+
+            .container {
+                padding: 0.75rem;
             }
 
             section {
-                padding: 1.5rem;
+                padding: 1.2rem;
+                margin: 0.75rem 0;
+                border-radius: 12px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin: 1.2rem 0 0.75rem;
+            }
+
+            p, li {
+                font-size: 1rem;
+            }
+
+            .grade-scale {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+
+            .criteria-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                margin: 1rem 0;
+            }
+
+            .highlight-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .inline-cta {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .cta-section {
+                padding: 2rem 1.2rem;
+                margin: 1.5rem 0;
+                border-radius: 14px;
+            }
+
+            .cta-section h2 {
+                font-size: 1.7rem;
+            }
+
+            .cta-section p {
+                font-size: 1.05rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 1rem 1.8rem;
+                font-size: 1.1rem;
+            }
+
+            .cta-features {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .sticky-bar {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .sticky-title {
+                font-size: 0.85rem;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .how-steps li {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1.8rem 0.75rem;
+            }
+
+            header h1 {
+                font-size: 1.7rem;
+                letter-spacing: 0;
+            }
+
+            .logo-container img {
+                max-width: 90px;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .cta-features {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-button {
+                padding: 0.9rem 1.4rem;
+                font-size: 1rem;
+            }
+
+            .inline-cta {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .inline-cta-button {
+                text-align: center;
+                justify-content: center;
+            }
+
+            footer {
+                padding: 1.5rem 1rem;
             }
         }
 
