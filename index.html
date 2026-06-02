@@ -157,7 +157,6 @@
             border-radius: 12px;
             border-left: 5px solid;
             perspective: 800px;
-            min-height: 220px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: default;
         }
@@ -167,12 +166,13 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
         }
 
+        /* Grid layering : les deux faces occupent la même cellule,
+           le parent se dimensionne à la plus haute des deux */
         .grade-card-inner {
-            position: relative;
-            width: 100%;
-            min-height: 220px;
-            transition: transform 0.65s ease;
+            display: grid;
+            grid-template-areas: "card";
             transform-style: preserve-3d;
+            transition: transform 0.65s ease;
         }
 
         .grade-card:hover .grade-card-inner {
@@ -181,8 +181,7 @@
 
         .grade-card-front,
         .grade-card-back {
-            position: absolute;
-            inset: 0;
+            grid-area: card;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             border-radius: 12px;
