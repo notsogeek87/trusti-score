@@ -624,9 +624,73 @@
                 padding: 0.8rem;
             }
         }
+
+        /* Grade letter bounce */
+        .grade-bounce {
+            animation: gradeBounce 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes gradeBounce {
+            0%   { transform: scale(0.2) rotate(-15deg); opacity: 0; }
+            100% { transform: scale(1)   rotate(0deg);   opacity: 1; }
+        }
+
+        /* Radar chart */
+        .radar-container { max-width: 360px; margin: 1.5rem auto 0; }
+
+        .radar-chart { width: 100%; height: auto; display: block; }
+
+        .radar-polygon {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: radarExpand 0.9s cubic-bezier(0.34, 1.1, 0.64, 1) both;
+            animation-delay: 0.15s;
+        }
+
+        @keyframes radarExpand {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        body { transition: background 1.2s ease; }
+
+        /* Sticky bar */
+        .sticky-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #334155;
+            padding: 0.6rem 2rem;
+            display: flex; align-items: center; gap: 1rem;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .sticky-bar.visible { transform: translateY(0); }
+        .sticky-logo { height: 32px; width: auto; }
+        .sticky-title { font-weight: 700; color: #e2e8f0; font-size: 1rem; flex: 1; }
+
+        .sticky-cta {
+            color: white; text-decoration: none;
+            padding: 0.4rem 1.2rem;
+            background: rgba(255,255,255,0.15); border-radius: 8px;
+            font-size: 0.9rem; font-weight: 600;
+            transition: background 0.2s; white-space: nowrap;
+        }
+
+        .sticky-cta:hover { background: rgba(255,255,255,0.25); }
     </style>
 </head>
 <body>
+    <div id="stickyBar" class="sticky-bar" aria-hidden="true">
+        <img src="assets/logo.png" alt="" class="sticky-logo" aria-hidden="true">
+        <span class="sticky-title">Simulateur TrustiScore</span>
+        <a href="index.html" class="sticky-cta">← Accueil</a>
+    </div>
     <header>
         <div class="header-content">
             <div class="logo-container">
@@ -665,7 +729,8 @@
             <h2 class="result-title">Votre TrustiScore</h2>
             <div id="resultScore" class="result-score">-</div>
             <div id="resultDescription" class="result-description"></div>
-            
+            <div id="radarChart" class="radar-container"></div>
+
             <div class="result-details">
                 <h3>Détails de l'évaluation</h3>
                 <div id="resultBreakdown" class="result-breakdown"></div>
@@ -855,39 +920,109 @@
             resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
 
+        const GRADE_COLORS = { A: '#10b981', B: '#06b6d4', C: '#f59e0b', D: '#f97316', E: '#ef4444' };
+
+        function animateCounter(el, target, duration) {
+            duration = duration || 1100;
+            const start = performance.now();
+            function tick(now) {
+                const t = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - t, 3);
+                el.textContent = Math.round(ease * target);
+                if (t < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        function generateRadarSVG(details, color) {
+            const entries = Object.values(details);
+            const n = entries.length;
+            const cx = 180, cy = 180, R = 115, LR = 150;
+
+            function pt(i, r) {
+                const a = -Math.PI / 2 + i * 2 * Math.PI / n;
+                return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+            }
+
+            const grids = [1,2,3,4,5].map(function(l) {
+                const pts = entries.map(function(_, i) { return pt(i, l/5*R).map(function(v){return v.toFixed(1);}).join(','); }).join(' ');
+                return '<polygon points="' + pts + '" fill="none" stroke="#334155" stroke-width="' + (l===5?'1.5':'0.8') + '" opacity="0.7"/>';
+            }).join('');
+
+            const axes = entries.map(function(_, i) {
+                const p = pt(i, R);
+                return '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" stroke="#334155" stroke-width="0.8" opacity="0.7"/>';
+            }).join('');
+
+            const scorePts = entries.map(function(d, i) {
+                return pt(i, d.raw / 4 * R).map(function(v){return v.toFixed(1);}).join(',');
+            }).join(' ');
+
+            const dots = entries.map(function(d, i) {
+                const p = pt(i, d.raw / 4 * R);
+                return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="5" fill="' + color + '" stroke="#0f172a" stroke-width="2"/>';
+            }).join('');
+
+            const labels = entries.map(function(d, i) {
+                const p = pt(i, LR);
+                const name = d.criterion.name.split(' ')[0];
+                const pct = d.criterion.weight;
+                const x = p[0].toFixed(1), y = p[1].toFixed(1);
+                return '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="middle" font-family="\'Segoe UI\',sans-serif">' +
+                    '<tspan x="' + x + '" dy="-7" font-size="10" fill="#94a3b8" font-weight="600">' + name + '</tspan>' +
+                    '<tspan x="' + x + '" dy="15" font-size="9" fill="#64748b">' + pct + '%</tspan>' +
+                '</text>';
+            }).join('');
+
+            return '<svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" class="radar-chart" role="img" aria-label="Graphique radar des scores par critère">' +
+                grids + axes +
+                '<polygon points="' + scorePts + '" fill="' + color + '25" stroke="' + color + '" stroke-width="2.5" class="radar-polygon"/>' +
+                dots + labels +
+            '</svg>';
+        }
+
         function displayResults(results) {
             const { score, grade, gradeData, details } = results;
-            
-            // Affichage de la note
+            const color = GRADE_COLORS[grade] || '#3b82f6';
+
+            // Grade letter avec animation bounce
             resultScore.textContent = grade;
             resultScore.className = 'result-score result-grade-' + grade.toLowerCase();
-            
-            // Affichage de la description
-            resultDescription.innerHTML = `
-                <strong>${gradeData.title}</strong><br>
-                ${gradeData.description}<br>
-                <small style="color: #94a3b8; margin-top: 1rem; display: block;">
-                    Score final : ${score} / 100
-                </small>
-            `;
-            
-            // Affichage du détail par critère
+            resultScore.classList.remove('grade-bounce');
+            void resultScore.offsetWidth;
+            resultScore.classList.add('grade-bounce');
+
+            // Description avec compteur animé
+            resultDescription.innerHTML =
+                '<strong>' + gradeData.title + '</strong><br>' +
+                gradeData.description + '<br>' +
+                '<small style="color:#94a3b8;margin-top:1rem;display:block;">Score final : <span id="animatedScore">0</span> / 100</small>';
+
+            setTimeout(function() {
+                const el = document.getElementById('animatedScore');
+                if (el) animateCounter(el, score);
+            }, 300);
+
+            // Radar chart
+            const radarEl = document.getElementById('radarChart');
+            if (radarEl) radarEl.innerHTML = generateRadarSVG(details, color);
+
+            // Breakdown
             let breakdownHTML = '';
             for (let [key, scoreData] of Object.entries(details)) {
                 const stars = '★'.repeat(scoreData.raw) + '☆'.repeat(4 - scoreData.raw);
-                breakdownHTML += `
-                    <div class="breakdown-item">
-                        <strong>${scoreData.criterion.name} (${scoreData.criterion.weight}%)</strong>
-                        <span>${stars} (${scoreData.raw}/4)</span>
-                        <div style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.3rem;">
-                            ${scoreData.weighted.toFixed(1)} pts
-                        </div>
-                    </div>
-                `;
+                breakdownHTML += '<div class="breakdown-item">' +
+                    '<strong>' + scoreData.criterion.name + ' (' + scoreData.criterion.weight + '%)</strong>' +
+                    '<span>' + stars + ' (' + scoreData.raw + '/4)</span>' +
+                    '<div style="color:#94a3b8;font-size:0.85rem;margin-top:0.3rem;">' + scoreData.weighted.toFixed(1) + ' pts</div>' +
+                '</div>';
             }
             resultBreakdown.innerHTML = breakdownHTML;
-            
-            // Affichage du container
+
+            // Fond dynamique selon la note
+            document.body.style.background =
+                'linear-gradient(180deg, #0f172a 0%, ' + color + '0d 50%, #0f172a 100%)';
+
             resultContainer.classList.add('show');
         }
 
@@ -902,6 +1037,18 @@
 
         // Initialiser au chargement de la page
         initSimulator();
+
+        // Sticky bar
+        (function() {
+            const bar = document.getElementById('stickyBar');
+            if (!bar) return;
+            const io = new IntersectionObserver(function(entries) {
+                bar.classList.toggle('visible', !entries[0].isIntersecting);
+                bar.setAttribute('aria-hidden', String(entries[0].isIntersecting));
+            }, { threshold: 0 });
+            const h = document.querySelector('header');
+            if (h) io.observe(h);
+        })();
     </script>
 </body>
 </html>

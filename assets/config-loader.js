@@ -245,22 +245,29 @@ class TrustiScoreConfig {
      */
     generateGradeScale() {
         const grades = this.getGradeDescriptions();
-        let html = '<div class="grade-scale">';
+        let html = '';
 
         ['A', 'B', 'C', 'D', 'E'].forEach(grade => {
             const gradeData = grades[grade];
             if (gradeData) {
                 html += `
                     <div class="grade-card grade-${grade.toLowerCase()}">
-                        <h4>Note ${grade}</h4>
-                        <h5>${gradeData.title}</h5>
-                        <p>${gradeData.shortDescription || gradeData.description}</p>
+                        <div class="grade-card-inner">
+                            <div class="grade-card-front">
+                                <h4>Note ${grade}</h4>
+                                <h5>${gradeData.title}</h5>
+                                <p>${gradeData.shortDescription || gradeData.description}</p>
+                                <small class="flip-hint">Survolez pour en savoir plus</small>
+                            </div>
+                            <div class="grade-card-back">
+                                <p>${gradeData.description}</p>
+                            </div>
+                        </div>
                     </div>
                 `;
             }
         });
 
-        html += '</div>';
         return html;
     }
 
@@ -270,7 +277,7 @@ class TrustiScoreConfig {
      */
     generateCriteriaGrid() {
         const criteria = this.getCriteria();
-        let html = '<div class="criteria-grid">';
+        let html = '';
 
         Object.values(criteria).forEach(criterion => {
             html += `
@@ -282,7 +289,6 @@ class TrustiScoreConfig {
             `;
         });
 
-        html += '</div>';
         return html;
     }
 
