@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Simulateur TrustiScore : évaluez en 5 minutes la souveraineté numérique de votre application et obtenez une note de A à E.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <title>Simulateur TrustiScore - Calculez votre note</title>
     <style>
         * {
@@ -52,9 +54,15 @@
         }
         
         .logo-container img {
-            max-width: 120px;
+            max-width: 150px;
             height: auto;
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         
         header h1 {
@@ -269,7 +277,20 @@
         .star-value-1 .star-icon { color: #ef4444; }
         
         input[type="radio"] {
-            display: none;
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+        }
+
+        .star-option:focus-within {
+            outline: 2px solid #60a5fa;
+            outline-offset: 2px;
+            border-color: #60a5fa;
         }
         
         .score-excellent { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2)); border-left-color: #10b981; }
@@ -278,11 +299,15 @@
         .score-poor { background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.2)); border-left-color: #f97316; }
         .score-critical { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2)); border-left-color: #ef4444; }
         
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0 0;
+        }
+
         .calculate-button {
-            display: block;
-            width: 100%;
-            max-width: 400px;
-            margin: 2rem auto;
             padding: 1.2rem 2rem;
             font-size: 1.3rem;
             font-weight: bold;
@@ -293,6 +318,103 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .reset-button {
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #94a3b8;
+            background: transparent;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reset-button:hover {
+            color: #e2e8f0;
+            border-color: #60a5fa;
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .progress-indicator {
+            background: rgba(30, 58, 138, 0.2);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-text {
+            color: #93c5fd;
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .progress-bar-track {
+            flex: 1;
+            height: 8px;
+            background: #334155;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-indicator.complete .progress-text { color: #10b981; }
+        .progress-indicator.complete .progress-bar-fill {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #94a3b8;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #334155;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.15));
+            border: 1px solid #ef4444;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            color: #fca5a5;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .error-message.show { display: block; }
+
+        :focus-visible {
+            outline: 2px solid #60a5fa;
+            outline-offset: 3px;
+            border-radius: 4px;
         }
         
         .calculate-button:hover {
@@ -461,6 +583,26 @@
                 font-size: 1.1rem;
                 padding: 1rem 1.5rem;
             }
+
+            .form-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .calculate-button, .reset-button {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .progress-indicator {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .progress-bar-track {
+                width: 100%;
+            }
             
             .result-container {
                 padding: 2rem 1rem;
@@ -488,7 +630,7 @@
     <header>
         <div class="header-content">
             <div class="logo-container">
-                <img src="assets/logo.png" alt="TrustiScore Logo">
+                <img src="assets/logo.png" alt="Logo TrustiScore">
             </div>
             <h1>Simulateur TrustiScore</h1>
             <p>Évaluez le niveau de confiance d'une application</p>
@@ -503,12 +645,23 @@
         </div>
 
         <div class="simulator-container">
-            <form id="trustiScoreForm" class="criteria-form">
+            <div id="errorMessage" class="error-message" role="alert" aria-live="assertive"></div>
+            <div id="loadingState" class="loading-state">
+                <div class="spinner" aria-label="Chargement en cours"></div>
+                <p>Chargement du simulateur…</p>
+            </div>
+            <div id="progressIndicator" class="progress-indicator" role="status" aria-live="polite" hidden>
+                <span id="progressText" class="progress-text">0 / 5 critères remplis</span>
+                <div class="progress-bar-track" aria-hidden="true">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+            <form id="trustiScoreForm" class="criteria-form" hidden>
                 <!-- Les critères seront générés dynamiquement par JavaScript -->
             </form>
         </div>
 
-        <div id="resultContainer" class="result-container">
+        <div id="resultContainer" class="result-container" aria-live="polite">
             <h2 class="result-title">Votre TrustiScore</h2>
             <div id="resultScore" class="result-score">-</div>
             <div id="resultDescription" class="result-description"></div>
@@ -535,22 +688,31 @@
 
         // Chargement de la configuration et initialisation
         async function initSimulator() {
+            const loadingState = document.getElementById('loadingState');
+            const progressIndicator = document.getElementById('progressIndicator');
+
             try {
                 await trustiConfig.load();
-                
-                // Appliquer la configuration au header et footer
+
                 trustiConfig.applyToHeader();
                 trustiConfig.applyToFooter();
-                
-                // Générer les critères du formulaire
+
                 generateCriteriaForm();
-                
-                // Mettre à jour les textes du simulateur
                 updateSimulatorTexts();
-                
+
+                if (loadingState) loadingState.hidden = true;
+                form.hidden = false;
+                if (progressIndicator) progressIndicator.hidden = false;
+                updateProgress();
+
             } catch (error) {
                 console.error('Erreur lors de l\'initialisation:', error);
-                alert('Erreur lors du chargement de la configuration. Veuillez rafraîchir la page.');
+                if (loadingState) loadingState.hidden = true;
+                const errorDiv = document.getElementById('errorMessage');
+                if (errorDiv) {
+                    errorDiv.textContent = 'Erreur lors du chargement de la configuration. Veuillez rafraîchir la page.';
+                    errorDiv.classList.add('show');
+                }
             }
         }
 
@@ -608,33 +770,59 @@
             });
             
             form.innerHTML = html + `
-                <button type="submit" class="calculate-button">${trustiConfig.getSimulatorConfig().submitButton || '🧮 Calculer le TrustiScore'}</button>
+                <div class="form-actions">
+                    <button type="submit" class="calculate-button">${trustiConfig.getSimulatorConfig().submitButton || '🧮 Calculer le TrustiScore'}</button>
+                    <button type="button" id="resetBtn" class="reset-button">↺ Réinitialiser</button>
+                </div>
             `;
             
             // Réattacher les événements
             attachEventListeners();
         }
 
+        function updateProgress() {
+            const criteria = trustiConfig.getCriteria();
+            const total = Object.keys(criteria).length;
+            const filled = form.querySelectorAll('input[type="radio"]:checked').length;
+
+            const progressText = document.getElementById('progressText');
+            const progressFill = document.getElementById('progressBarFill');
+            const progressIndicator = document.getElementById('progressIndicator');
+
+            if (progressText) progressText.textContent = `${filled} / ${total} critères remplis`;
+            if (progressFill) progressFill.style.width = `${(filled / total) * 100}%`;
+            if (progressIndicator) progressIndicator.classList.toggle('complete', filled === total);
+        }
+
         function attachEventListeners() {
-            // Validation en temps réel et gestion des clics
             form.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     const criterionItem = this.closest('.criterion-item');
                     const score = parseInt(this.value);
                     const starRating = this.closest('.star-rating');
-                    
-                    // Retirer la classe 'selected' de toutes les options du même groupe
+
                     starRating.querySelectorAll('.star-option').forEach(option => {
                         option.classList.remove('selected');
                     });
-                    
-                    // Ajouter la classe 'selected' à l'option cliquée
                     this.closest('.star-option').classList.add('selected');
-                    
-                    // Mise à jour visuelle du critère
                     updateCriterionVisual(criterionItem, score);
+                    updateProgress();
                 });
             });
+
+            const resetBtn = document.getElementById('resetBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    form.querySelectorAll('input[type="radio"]').forEach(r => { r.checked = false; });
+                    form.querySelectorAll('.criterion-item').forEach(item => {
+                        item.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+                    });
+                    form.querySelectorAll('.star-option').forEach(opt => opt.classList.remove('selected'));
+                    resultContainer.classList.remove('show');
+                    updateProgress();
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
         }
 
         function updateCriterionVisual(criterionItem, score) {

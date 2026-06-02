@@ -311,10 +311,11 @@ class TrustiScoreConfig {
         // Générer les options (en ordre décroissant : 4, 3, 2, 1, 0)
         criterion.options.forEach(option => {
             html += `
-                <label class="star-option star-value-${option.value + 1}">
-                    <input type="radio" name="${criterionKey}" value="${option.value}" ${option.value === 4 ? 'required' : ''}>
-                    <div class="star-icon">${option.icon}</div>
-                    <div class="star-label">${option.label}</div>
+                <label class="star-option star-value-${option.value + 1}" title="${option.description}">
+                    <input type="radio" name="${criterionKey}" value="${option.value}" required
+                           aria-label="${option.label} — ${option.description}">
+                    <div class="star-icon" aria-hidden="true">${option.icon}</div>
+                    <div class="star-label" aria-hidden="true">${option.label}</div>
                 </label>
             `;
         });

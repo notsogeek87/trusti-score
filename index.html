@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="TrustiScore évalue la souveraineté numérique des applications : hébergement européen, RGPD, transparence. Découvrez la note A-E de vos applications préférées.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <title>TrustiScore - Reprenez votre souveraineté numérique</title>
     <style>
         * {
@@ -428,7 +430,7 @@
         
         .inline-cta-button:hover {
             background: #2563eb;
-            transform: translateX(5px);
+            transform: translateY(-3px);
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
         
@@ -436,18 +438,32 @@
             header h1 {
                 font-size: 2rem;
             }
-            
+
             header p {
                 font-size: 1.1rem;
             }
-            
+
             .logo-container img {
                 max-width: 140px;
             }
-            
+
             section {
                 padding: 1.5rem;
             }
+        }
+
+        :focus-visible {
+            outline: 2px solid #60a5fa;
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .loading-placeholder {
+            text-align: center;
+            color: #94a3b8;
+            padding: 2rem;
+            font-style: italic;
+            grid-column: 1 / -1;
         }
     </style>
 </head>
@@ -455,9 +471,9 @@
     <header>
         <div class="header-content">
             <div class="logo-container">
-                <img src="assets/logo.png" alt="TrustiScore - Chevalier de la souveraineté numérique">
+                <img src="assets/logo.png" alt="Logo TrustiScore">
             </div>
-            <h1>TRUSTISCORE</h1>
+            <h1>TrustiScore</h1>
             <p>Reprenez votre souveraineté numérique européenne</p>
             <a href="simulateur.html" class="nav-link">🧮 Simulateur TrustiScore</a>
         </div>
@@ -541,37 +557,7 @@
 
             <h3>L'échelle de notation</h3>
             <div class="grade-scale">
-                <div class="grade-card grade-a">
-                    <h4>Note A</h4>
-                    <h5>Excellent</h5>
-                    <p>Ex : Siège/actionnaires en France ou en Union européenne, 100% en Union européenne (cloud souverain qualifié), 
-                       Open source, réversible, sans dépendance GAFAM, RGPD complet, rapports détaillés.</p>
-                </div>
-                
-                <div class="grade-card grade-b">
-                    <h4>Note B</h4>
-                    <h5>Bon</h5>
-                    <p>Bonnes pratiques générales avec quelques points d'amélioration concernant la souveraineté ou la transparence.</p>
-                </div>
-                
-                <div class="grade-card grade-c">
-                    <h4>Note C</h4>
-                    <h5>Moyen</h5>
-                    <p>Service utile mais présence de risques modérés. Attention nécessaire sur certains points.</p>
-                </div>
-                
-                <div class="grade-card grade-d">
-                    <h4>Note D</h4>
-                    <h5>Faible</h5>
-                    <p>Problèmes significatifs en termes de souveraineté et/ou de protection des données. Alternatives recommandées.</p>
-                </div>
-                
-                <div class="grade-card grade-e">
-                    <h4>Note E</h4>
-                    <h5>Risqué</h5>
-                    <p>Ex : Siège aux USA, en Chine, risques extraterritoriaux, Stockage mondial sans garanties RGPD, 
-                       Services critiques aux USA, Chine…, Infos minimales ou absentes, CGU opaques.</p>
-                </div>
+                <div class="loading-placeholder" aria-live="polite">Chargement des notes…</div>
             </div>
             
             <h3>Exemples concrets</h3>
@@ -582,7 +568,7 @@
         </section>
 
         <section>
-            <h2>Le système de notation (transparent et équilibré)</h2>
+            <h2>⚖️ Le système de notation (transparent et équilibré)</h2>
             
             <p>
                 Nous évaluons <strong>chaque appli sur 5 critères clés</strong>, notés de <strong>0 à 4 points</strong> 
@@ -591,35 +577,7 @@
             </p>
 
             <div class="criteria-grid">
-                <div class="criteria-item">
-                    <strong>🗺️ Gouvernance & Juridiction (20%)</strong>
-                    <p><strong>Note A :</strong> Siège/actionnaires en France ou en Union européenne, pas de lois intrusives<br>
-                       <strong>Note E :</strong> Siège aux USA, en Chine, risques extraterritoriaux</p>
-                </div>
-                
-                <div class="criteria-item">
-                    <strong>💾 Localisation des données (25%)</strong>
-                    <p><strong>Note A :</strong> 100% en Union européenne (cloud souverain qualifié)<br>
-                       <strong>Note E :</strong> Stockage mondial sans garanties RGPD</p>
-                </div>
-                
-                <div class="criteria-item">
-                    <strong>🔧 Contrôle technique (20%)</strong>
-                    <p><strong>Note A :</strong> Open source, réversible, sans dépendance GAFAM (Google, Apple, Facebook, Amazon, Microsoft)<br>
-                       <strong>Note E :</strong> Services critiques aux USA, Chine…</p>
-                </div>
-                
-                <div class="criteria-item">
-                    <strong>✅ Conformité & Certifications (20%)</strong>
-                    <p><strong>Note A :</strong> RGPD complet (DPO, DPIA), Normes telles que SecNumCloud/ISO<br>
-                       <strong>Note E :</strong> Infos minimales ou absentes</p>
-                </div>
-                
-                <div class="criteria-item">
-                    <strong>📜 Transparence (15%)</strong>
-                    <p><strong>Note A :</strong> Rapports détaillés, procédures de droit à l'oubli connues<br>
-                       <strong>Note E :</strong> CGU opaques, pas d'engagements</p>
-                </div>
+                <div class="loading-placeholder" aria-live="polite">Chargement des critères…</div>
             </div>
 
             <div class="highlight-box">
