@@ -216,6 +216,13 @@
         font-weight: 700; font-size: 18px;
     }
 
+    /* Deuxième item de grille explicite : sans lui, un navigateur peut former
+       DEUX boîtes anonymes distinctes à partir de <strong> + texte suivant
+       (l'une prenant presque toute la largeur, l'autre retombant sous le
+       cercle numéroté sur une piste de 46px) au lieu d'une seule couvrant la
+       colonne de texte — d'où un texte réduit à un mot par ligne. */
+    .step-text { min-width: 0; }
+
     /* ---------- Échelle A-E ---------- */
     .scale-row { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 34px; }
     .scale-step {
@@ -570,11 +577,11 @@
             '<div class="eyebrow">Le parcours</div>' +
             '<h2>Comment ça marche</h2>' +
             '<div class="body"><ol class="steps">' +
-            '<li><strong>Recherchez</strong> une application ou un service — ProtonMail, ChatGPT, Vinted…</li>' +
-            '<li><strong>Découvrez sa note</strong> TrustiScore, de A à E, avec son badge coloré.</li>' +
-            '<li><strong>Lisez le détail</strong> : la justification critère par critère.</li>' +
-            '<li><strong>Trouvez une alternative</strong> plus respectueuse, avec son propre TrustiScore.</li>' +
-            '<li><strong>Contribuez</strong> : proposez vos propres évaluations selon la grille publique.</li>' +
+            '<li><span class="step-text"><strong>Recherchez</strong> une application ou un service — ProtonMail, ChatGPT, Vinted…</span></li>' +
+            '<li><span class="step-text"><strong>Découvrez sa note</strong> TrustiScore, de A à E, avec son badge coloré.</span></li>' +
+            '<li><span class="step-text"><strong>Lisez le détail</strong> : la justification critère par critère.</span></li>' +
+            '<li><span class="step-text"><strong>Trouvez une alternative</strong> plus respectueuse, avec son propre TrustiScore.</span></li>' +
+            '<li><span class="step-text"><strong>Contribuez</strong> : proposez vos propres évaluations selon la grille publique.</span></li>' +
             '</ol></div>',
             'La solution', 'Comment ça marche',
             'Faire la démo live ici si le réseau le permet : ouvrir l\'application et chercher une appli que ' +
@@ -687,11 +694,11 @@
             '<div class="eyebrow">Notre engagement</div>' +
             '<h2>Indépendant, objectif, transparent</h2>' +
             '<div class="body"><ol class="steps">' +
-            '<li><strong>Indépendance totale</strong> — aucun lien financier avec les services évalués.</li>' +
-            '<li><strong>Objectivité</strong> — des faits vérifiables et des sources publiques, rien d\'autre.</li>' +
-            '<li><strong>Transparence</strong> — grille de notation publique, justification pour chaque note.</li>' +
-            '<li><strong>Mise à jour continue</strong> — réévaluation au fil de l\'évolution des services.</li>' +
-            '<li><strong>Respect de la vie privée</strong> — nous appliquons ce que nous recommandons.</li>' +
+            '<li><span class="step-text"><strong>Indépendance totale</strong> — aucun lien financier avec les services évalués.</span></li>' +
+            '<li><span class="step-text"><strong>Objectivité</strong> — des faits vérifiables et des sources publiques, rien d\'autre.</span></li>' +
+            '<li><span class="step-text"><strong>Transparence</strong> — grille de notation publique, justification pour chaque note.</span></li>' +
+            '<li><span class="step-text"><strong>Mise à jour continue</strong> — réévaluation au fil de l\'évolution des services.</span></li>' +
+            '<li><span class="step-text"><strong>Respect de la vie privée</strong> — nous appliquons ce que nous recommandons.</span></li>' +
             '</ol></div>',
             'L\'engagement', 'Nos principes',
             'C\'est le slide qui répond à la question « qui êtes-vous pour noter ? ». ' +
