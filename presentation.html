@@ -7,6 +7,9 @@
 <meta name="description" content="Présentation TrustiScore : support de conférence sur la souveraineté numérique et la notation A-E des applications.">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <title>TrustiScore — Présentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
     :root {
         --bg: #0f172a;
@@ -26,6 +29,8 @@
         --e: #ef4444;
         --stage-w: 1280px;
         --stage-h: 720px;
+        --font-display: 'Archivo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -93,12 +98,13 @@
 
     /* ---------- Typographie de scène ---------- */
     .eyebrow {
-        font-size: 15px;
-        letter-spacing: 0.16em;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--accent-light);
-        font-weight: 700;
-        margin-bottom: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
         display: flex;
         align-items: center;
         gap: 12px;
@@ -111,16 +117,25 @@
     }
 
     .slide h2 {
-        font-size: 52px;
-        line-height: 1.1;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        font-family: var(--font-display);
+        font-size: 68px;
+        line-height: 1.04;
+        font-weight: 800;
+        letter-spacing: -1.5px;
         text-wrap: balance;
-        margin-bottom: 28px;
+        margin-bottom: 30px;
         color: #fff;
     }
 
-    .slide h3 { font-size: 26px; font-weight: 600; color: var(--accent-light); margin-bottom: 12px; }
+    .slide h3 {
+        font-family: var(--font-display);
+        font-size: 30px;
+        line-height: 1.15;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        color: var(--accent-light);
+        margin-bottom: 14px;
+    }
     .slide p { font-size: 23px; line-height: 1.55; color: var(--text-2); max-width: 62ch; }
     .slide p + p { margin-top: 16px; }
     .slide strong { color: #fff; font-weight: 600; }
@@ -143,24 +158,26 @@
         box-shadow: 0 18px 50px rgba(2, 8, 20, 0.6);
     }
     .slide-cover h1 {
-        font-size: 88px;
-        font-weight: 700;
-        letter-spacing: -2px;
+        font-family: var(--font-display);
+        font-size: 108px;
+        font-weight: 900;
+        letter-spacing: -3px;
         color: #fff;
         line-height: 1;
     }
     .slide-cover .tagline {
-        font-size: 30px;
+        font-size: 32px;
         color: var(--accent-light);
         font-weight: 300;
-        margin-top: 16px;
+        margin-top: 18px;
     }
     .cover-meta {
         margin-top: 44px;
         display: flex;
         gap: 14px;
         align-items: center;
-        font-size: 15px;
+        font-family: var(--font-mono);
+        font-size: 14px;
         color: var(--text-3);
         letter-spacing: 0.08em;
         text-transform: uppercase;
@@ -170,14 +187,16 @@
     /* ---------- Citation / affirmation forte ---------- */
     .slide-statement { justify-content: center; }
     .statement {
-        font-size: 46px;
-        line-height: 1.25;
-        font-weight: 300;
+        font-family: var(--font-display);
+        font-size: 58px;
+        line-height: 1.15;
+        font-weight: 500;
+        letter-spacing: -1px;
         color: #fff;
         max-width: 20ch;
         text-wrap: balance;
     }
-    .statement em { font-style: normal; color: var(--accent-light); font-weight: 600; }
+    .statement em { font-style: normal; color: var(--accent-light); font-weight: 800; }
     .statement-note {
         margin-top: 32px;
         padding-left: 22px;
@@ -234,7 +253,7 @@
         color: #06121f;
         font-weight: 700;
     }
-    .scale-step .letter { font-size: 46px; line-height: 1; }
+    .scale-step .letter { font-family: var(--font-display); font-size: 46px; font-weight: 900; line-height: 1; }
     .scale-legend { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
     /* Combinateur d'enfant direct (>) et non descendant : sinon la règle
        s'applique aussi à .range/.title/.unit (des div imbriqués dans la
@@ -277,10 +296,10 @@
     .verdict { padding: 26px 28px; border-radius: 14px; background: var(--surface); border-top: 4px solid; }
     .verdict.good { border-top-color: var(--a); }
     .verdict.bad { border-top-color: var(--e); }
-    .verdict .badge { font-size: 34px; font-weight: 700; line-height: 1; }
+    .verdict .badge { font-family: var(--font-display); font-size: 36px; font-weight: 800; line-height: 1; }
     .verdict.good .badge { color: var(--a); }
     .verdict.bad .badge { color: var(--e); }
-    .verdict .badge small { font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; display: block; color: var(--text-3); margin-bottom: 6px; }
+    .verdict .badge small { font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; display: block; color: var(--text-3); margin-bottom: 6px; }
     .verdict p { font-size: 20px !important; margin-top: 14px; color: var(--text-2) !important; }
 
     /* ---------- Comparatif d'exemples ---------- */
@@ -288,15 +307,16 @@
     .app-card { background: var(--surface); border-radius: 16px; padding: 32px; display: flex; gap: 26px; align-items: center; }
     .app-grade {
         width: 104px; height: 104px; flex: none; border-radius: 18px;
-        display: grid; place-items: center; font-size: 56px; font-weight: 700; color: #06121f;
+        display: grid; place-items: center;
+        font-family: var(--font-display); font-size: 56px; font-weight: 900; color: #06121f;
     }
-    .app-card h4 { font-size: 28px; color: #fff; margin-bottom: 8px; }
+    .app-card h4 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .app-card p { font-size: 19px !important; color: var(--text-2) !important; }
 
     /* ---------- Chiffres clés ---------- */
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
     .stat { background: var(--surface); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
-    .stat .n { font-size: 54px; font-weight: 700; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+    .stat .n { font-family: var(--font-display); font-size: 54px; font-weight: 800; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
     .stat .l { font-size: 18px; color: var(--text-3); margin-top: 12px; line-height: 1.4; }
 
     /* ---------- Slide de clôture ---------- */
@@ -304,7 +324,7 @@
         align-items: center; justify-content: center; text-align: center;
         background: radial-gradient(900px 500px at 50% 40%, rgba(59,130,246,0.2), transparent 65%), var(--bg);
     }
-    .slide-outro h2 { font-size: 62px; }
+    .slide-outro h2 { font-size: 78px; }
     .urls { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
     .url-chip {
         border: 1px solid var(--line); border-radius: 12px; padding: 18px 26px;
@@ -318,7 +338,8 @@
         position: absolute;
         left: 80px; right: 80px; bottom: 32px;
         display: flex; align-items: center; justify-content: space-between;
-        font-size: 14px; color: #56647d; letter-spacing: 0.06em;
+        font-family: var(--font-mono);
+        font-size: 12px; color: #56647d; letter-spacing: 0.06em;
     }
     .slide-cover .slide-foot, .slide-outro .slide-foot { display: none; }
 
@@ -353,7 +374,7 @@
     .controls .sep {
         width: 1px; height: 20px; background: var(--line); flex: none; margin: 0 2px;
     }
-    .counter { font-size: 14px; color: var(--text-3); padding: 0 8px; font-variant-numeric: tabular-nums; min-width: 56px; text-align: center; }
+    .counter { font-family: var(--font-mono); font-size: 13px; color: var(--text-3); padding: 0 8px; font-variant-numeric: tabular-nums; min-width: 56px; text-align: center; }
 
     /* ---------- Notes orateur ---------- */
     .notes {
@@ -883,6 +904,16 @@
     }
 
     /* ---------- Démarrage ---------- */
+    // go() met à jour l'URL via history.replaceState (silencieux, ne redéclenche
+    // pas hashchange) ; ce lecteur ne réagit donc qu'à un hash changé de
+    // l'extérieur — barre d'adresse, lien externe, bouton précédent/suivant du
+    // navigateur — pas à la navigation normale entre slides.
+    function goToHash() {
+        var hash = parseInt((location.hash || '').replace('#', ''), 10);
+        if (hash > 0 && hash <= slides.length) go(hash - 1);
+    }
+    window.addEventListener('hashchange', goToHash);
+
     trustiConfig.load().then(function (cfg) {
         build(cfg);
         document.getElementById('loading').style.display = 'none';
