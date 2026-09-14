@@ -42,21 +42,30 @@
     /* ---------- Scène : 1280x720 mis à l'échelle du viewport ---------- */
     .deck {
         position: fixed;
-        inset: 0;
-        display: grid;
-        place-items: center;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        /* dvh suit la rétractation des barres du navigateur mobile ;
+           fit() écrase ensuite ces valeurs avec la mesure exacte. */
+        height: 100dvh;
+        overflow: hidden;
         background:
             radial-gradient(1200px 600px at 50% -10%, rgba(59,130,246,0.10), transparent 60%),
             var(--bg);
     }
 
     .stage {
+        /* La boîte de mise en page reste 1280x720 quelle que soit l'échelle.
+           On la centre donc sur le point central du deck avec translate(-50%,-50%)
+           plutôt que par un centrage de grille, qui se recale tout seul dès que
+           l'élément dépasse son conteneur. */
+        position: absolute;
+        top: 50%;
+        left: 50%;
         width: var(--stage-w);
         height: var(--stage-h);
-        position: relative;
-        transform: scale(var(--scale, 1));
+        transform: translate(-50%, -50%) scale(var(--scale, 1));
         transform-origin: center center;
-        flex: none;
     }
 
     .slide {
@@ -400,8 +409,13 @@
     @media print {
         @page { size: 1280px 720px; margin: 0; }
         html, body { overflow: visible; height: auto; background: #fff; }
-        .deck { position: static; display: block; background: none; }
-        .stage { transform: none !important; width: 1280px; height: auto; }
+        .deck { position: static; display: block; background: none; width: auto; height: auto; overflow: visible; }
+        .stage {
+            position: static;
+            top: auto; left: auto;
+            transform: none !important;
+            width: 1280px; height: auto;
+        }
         .slide {
             display: flex !important;
             position: relative;
@@ -801,15 +815,31 @@
     }, { passive: true });
 
     /* ---------- Mise à l'échelle de la scène ---------- */
+    var deck = document.getElementById('deck');
+
     function fit() {
-        var pad = window.innerWidth < 720 ? 8 : 24;
-        var s = Math.min(
-            (window.innerWidth - pad * 2) / 1280,
-            (window.innerHeight - pad * 2) / 720
-        );
-        stage.style.setProperty('--scale', s);
+        // visualViewport décrit la surface réellement visible ; innerHeight,
+        // lui, inclut ce que masquent les barres d'outils mobiles.
+        var vv = window.visualViewport;
+        var w = Math.round(vv ? vv.width : window.innerWidth);
+        var h = Math.round(vv ? vv.height : window.innerHeight);
+        if (!w || !h) return;
+
+        deck.style.width = w + 'px';
+        deck.style.height = h + 'px';
+
+        var pad = w < 720 ? 8 : 24;
+        var s = Math.min((w - pad * 2) / 1280, (h - pad * 2) / 720);
+        stage.style.setProperty('--scale', Math.max(s, 0.05));
     }
+
     window.addEventListener('resize', fit);
+    window.addEventListener('orientationchange', fit);
+    if (window.visualViewport) {
+        // Pliage/dépliage, rotation, rétractation de la barre d'adresse.
+        window.visualViewport.addEventListener('resize', fit);
+        window.visualViewport.addEventListener('scroll', fit);
+    }
 
     /* ---------- Démarrage ---------- */
     trustiConfig.load().then(function (cfg) {
