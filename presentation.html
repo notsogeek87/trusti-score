@@ -333,9 +333,13 @@
     .url-chip {
         border: 1px solid var(--line); border-radius: 12px; padding: 18px 26px;
         background: rgba(30,41,59,0.7); text-align: left;
+        display: flex; align-items: center; gap: 14px;
+        text-decoration: none; transition: border-color .15s, background .15s;
     }
+    a.url-chip:hover, a.url-chip:focus-visible { border-color: var(--accent-light); background: rgba(30,41,59,0.95); }
     .url-chip .k { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
     .url-chip .v { font-size: 21px; color: var(--accent-light); font-weight: 600; margin-top: 5px; }
+    .url-chip .play-icon { flex: none; width: 30px; height: 30px; }
 
     /* ---------- Pied de slide ---------- */
     .slide-foot {
@@ -769,8 +773,18 @@
             '<p class="lead" style="max-width:56ch;text-align:center">TrustiScore est open source et grandit avec sa communauté : ' +
             'proposez des applications, contestez une note, faites évoluer la grille.</p>' +
             '<div class="urls">' +
-            '<div class="url-chip"><div class="k">L\'application</div><div class="v">trusti-alpha.vercel.app</div></div>' +
-            '<div class="url-chip"><div class="k">Le simulateur</div><div class="v">/simulateur.html</div></div>' +
+            '<a class="url-chip" href="https://youtube.com/shorts/45mTjVWKRe8?is=mIsF9wE4JEMu18Il" target="_blank" rel="noopener noreferrer">' +
+            '<svg class="play-icon" viewBox="0 0 512 512" aria-hidden="true">' +
+            '<path fill="#00d2ff" d="M32 42c-6 6-9 15-9 26v376c0 11 3 20 9 26l4 3 211-211v-6L36 39z"/>' +
+            '<path fill="#00f076" d="M319 291 247 219 36 430c8 8 20 9 34 1z"/>' +
+            '<path fill="#ff3c47" d="M319 149l-72-72-249 211 249 250z"/>' +
+            '<path fill="#ffcf00" d="M319 291l68-39c19-11 19-29 0-40l-68-39-72 71z"/>' +
+            '</svg>' +
+            '<div><div class="k">L\'application</div><div class="v">trusti-alpha.vercel.app</div></div>' +
+            '</a>' +
+            '<a class="url-chip" href="simulateur.html" target="_blank" rel="noopener noreferrer">' +
+            '<div><div class="k">Le simulateur</div><div class="v">/simulateur.html</div></div>' +
+            '</a>' +
             '</div>' +
             '<p style="margin-top:34px;font-size:17px;color:#56647d">Appuyez sur <b style="color:#8b9bb4">Q</b> pour revenir au site.</p>',
             '', 'Conclusion',
