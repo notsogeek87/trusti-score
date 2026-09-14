@@ -330,7 +330,7 @@
     }
 
     .controls {
-        position: fixed; bottom: 16px; right: 20px; z-index: 40;
+        position: fixed; bottom: 16px; right: 20px; z-index: 50;
         display: flex; align-items: center; gap: 8px;
         background: rgba(15,23,42,0.86);
         border: 1px solid var(--line);
@@ -357,7 +357,7 @@
 
     /* ---------- Notes orateur ---------- */
     .notes {
-        position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
         background: rgba(8,13,25,0.96);
         border-top: 1px solid var(--line);
         padding: 20px 28px 24px;
@@ -366,7 +366,21 @@
         transform: translateY(101%); transition: transform 0.3s ease;
     }
     .notes.open { transform: none; }
-    .notes h5 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 8px; }
+    .notes-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .notes h5 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light); margin: 0; }
+    .notes-close {
+        flex: none;
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text-2);
+        font-size: 15px; line-height: 1;
+        cursor: pointer;
+        display: grid; place-items: center;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+    .notes-close:hover { background: rgba(59,130,246,0.25); color: #fff; }
 
     /* ---------- Sommaire (touche S) ---------- */
     .overview {
@@ -469,7 +483,10 @@
 </div>
 
 <aside class="notes" id="notes" aria-label="Notes orateur">
-    <h5>Notes orateur</h5>
+    <div class="notes-head">
+        <h5>Notes orateur</h5>
+        <button type="button" class="notes-close" id="btnNotesClose" title="Fermer les notes" aria-label="Fermer les notes">✕</button>
+    </div>
     <div id="notesBody"></div>
 </aside>
 
@@ -820,6 +837,7 @@
     document.getElementById('btnPrev').addEventListener('click', prev);
     document.getElementById('btnOverview').addEventListener('click', function () { toggleOverview(); });
     document.getElementById('btnNotes').addEventListener('click', function () { toggleNotes(); });
+    document.getElementById('btnNotesClose').addEventListener('click', function () { toggleNotes(false); });
     document.getElementById('btnFull').addEventListener('click', toggleFullscreen);
     document.getElementById('btnHelp').addEventListener('click', function () { toggleHelp(); });
     document.getElementById('help').addEventListener('click', function (e) {
