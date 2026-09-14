@@ -118,21 +118,21 @@
 
     .slide h2 {
         font-family: var(--font-display);
-        font-size: 68px;
-        line-height: 1.04;
-        font-weight: 800;
-        letter-spacing: -1.5px;
+        font-size: 88px;
+        line-height: 1.0;
+        font-weight: 900;
+        letter-spacing: -2.5px;
         text-wrap: balance;
-        margin-bottom: 30px;
+        margin-bottom: 32px;
         color: #fff;
     }
 
     .slide h3 {
         font-family: var(--font-display);
-        font-size: 30px;
+        font-size: 34px;
         line-height: 1.15;
         font-weight: 700;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.4px;
         color: var(--accent-light);
         margin-bottom: 14px;
     }
@@ -186,18 +186,22 @@
 
     /* ---------- Citation / affirmation forte ---------- */
     .slide-statement { justify-content: center; }
-    .statement {
+    /* Spécificité .slide-statement .statement (0,2,0) : .slide p (0,1,1)
+       gagnait sinon la bataille de cascade sur ce <p>, et la taille
+       n'était jamais réellement appliquée — le bug qui a fait paraître
+       les titres "toujours petits" malgré des valeurs correctes ici. */
+    .slide-statement .statement {
         font-family: var(--font-display);
-        font-size: 58px;
-        line-height: 1.15;
+        font-size: 72px;
+        line-height: 1.08;
         font-weight: 500;
-        letter-spacing: -1px;
+        letter-spacing: -1.5px;
         color: #fff;
-        max-width: 20ch;
+        max-width: 15ch;
         text-wrap: balance;
     }
-    .statement em { font-style: normal; color: var(--accent-light); font-weight: 800; }
-    .statement-note {
+    .slide-statement .statement em { font-style: normal; color: var(--accent-light); font-weight: 800; }
+    .slide-statement .statement-note {
         margin-top: 32px;
         padding-left: 22px;
         border-left: 3px solid var(--accent);
