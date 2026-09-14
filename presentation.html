@@ -235,11 +235,22 @@
         font-weight: 700;
     }
     .scale-step .letter { font-size: 46px; line-height: 1; }
-    .scale-step .cap { font-size: 14px; font-weight: 600; margin-top: 8px; opacity: 0.82; }
     .scale-legend { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-    .scale-legend div { border-top: 2px solid; padding-top: 12px; }
+    /* Combinateur d'enfant direct (>) et non descendant : sinon la règle
+       s'applique aussi à .range/.title/.unit (des div imbriqués dans la
+       colonne), et chacun hérite d'un border-top — trois traits empilés
+       par colonne au lieu d'un seul en haut. */
+    .scale-legend > div { border-top: 2px solid; padding-top: 12px; }
     .scale-legend .range { font-size: 22px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
-    .scale-legend .unit { font-size: 15px; color: var(--text-3); margin-top: 4px; }
+    /* Libellé de la note (ex. "Critique, très risqué…") : sa longueur dépend
+       de la configuration éditée dans l'admin, donc jamais de hauteur fixe
+       ici — seule la barre colorée ci-dessus a une hauteur imposée, et elle
+       ne porte plus que la lettre. */
+    /* min-height réserve la place de 2 lignes même quand le libellé n'en
+       prend qu'une, pour que "points sur 100" reste aligné d'une colonne
+       à l'autre quelle que soit la longueur du texte de chacune. */
+    .scale-legend .title { font-size: 15px; font-weight: 600; line-height: 1.35; margin-top: 6px; min-height: 62px; }
+    .scale-legend .unit { font-size: 13px; color: var(--text-3); margin-top: 6px; }
 
     /* ---------- Barres de pondération ---------- */
     .weights { display: grid; gap: 18px; }
@@ -596,10 +607,15 @@
         var bars = '', legend = '';
         ['A', 'B', 'C', 'D', 'E'].forEach(function (g) {
             var d = grades[g] || {};
+            // La barre ne porte que la lettre : quelle que soit la longueur du
+            // libellé édité dans l'admin, elle garde toujours la même hauteur,
+            // sans jamais risquer de déborder de la plus petite marche (E).
             bars += '<div class="scale-step" style="height:' + GRADE_HEIGHTS[g] + 'px;background:' + GRADE_COLORS[g] + '">' +
-                '<span class="letter">' + g + '</span><span class="cap">' + esc(d.title || '') + '</span></div>';
+                '<span class="letter">' + g + '</span></div>';
             legend += '<div style="border-top-color:' + GRADE_COLORS[g] + '">' +
-                '<div class="range">' + ranges[g] + '</div><div class="unit">points sur 100</div></div>';
+                '<div class="range">' + ranges[g] + '</div>' +
+                '<div class="title" style="color:' + GRADE_COLORS[g] + '">' + esc(d.title || '') + '</div>' +
+                '<div class="unit">points sur 100</div></div>';
         });
         out.push(slide('',
             '<div class="eyebrow">Le résultat</div>' +
