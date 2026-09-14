@@ -24,8 +24,11 @@ echo "==> Vérification nginx"
 sudo nginx -t
 sudo systemctl reload nginx
 
-echo "==> Test de santé de l'API"
+BACKEND_PORT="$(grep -E '^BACKEND_PORT=' .env 2>/dev/null | cut -d= -f2)"
+BACKEND_PORT="${BACKEND_PORT:-3001}"
+
+echo "==> Test de santé de l'API (port $BACKEND_PORT)"
 sleep 2
-curl -fsS http://127.0.0.1:3001/api/health && echo || echo "!! L'API ne répond pas encore, vérifiez: docker compose logs -f backend"
+curl -fsS "http://127.0.0.1:${BACKEND_PORT}/api/health" && echo || echo "!! L'API ne répond pas encore, vérifiez: docker compose logs -f backend"
 
 echo "==> Déploiement terminé."

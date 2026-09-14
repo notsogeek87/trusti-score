@@ -1,0 +1,28 @@
+name: Déploiement VPS
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    steps:
+      - name: Déployer sur le VPS (${{ github.ref_name }})
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_DEPLOY_USER }}
+          key: ${{ secrets.VPS_DEPLOY_SSH_KEY }}
+          port: ${{ secrets.VPS_SSH_PORT || 22 }}
+          # Cette "commande" est interceptée côté VPS par la commande forcée
+          # définie dans authorized_keys (voir deploy/ci-deploy.sh) : elle ne
+          # sert qu'à choisir main/staging, elle ne s'exécute jamais telle quelle.
+          script: ${{ github.ref_name }}
