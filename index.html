@@ -784,6 +784,55 @@
         }
 
         .sticky-cta:hover { background: #2563eb; }
+        /* --- Bascule vers le mode présentation ---------------------------
+           Même pastille, même coin que la barre de contrôle de la
+           présentation : le geste de retour est au même endroit. */
+        .present-toggle {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            z-index: 90;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.15rem;
+            border-radius: 100px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+            /* Assez discret pour ne pas concurrencer les CTA, assez opaque
+               pour rester lisible par-dessus le bandeau bleu. */
+            opacity: 0.85;
+            transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .present-toggle:hover,
+        .present-toggle:focus-visible {
+            opacity: 1;
+            transform: translateY(-2px);
+            border-color: #3b82f6;
+            color: #fff;
+        }
+
+        .present-toggle .pt-icon { font-size: 1rem; line-height: 1; }
+
+        @media (max-width: 600px) {
+            .present-toggle {
+                right: 0.75rem;
+                bottom: 0.75rem;
+                padding: 0.5rem 0.9rem;
+                font-size: 0.82rem;
+            }
+        }
+
+        @media print { .present-toggle { display: none; } }
+
 
         /* ================= Ajouts audit UX — P0 / P1 ================= */
 
@@ -1484,11 +1533,17 @@
         </section>
     </main>
 
+    <a href="presentation.html" class="present-toggle" title="Ouvrir le support de présentation plein écran">
+        <span class="pt-icon" aria-hidden="true">▶</span>
+        <span>Mode présentation</span>
+    </a>
+
     <footer>
         <nav class="footer-links" aria-label="Informations légales">
             <a href="mentions-legales.html">Mentions légales</a>
             <a href="confidentialite.html">Confidentialité</a>
             <a href="simulateur.html">Simulateur</a>
+            <a href="presentation.html">Mode présentation</a>
             <a href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">Code source</a>
         </nav>
         <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>

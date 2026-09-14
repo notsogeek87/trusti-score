@@ -312,13 +312,20 @@
         opacity: 0.35; transition: opacity 0.25s ease;
     }
     .controls:hover, .controls:focus-within { opacity: 1; }
-    .controls button {
+    .controls button,
+    .controls a.control-link {
         width: 34px; height: 34px; border-radius: 50%;
         background: transparent; border: 0; color: var(--text-2);
         font-size: 16px; cursor: pointer; display: grid; place-items: center;
+        text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
     }
-    .controls button:hover { background: rgba(59,130,246,0.25); color: #fff; }
+    .controls button:hover,
+    .controls a.control-link:hover { background: rgba(59,130,246,0.25); color: #fff; }
+
+    .controls .sep {
+        width: 1px; height: 20px; background: var(--line); flex: none; margin: 0 2px;
+    }
     .counter { font-size: 14px; color: var(--text-3); padding: 0 8px; font-variant-numeric: tabular-nums; min-width: 56px; text-align: center; }
 
     /* ---------- Notes orateur ---------- */
@@ -425,6 +432,8 @@
     <button type="button" id="btnNotes" title="Notes orateur (N)" aria-label="Notes orateur">✎</button>
     <button type="button" id="btnFull" title="Plein écran (F)" aria-label="Plein écran">⛶</button>
     <button type="button" id="btnHelp" title="Raccourcis clavier (?)" aria-label="Raccourcis clavier">?</button>
+    <span class="sep" aria-hidden="true"></span>
+    <a href="index.html" class="control-link" id="btnExit" title="Revenir au site (Q)" aria-label="Revenir au site">⤺</a>
 </div>
 
 <aside class="notes" id="notes" aria-label="Notes orateur">
@@ -450,6 +459,7 @@
             <dt><kbd>F</kbd></dt><dd>Plein écran</dd>
             <dt><kbd>Ctrl</kbd>+<kbd>P</kbd></dt><dd>Exporter en PDF (1 slide par page)</dd>
             <dt><kbd>Échap</kbd></dt><dd>Fermer le panneau ouvert</dd>
+            <dt><kbd>Q</kbd></dt><dd>Revenir au site</dd>
         </dl>
     </div>
 </div>
@@ -681,7 +691,8 @@
             '<div class="urls">' +
             '<div class="url-chip"><div class="k">L\'application</div><div class="v">trusti-alpha.vercel.app</div></div>' +
             '<div class="url-chip"><div class="k">Le simulateur</div><div class="v">/simulateur.html</div></div>' +
-            '</div>',
+            '</div>' +
+            '<p style="margin-top:34px;font-size:17px;color:#56647d">Appuyez sur <b style="color:#8b9bb4">Q</b> pour revenir au site.</p>',
             '', 'Conclusion',
             'Appel à l\'action précis selon le public : tester une appli ce soir, ou contribuer à une évaluation, ' +
             'ou passer le simulateur sur leur propre produit. Laisser ce slide affiché pendant les questions.'));
@@ -764,6 +775,7 @@
         else if (k === 'n' || k === 'N') { toggleNotes(); }
         else if (k === 'f' || k === 'F') { toggleFullscreen(); }
         else if (k === '?') { toggleHelp(); }
+        else if (k === 'q' || k === 'Q') { window.location.href = 'index.html'; }
         else if (/^[1-9]$/.test(k)) { go(parseInt(k, 10) - 1); }
     });
 
