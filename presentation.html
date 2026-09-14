@@ -498,6 +498,7 @@
     <button type="button" id="btnOverview" title="Sommaire (S)" aria-label="Sommaire">☰</button>
     <button type="button" id="btnNotes" title="Notes orateur (N)" aria-label="Notes orateur">✎</button>
     <button type="button" id="btnFull" title="Plein écran (F)" aria-label="Plein écran">⛶</button>
+    <button type="button" id="btnPdf" title="Exporter en PDF (Ctrl+P) — 1 slide par page, utilisable hors ligne" aria-label="Exporter en PDF">⎙</button>
     <button type="button" id="btnHelp" title="Raccourcis clavier (?)" aria-label="Raccourcis clavier">?</button>
     <span class="sep" aria-hidden="true"></span>
     <a href="index.html" class="control-link" id="btnExit" title="Revenir au site (Q)" aria-label="Revenir au site">⤺</a>
@@ -860,6 +861,7 @@
     document.getElementById('btnNotes').addEventListener('click', function () { toggleNotes(); });
     document.getElementById('btnNotesClose').addEventListener('click', function () { toggleNotes(false); });
     document.getElementById('btnFull').addEventListener('click', toggleFullscreen);
+    document.getElementById('btnPdf').addEventListener('click', function () { window.print(); });
     document.getElementById('btnHelp').addEventListener('click', function () { toggleHelp(); });
     document.getElementById('help').addEventListener('click', function (e) {
         if (e.target === this) toggleHelp(false);
