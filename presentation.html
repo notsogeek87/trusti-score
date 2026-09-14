@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Présentation TrustiScore : support de conférence sur la souveraineté numérique et la notation A-E des applications.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<title>TrustiScore — Présentation</title>
+<style>
+    :root {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --surface-2: #273549;
+        --line: #334155;
+        --text: #e2e8f0;
+        --text-2: #b6c2d4;
+        --text-3: #8b9bb4;
+        --accent: #3b82f6;
+        --accent-light: #60a5fa;
+        --accent-deep: #1e3a8a;
+        --a: #10b981;
+        --b: #06b6d4;
+        --c: #f59e0b;
+        --d: #f97316;
+        --e: #ef4444;
+        --stage-w: 1280px;
+        --stage-h: 720px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Scène : 1280x720 mis à l'échelle du viewport ---------- */
+    .deck {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background:
+            radial-gradient(1200px 600px at 50% -10%, rgba(59,130,246,0.10), transparent 60%),
+            var(--bg);
+    }
+
+    .stage {
+        width: var(--stage-w);
+        height: var(--stage-h);
+        position: relative;
+        transform: scale(var(--scale, 1));
+        transform-origin: center center;
+        flex: none;
+    }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        padding: 64px 80px 88px;
+        display: none;
+        flex-direction: column;
+        background: var(--bg);
+        overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .slide.active > * { animation: rise 0.42s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+        .slide.active > *:nth-child(2) { animation-delay: 0.05s; }
+        .slide.active > *:nth-child(3) { animation-delay: 0.1s; }
+        .slide.active > *:nth-child(4) { animation-delay: 0.15s; }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: none; }
+        }
+    }
+
+    /* ---------- Typographie de scène ---------- */
+    .eyebrow {
+        font-size: 15px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        font-weight: 700;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .eyebrow::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--line), transparent);
+    }
+
+    .slide h2 {
+        font-size: 52px;
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        text-wrap: balance;
+        margin-bottom: 28px;
+        color: #fff;
+    }
+
+    .slide h3 { font-size: 26px; font-weight: 600; color: var(--accent-light); margin-bottom: 12px; }
+    .slide p { font-size: 23px; line-height: 1.55; color: var(--text-2); max-width: 62ch; }
+    .slide p + p { margin-top: 16px; }
+    .slide strong { color: #fff; font-weight: 600; }
+    .lead { font-size: 28px !important; line-height: 1.45 !important; color: var(--text) !important; }
+
+    .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+
+    /* ---------- Slide de titre ---------- */
+    .slide-cover {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background:
+            radial-gradient(900px 500px at 50% 30%, rgba(59,130,246,0.22), transparent 65%),
+            linear-gradient(160deg, #101c37 0%, var(--bg) 60%);
+    }
+    .slide-cover img {
+        width: 132px; height: auto; margin-bottom: 28px;
+        border-radius: 24px;
+        box-shadow: 0 18px 50px rgba(2, 8, 20, 0.6);
+    }
+    .slide-cover h1 {
+        font-size: 88px;
+        font-weight: 700;
+        letter-spacing: -2px;
+        color: #fff;
+        line-height: 1;
+    }
+    .slide-cover .tagline {
+        font-size: 30px;
+        color: var(--accent-light);
+        font-weight: 300;
+        margin-top: 16px;
+    }
+    .cover-meta {
+        margin-top: 44px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        font-size: 15px;
+        color: var(--text-3);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .cover-meta span { padding: 7px 16px; border: 1px solid var(--line); border-radius: 100px; }
+
+    /* ---------- Citation / affirmation forte ---------- */
+    .slide-statement { justify-content: center; }
+    .statement {
+        font-size: 46px;
+        line-height: 1.25;
+        font-weight: 300;
+        color: #fff;
+        max-width: 20ch;
+        text-wrap: balance;
+    }
+    .statement em { font-style: normal; color: var(--accent-light); font-weight: 600; }
+    .statement-note {
+        margin-top: 32px;
+        padding-left: 22px;
+        border-left: 3px solid var(--accent);
+        font-size: 21px;
+        color: var(--text-3);
+        max-width: 56ch;
+    }
+
+    /* ---------- Grilles ---------- */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .two-col.narrow-left { grid-template-columns: 0.9fr 1.1fr; }
+
+    .steps { list-style: none; display: grid; gap: 14px; counter-reset: s; }
+    .steps li {
+        counter-increment: s;
+        display: grid;
+        grid-template-columns: 46px 1fr;
+        gap: 20px;
+        align-items: start;
+        font-size: 21px;
+        color: var(--text-2);
+        line-height: 1.45;
+        padding: 12px 16px 12px 0;
+        border-bottom: 1px solid rgba(51,65,85,0.6);
+    }
+    .steps li:last-child { border-bottom: 0; }
+    .steps li::before {
+        content: counter(s);
+        width: 46px; height: 46px;
+        border-radius: 50%;
+        display: grid; place-items: center;
+        background: rgba(59,130,246,0.14);
+        border: 1px solid rgba(96,165,250,0.35);
+        color: var(--accent-light);
+        font-weight: 700; font-size: 18px;
+    }
+
+    /* ---------- Échelle A-E ---------- */
+    .scale-row { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 34px; }
+    .scale-step {
+        flex: 1;
+        border-radius: 12px 12px 4px 4px;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: flex-end;
+        padding-bottom: 14px;
+        color: #06121f;
+        font-weight: 700;
+    }
+    .scale-step .letter { font-size: 46px; line-height: 1; }
+    .scale-step .cap { font-size: 14px; font-weight: 600; margin-top: 8px; opacity: 0.82; }
+    .scale-legend { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .scale-legend div { border-top: 2px solid; padding-top: 12px; }
+    .scale-legend .range { font-size: 22px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+    .scale-legend .unit { font-size: 15px; color: var(--text-3); margin-top: 4px; }
+
+    /* ---------- Barres de pondération ---------- */
+    .weights { display: grid; gap: 18px; }
+    .weight-row { display: grid; grid-template-columns: 300px 1fr 64px; gap: 20px; align-items: center; }
+    .weight-name { font-size: 20px; color: var(--text); font-weight: 600; text-align: right; }
+    .weight-track { height: 26px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+    .weight-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-deep), var(--accent-light));
+        border-radius: 6px;
+        width: 0;
+        transition: width 0.7s cubic-bezier(0.2,0.7,0.3,1);
+    }
+    .weight-pct { font-size: 22px; font-weight: 700; color: var(--accent-light); font-variant-numeric: tabular-nums; }
+
+    /* ---------- Fiche critère ---------- */
+    .criterion-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 10px; }
+    .criterion-weight {
+        font-size: 20px; font-weight: 700; color: var(--accent-light);
+        border: 1px solid rgba(96,165,250,0.4); border-radius: 100px; padding: 5px 16px;
+        white-space: nowrap;
+    }
+    .verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 34px; }
+    .verdict { padding: 26px 28px; border-radius: 14px; background: var(--surface); border-top: 4px solid; }
+    .verdict.good { border-top-color: var(--a); }
+    .verdict.bad { border-top-color: var(--e); }
+    .verdict .badge { font-size: 34px; font-weight: 700; line-height: 1; }
+    .verdict.good .badge { color: var(--a); }
+    .verdict.bad .badge { color: var(--e); }
+    .verdict .badge small { font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; display: block; color: var(--text-3); margin-bottom: 6px; }
+    .verdict p { font-size: 20px !important; margin-top: 14px; color: var(--text-2) !important; }
+
+    /* ---------- Comparatif d'exemples ---------- */
+    .examples { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .app-card { background: var(--surface); border-radius: 16px; padding: 32px; display: flex; gap: 26px; align-items: center; }
+    .app-grade {
+        width: 104px; height: 104px; flex: none; border-radius: 18px;
+        display: grid; place-items: center; font-size: 56px; font-weight: 700; color: #06121f;
+    }
+    .app-card h4 { font-size: 28px; color: #fff; margin-bottom: 8px; }
+    .app-card p { font-size: 19px !important; color: var(--text-2) !important; }
+
+    /* ---------- Chiffres clés ---------- */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+    .stat { background: var(--surface); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
+    .stat .n { font-size: 54px; font-weight: 700; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+    .stat .l { font-size: 18px; color: var(--text-3); margin-top: 12px; line-height: 1.4; }
+
+    /* ---------- Slide de clôture ---------- */
+    .slide-outro {
+        align-items: center; justify-content: center; text-align: center;
+        background: radial-gradient(900px 500px at 50% 40%, rgba(59,130,246,0.2), transparent 65%), var(--bg);
+    }
+    .slide-outro h2 { font-size: 62px; }
+    .urls { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
+    .url-chip {
+        border: 1px solid var(--line); border-radius: 12px; padding: 18px 26px;
+        background: rgba(30,41,59,0.7); text-align: left;
+    }
+    .url-chip .k { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+    .url-chip .v { font-size: 21px; color: var(--accent-light); font-weight: 600; margin-top: 5px; }
+
+    /* ---------- Pied de slide ---------- */
+    .slide-foot {
+        position: absolute;
+        left: 80px; right: 80px; bottom: 32px;
+        display: flex; align-items: center; justify-content: space-between;
+        font-size: 14px; color: #56647d; letter-spacing: 0.06em;
+    }
+    .slide-cover .slide-foot, .slide-outro .slide-foot { display: none; }
+
+    /* ---------- Chrome de navigation ---------- */
+    .progress {
+        position: fixed; top: 0; left: 0; height: 3px;
+        background: linear-gradient(90deg, var(--accent-deep), var(--accent-light));
+        transition: width 0.3s ease; z-index: 40;
+    }
+
+    .controls {
+        position: fixed; bottom: 16px; right: 20px; z-index: 40;
+        display: flex; align-items: center; gap: 8px;
+        background: rgba(15,23,42,0.86);
+        border: 1px solid var(--line);
+        border-radius: 100px; padding: 7px 10px;
+        backdrop-filter: blur(10px);
+        opacity: 0.35; transition: opacity 0.25s ease;
+    }
+    .controls:hover, .controls:focus-within { opacity: 1; }
+    .controls button {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: transparent; border: 0; color: var(--text-2);
+        font-size: 16px; cursor: pointer; display: grid; place-items: center;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+    .controls button:hover { background: rgba(59,130,246,0.25); color: #fff; }
+    .counter { font-size: 14px; color: var(--text-3); padding: 0 8px; font-variant-numeric: tabular-nums; min-width: 56px; text-align: center; }
+
+    /* ---------- Notes orateur ---------- */
+    .notes {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+        background: rgba(8,13,25,0.96);
+        border-top: 1px solid var(--line);
+        padding: 20px 28px 24px;
+        font-size: 17px; line-height: 1.55; color: var(--text-2);
+        max-height: 34vh; overflow-y: auto;
+        transform: translateY(101%); transition: transform 0.3s ease;
+    }
+    .notes.open { transform: none; }
+    .notes h5 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 8px; }
+
+    /* ---------- Sommaire (touche S) ---------- */
+    .overview {
+        position: fixed; inset: 0; z-index: 50;
+        background: rgba(8,13,25,0.97);
+        padding: 40px; overflow-y: auto;
+        display: none;
+    }
+    .overview.open { display: block; }
+    .overview h4 { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .ov-item {
+        text-align: left; background: var(--surface); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 18px; cursor: pointer; color: var(--text-2);
+        font-size: 16px; line-height: 1.35; font-family: inherit;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .ov-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .ov-item.current { border-color: var(--accent-light); background: rgba(59,130,246,0.16); color: #fff; }
+    .ov-item .num { display: block; font-size: 12px; color: var(--text-3); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+
+    /* ---------- Aide (touche ?) ---------- */
+    .help {
+        position: fixed; inset: 0; z-index: 60; display: none;
+        place-items: center; background: rgba(8,13,25,0.9);
+    }
+    .help.open { display: grid; }
+    .help-panel {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+        padding: 32px 36px; max-width: 520px; width: calc(100% - 48px);
+    }
+    .help-panel h4 { font-size: 20px; color: #fff; margin-bottom: 20px; }
+    .help-panel dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; align-items: baseline; }
+    .help-panel dt { text-align: right; }
+    .help-panel dd { font-size: 16px; color: var(--text-2); }
+    kbd {
+        background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px;
+        border-radius: 6px; padding: 3px 9px; font-family: inherit; font-size: 14px; color: #fff;
+        white-space: nowrap;
+    }
+
+    .loading, .fatal {
+        position: fixed; inset: 0; display: grid; place-items: center;
+        font-size: 19px; color: var(--text-3); text-align: center; padding: 32px; z-index: 70;
+        background: var(--bg);
+    }
+    .fatal { display: none; color: #fca5a5; }
+    .fatal.open { display: grid; }
+
+    :focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; border-radius: 4px; }
+
+    /* ---------- Écrans étroits : la scène reste lisible ---------- */
+    @media (max-width: 720px) {
+        .controls { bottom: 10px; right: 10px; }
+    }
+
+    /* ---------- Export PDF : 1 slide = 1 page paysage ---------- */
+    @media print {
+        @page { size: 1280px 720px; margin: 0; }
+        html, body { overflow: visible; height: auto; background: #fff; }
+        .deck { position: static; display: block; background: none; }
+        .stage { transform: none !important; width: 1280px; height: auto; }
+        .slide {
+            display: flex !important;
+            position: relative;
+            width: 1280px; height: 720px;
+            page-break-after: always; break-after: page;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+        .progress, .controls, .notes, .overview, .help, .loading { display: none !important; }
+    }
+</style>
+</head>
+<body>
+
+<div id="loading" class="loading">Chargement de la présentation…</div>
+<div id="fatal" class="fatal"></div>
+
+<div class="progress" id="progress" style="width:0"></div>
+
+<div class="deck" id="deck">
+    <div class="stage" id="stage"><!-- slides injectées --></div>
+</div>
+
+<div class="controls" role="group" aria-label="Navigation de la présentation">
+    <button type="button" id="btnPrev" title="Slide précédente (←)" aria-label="Slide précédente">‹</button>
+    <span class="counter" id="counter" aria-live="polite">– / –</span>
+    <button type="button" id="btnNext" title="Slide suivante (→)" aria-label="Slide suivante">›</button>
+    <button type="button" id="btnOverview" title="Sommaire (S)" aria-label="Sommaire">☰</button>
+    <button type="button" id="btnNotes" title="Notes orateur (N)" aria-label="Notes orateur">✎</button>
+    <button type="button" id="btnFull" title="Plein écran (F)" aria-label="Plein écran">⛶</button>
+    <button type="button" id="btnHelp" title="Raccourcis clavier (?)" aria-label="Raccourcis clavier">?</button>
+</div>
+
+<aside class="notes" id="notes" aria-label="Notes orateur">
+    <h5>Notes orateur</h5>
+    <div id="notesBody"></div>
+</aside>
+
+<div class="overview" id="overview" role="dialog" aria-modal="true" aria-label="Sommaire">
+    <h4>Sommaire — cliquez pour aller à une slide</h4>
+    <div class="overview-grid" id="overviewGrid"></div>
+</div>
+
+<div class="help" id="help" role="dialog" aria-modal="true" aria-label="Raccourcis clavier">
+    <div class="help-panel">
+        <h4>Raccourcis clavier</h4>
+        <dl>
+            <dt><kbd>→</kbd> <kbd>Espace</kbd></dt><dd>Slide suivante</dd>
+            <dt><kbd>←</kbd></dt><dd>Slide précédente</dd>
+            <dt><kbd>Début</kbd> <kbd>Fin</kbd></dt><dd>Première / dernière slide</dd>
+            <dt><kbd>1</kbd>…<kbd>9</kbd></dt><dd>Aller à la slide N</dd>
+            <dt><kbd>S</kbd></dt><dd>Sommaire</dd>
+            <dt><kbd>N</kbd></dt><dd>Notes orateur</dd>
+            <dt><kbd>F</kbd></dt><dd>Plein écran</dd>
+            <dt><kbd>Ctrl</kbd>+<kbd>P</kbd></dt><dd>Exporter en PDF (1 slide par page)</dd>
+            <dt><kbd>Échap</kbd></dt><dd>Fermer le panneau ouvert</dd>
+        </dl>
+    </div>
+</div>
+
+<script src="assets/config-loader.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    var APP_URL = 'https://trusti-alpha.vercel.app/';
+    var GRADE_COLORS = { A: '#10b981', B: '#06b6d4', C: '#f59e0b', D: '#f97316', E: '#ef4444' };
+    var GRADE_HEIGHTS = { A: 200, B: 172, C: 144, D: 116, E: 88 };
+
+    var stage = document.getElementById('stage');
+    var slides = [];
+    var notesList = [];
+    var titles = [];
+    var current = 0;
+
+    function esc(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /* La config autorise <strong> dans certains champs : on la considère comme
+       contenu de confiance (elle vient de l'admin), donc innerHTML direct. */
+    function foot(chapter) {
+        return '<div class="slide-foot"><span>TrustiScore — Souveraineté numérique</span><span>' + esc(chapter) + '</span></div>';
+    }
+
+    function slide(cls, html, chapter, title, note) {
+        titles.push(title);
+        notesList.push(note || '');
+        return '<section class="slide ' + cls + '" role="group" aria-roledescription="slide" aria-label="' +
+            esc(title) + '">' + html + (chapter ? foot(chapter) : '') + '</section>';
+    }
+
+    function build(cfg) {
+        var criteria = cfg.criteria || {};
+        var grades = cfg.gradeDescriptions || {};
+        var keys = Object.keys(criteria);
+        var out = [];
+
+        /* 1 — Couverture */
+        out.push(slide('slide-cover',
+            '<img src="assets/logo.png" alt="">' +
+            '<h1>' + esc(cfg.siteName || 'TrustiScore') + '</h1>' +
+            '<p class="tagline">' + esc(cfg.siteTagline || '') + '</p>' +
+            '<div class="cover-meta"><span>Souveraineté numérique</span><span>RGPD</span><span>Open source</span></div>',
+            '', 'TrustiScore',
+            'Se présenter en une phrase. Annoncer le plan : le problème, la solution, la méthode, la démo.'));
+
+        /* 2 — Le problème */
+        out.push(slide('slide-statement',
+            '<div class="eyebrow">Le constat</div>' +
+            '<p class="statement">Nous utilisons ces applications tous les jours. <em>Savons-nous où finissent nos données ?</em></p>' +
+            '<p class="statement-note">La majorité des éditeurs non-européens stockent nos informations hors UE, ' +
+            'sous des lois extraterritoriales comme le <strong>Cloud&nbsp;Act</strong> américain — qui permet aux autorités ' +
+            'américaines d\'accéder aux données, même hébergées en Europe.</p>',
+            'Le problème', 'Le constat',
+            'Prendre un exemple dans la salle : téléphone, messagerie, cloud photo. Insister sur le Cloud Act : ' +
+            'l\'hébergement en Europe ne suffit pas si l\'éditeur est soumis au droit américain.'));
+
+        /* 3 — Définition */
+        out.push(slide('',
+            '<div class="eyebrow">Définition</div>' +
+            '<h2>C\'est quoi, la souveraineté numérique&nbsp;?</h2>' +
+            '<div class="body">' +
+            '<p class="lead">La capacité d\'un État, d\'une entreprise ou d\'une personne à garder un contrôle ' +
+            '<strong>juridique, technique et économique</strong> sur ses propres données, sans dépendance excessive ' +
+            'envers des puissances étrangères.</p>' +
+            '<p style="margin-top:26px">Concrètement, en Europe : respect du RGPD, localisation des données dans l\'UE, ' +
+            'et limitation de l\'exposition aux réglementations étrangères.</p>' +
+            '</div>',
+            'Le problème', 'Définition',
+            'Ne pas s\'attarder. Le message : c\'est un sujet juridique ET technique ET économique — c\'est ce qui le rend ' +
+            'illisible pour le grand public. D\'où TrustiScore.'));
+
+        /* 4 — La proposition */
+        out.push(slide('slide-statement',
+            '<div class="eyebrow">La proposition</div>' +
+            '<p class="statement">Après le Nutri-Score, <em>le TrustiScore</em>.</p>' +
+            '<p class="statement-note">Une note unique, de <strong>A à E</strong>, qui résume la souveraineté numérique ' +
+            'd\'une application. Un coup d\'œil suffit pour se décider — pas besoin d\'être expert.</p>',
+            'La solution', 'Après le Nutri-Score',
+            'C\'est LE slide à retenir. L\'analogie Nutri-Score fait tout le travail pédagogique : ' +
+            'personne ne lit les étiquettes nutritionnelles, tout le monde lit la lettre.'));
+
+        /* 5 — Parcours utilisateur */
+        out.push(slide('',
+            '<div class="eyebrow">Le parcours</div>' +
+            '<h2>Comment ça marche</h2>' +
+            '<div class="body"><ol class="steps">' +
+            '<li><strong>Recherchez</strong> une application ou un service — ProtonMail, ChatGPT, Vinted…</li>' +
+            '<li><strong>Découvrez sa note</strong> TrustiScore, de A à E, avec son badge coloré.</li>' +
+            '<li><strong>Lisez le détail</strong> : la justification critère par critère.</li>' +
+            '<li><strong>Trouvez une alternative</strong> plus respectueuse, avec son propre TrustiScore.</li>' +
+            '<li><strong>Contribuez</strong> : proposez vos propres évaluations selon la grille publique.</li>' +
+            '</ol></div>',
+            'La solution', 'Comment ça marche',
+            'Faire la démo live ici si le réseau le permet : ouvrir l\'application et chercher une appli que ' +
+            'le public connaît. Sinon, enchaîner.'));
+
+        /* 6 — L'échelle A → E */
+        var th = cfg.gradeThresholds || { A: 80, B: 60, C: 40, D: 20 };
+        var ranges = {
+            A: th.A + ' – 100', B: th.B + ' – ' + (th.A - 1), C: th.C + ' – ' + (th.B - 1),
+            D: th.D + ' – ' + (th.C - 1), E: '0 – ' + (th.D - 1)
+        };
+        var bars = '', legend = '';
+        ['A', 'B', 'C', 'D', 'E'].forEach(function (g) {
+            var d = grades[g] || {};
+            bars += '<div class="scale-step" style="height:' + GRADE_HEIGHTS[g] + 'px;background:' + GRADE_COLORS[g] + '">' +
+                '<span class="letter">' + g + '</span><span class="cap">' + esc(d.title || '') + '</span></div>';
+            legend += '<div style="border-top-color:' + GRADE_COLORS[g] + '">' +
+                '<div class="range">' + ranges[g] + '</div><div class="unit">points sur 100</div></div>';
+        });
+        out.push(slide('',
+            '<div class="eyebrow">Le résultat</div>' +
+            '<h2>Une échelle de A à E</h2>' +
+            '<div class="body">' +
+            '<div class="scale-row">' + bars + '</div>' +
+            '<div class="scale-legend">' + legend + '</div>' +
+            '<p style="margin-top:34px;font-size:19px;color:#8b9bb4">Les seuils sont publics et documentés : ' +
+            'la note n\'est pas une boîte noire, elle se recalcule à chaque réévaluation du service.</p>' +
+            '</div>',
+            'La méthode', 'L\'échelle A à E',
+            'Préciser que les seuils sont publics et paramétrables — c\'est un gage de transparence, ' +
+            'pas une boîte noire.'));
+
+        /* 7 — Pondération des critères */
+        var rows = '';
+        var maxWeight = keys.reduce(function (m, k) { return Math.max(m, criteria[k].weight); }, 1);
+        keys.forEach(function (k) {
+            var c = criteria[k];
+            rows += '<div class="weight-row">' +
+                '<div class="weight-name">' + esc(c.name) + '</div>' +
+                '<div class="weight-track"><div class="weight-fill" data-w="' +
+                    (c.weight / maxWeight * 100).toFixed(1) + '"></div></div>' +
+                '<div class="weight-pct">' + c.weight + '%</div>' +
+            '</div>';
+        });
+        out.push(slide('',
+            '<div class="eyebrow">La méthode</div>' +
+            '<h2>' + keys.length + ' critères, pondérés</h2>' +
+            '<div class="body"><div class="weights">' + rows + '</div>' +
+            '<p style="margin-top:34px;font-size:19px;color:#8b9bb4">Chaque critère est noté de 0 à 4 points, ' +
+            'pondéré, puis converti sur 100. Méthode inspirée des référentiels européens SecNumCloud et ISO&nbsp;27001.</p>' +
+            '</div>',
+            'La méthode', 'Les critères et leurs poids',
+            'Justifier la pondération : la localisation des données pèse le plus (25%) parce que c\'est le ' +
+            'critère le plus difficile à contourner. La transparence pèse le moins (15%) car elle est déclarative.'));
+
+        /* 8..12 — Une fiche par critère */
+        keys.forEach(function (k) {
+            var c = criteria[k];
+            out.push(slide('',
+                '<div class="eyebrow">Critère</div>' +
+                '<div class="criterion-head"><h2 style="margin-bottom:0">' + esc(c.name) + '</h2>' +
+                '<span class="criterion-weight">' + c.weight + '%</span></div>' +
+                '<div class="body">' +
+                '<p class="lead">' + esc(c.description) + '</p>' +
+                '<div class="verdicts">' +
+                '<div class="verdict good"><div class="badge"><small>Note A</small>4 points</div><p>' + esc(c.gradeAExample) + '</p></div>' +
+                '<div class="verdict bad"><div class="badge"><small>Note E</small>0 point</div><p>' + esc(c.gradeEExample) + '</p></div>' +
+                '</div></div>',
+                'La méthode — ' + c.weight + '%', c.name,
+                'Donner un exemple concret d\'éditeur pour chaque extrémité. Ne pas lire les encadrés : ' +
+                'le public les lit plus vite que vous.'));
+        });
+
+        /* 13 — Exemples réels */
+        out.push(slide('',
+            '<div class="eyebrow">En pratique</div>' +
+            '<h2>Deux exemples, deux verdicts</h2>' +
+            '<div class="body"><div class="examples">' +
+            '<div class="app-card">' +
+            '<div class="app-grade" style="background:' + GRADE_COLORS.A + '">A</div>' +
+            '<div><h4>ProtonMail</h4><p>Données hébergées en UE, chiffrement de bout en bout, transparence maximale.</p></div>' +
+            '</div>' +
+            '<div class="app-card">' +
+            '<div class="app-grade" style="background:' + GRADE_COLORS.E + '">E</div>' +
+            '<div><h4>TikTok</h4><p>Transferts de données hors UE, opacité sur la gestion et la conservation.</p></div>' +
+            '</div>' +
+            '</div></div>',
+            'En pratique', 'Deux exemples',
+            'Demander à la salle de deviner la note avant de l\'afficher — ça marche toujours. ' +
+            'Adapter les deux exemples au public (secteur public, santé, éducation…).'));
+
+        /* 14 — Le simulateur */
+        out.push(slide('',
+            '<div class="eyebrow">Pour les éditeurs</div>' +
+            '<h2>Et dans l\'autre sens : le simulateur</h2>' +
+            '<div class="body">' +
+            '<p class="lead">Vous construisez une application&nbsp;? Évaluez-la vous-même, en 5&nbsp;minutes, ' +
+            '<strong>avant</strong> le lancement.</p>' +
+            '<div class="stats" style="margin-top:36px">' +
+            '<div class="stat"><div class="n">' + keys.length + '</div><div class="l">questions sur vos choix techniques et juridiques</div></div>' +
+            '<div class="stat"><div class="n">A–E</div><div class="l">score instantané, calculé selon la même grille publique</div></div>' +
+            '<div class="stat"><div class="n">0&nbsp;€</div><div class="l">gratuit, sans compte, sans envoi de vos réponses</div></div>' +
+            '</div></div>',
+            'Pour les éditeurs', 'Le simulateur',
+            'Enchaîner sur une démo live du simulateur : simulateur.html. Remplir 5 réponses, ' +
+            'montrer le radar. Message clé : on identifie les points faibles avant le lancement, pas après.'));
+
+        /* 15 — Engagement */
+        out.push(slide('',
+            '<div class="eyebrow">Notre engagement</div>' +
+            '<h2>Indépendant, objectif, transparent</h2>' +
+            '<div class="body"><ol class="steps">' +
+            '<li><strong>Indépendance totale</strong> — aucun lien financier avec les services évalués.</li>' +
+            '<li><strong>Objectivité</strong> — des faits vérifiables et des sources publiques, rien d\'autre.</li>' +
+            '<li><strong>Transparence</strong> — grille de notation publique, justification pour chaque note.</li>' +
+            '<li><strong>Mise à jour continue</strong> — réévaluation au fil de l\'évolution des services.</li>' +
+            '<li><strong>Respect de la vie privée</strong> — nous appliquons ce que nous recommandons.</li>' +
+            '</ol></div>',
+            'L\'engagement', 'Nos principes',
+            'C\'est le slide qui répond à la question « qui êtes-vous pour noter ? ». ' +
+            'Anticiper la question du modèle économique.'));
+
+        /* 16 — Clôture */
+        out.push(slide('slide-outro',
+            '<h2>Reprenez le contrôle<br>de vos données</h2>' +
+            '<p class="lead" style="max-width:56ch;text-align:center">TrustiScore est open source et grandit avec sa communauté : ' +
+            'proposez des applications, contestez une note, faites évoluer la grille.</p>' +
+            '<div class="urls">' +
+            '<div class="url-chip"><div class="k">L\'application</div><div class="v">trusti-alpha.vercel.app</div></div>' +
+            '<div class="url-chip"><div class="k">Le simulateur</div><div class="v">/simulateur.html</div></div>' +
+            '</div>',
+            '', 'Conclusion',
+            'Appel à l\'action précis selon le public : tester une appli ce soir, ou contribuer à une évaluation, ' +
+            'ou passer le simulateur sur leur propre produit. Laisser ce slide affiché pendant les questions.'));
+
+        stage.innerHTML = out.join('');
+        slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+        buildOverview();
+    }
+
+    /* ---------- Sommaire ---------- */
+    function buildOverview() {
+        var grid = document.getElementById('overviewGrid');
+        grid.innerHTML = titles.map(function (t, i) {
+            return '<button type="button" class="ov-item" data-i="' + i + '">' +
+                '<span class="num">' + (i + 1) + ' / ' + titles.length + '</span>' + esc(t) + '</button>';
+        }).join('');
+        grid.addEventListener('click', function (e) {
+            var b = e.target.closest('.ov-item');
+            if (!b) return;
+            go(parseInt(b.dataset.i, 10));
+            toggleOverview(false);
+        });
+    }
+
+    /* ---------- Navigation ---------- */
+    function go(i) {
+        if (i < 0 || i >= slides.length) return;
+        slides[current].classList.remove('active');
+        current = i;
+        var s = slides[current];
+        s.classList.add('active');
+
+        document.getElementById('counter').textContent = (i + 1) + ' / ' + slides.length;
+        document.getElementById('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+        document.getElementById('notesBody').textContent = notesList[i] || 'Pas de note pour cette slide.';
+
+        Array.prototype.forEach.call(document.querySelectorAll('.ov-item'), function (b, n) {
+            b.classList.toggle('current', n === i);
+        });
+
+        // Animation des barres de pondération à l'entrée sur la slide
+        Array.prototype.forEach.call(s.querySelectorAll('.weight-fill'), function (el) {
+            el.style.width = '0';
+            requestAnimationFrame(function () { el.style.width = el.dataset.w + '%'; });
+        });
+
+        try { history.replaceState(null, '', '#' + (i + 1)); } catch (err) { /* file:// */ }
+    }
+
+    var next = function () { go(current + 1); };
+    var prev = function () { go(current - 1); };
+
+    function toggleOverview(force) {
+        var el = document.getElementById('overview');
+        var open = force === undefined ? !el.classList.contains('open') : force;
+        el.classList.toggle('open', open);
+    }
+    function toggleNotes(force) {
+        var el = document.getElementById('notes');
+        el.classList.toggle('open', force === undefined ? !el.classList.contains('open') : force);
+    }
+    function toggleHelp(force) {
+        var el = document.getElementById('help');
+        el.classList.toggle('open', force === undefined ? !el.classList.contains('open') : force);
+    }
+    function toggleFullscreen() {
+        if (document.fullscreenElement) { document.exitFullscreen(); }
+        else if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        var k = e.key;
+        if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter') { e.preventDefault(); next(); }
+        else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); prev(); }
+        else if (k === 'Home') { e.preventDefault(); go(0); }
+        else if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+        else if (k === 'Escape') { toggleOverview(false); toggleHelp(false); toggleNotes(false); }
+        else if (k === 's' || k === 'S') { toggleOverview(); }
+        else if (k === 'n' || k === 'N') { toggleNotes(); }
+        else if (k === 'f' || k === 'F') { toggleFullscreen(); }
+        else if (k === '?') { toggleHelp(); }
+        else if (/^[1-9]$/.test(k)) { go(parseInt(k, 10) - 1); }
+    });
+
+    document.getElementById('btnNext').addEventListener('click', next);
+    document.getElementById('btnPrev').addEventListener('click', prev);
+    document.getElementById('btnOverview').addEventListener('click', function () { toggleOverview(); });
+    document.getElementById('btnNotes').addEventListener('click', function () { toggleNotes(); });
+    document.getElementById('btnFull').addEventListener('click', toggleFullscreen);
+    document.getElementById('btnHelp').addEventListener('click', function () { toggleHelp(); });
+    document.getElementById('help').addEventListener('click', function (e) {
+        if (e.target === this) toggleHelp(false);
+    });
+
+    // Balayage tactile
+    var tx = 0, ty = 0;
+    document.addEventListener('touchstart', function (e) {
+        tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx;
+        var dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
+    }, { passive: true });
+
+    /* ---------- Mise à l'échelle de la scène ---------- */
+    function fit() {
+        var pad = window.innerWidth < 720 ? 8 : 24;
+        var s = Math.min(
+            (window.innerWidth - pad * 2) / 1280,
+            (window.innerHeight - pad * 2) / 720
+        );
+        stage.style.setProperty('--scale', s);
+    }
+    window.addEventListener('resize', fit);
+
+    /* ---------- Démarrage ---------- */
+    trustiConfig.load().then(function (cfg) {
+        build(cfg);
+        document.getElementById('loading').style.display = 'none';
+        fit();
+        var hash = parseInt((location.hash || '').replace('#', ''), 10);
+        go(hash > 0 && hash <= slides.length ? hash - 1 : 0);
+    }).catch(function (err) {
+        console.error(err);
+        document.getElementById('loading').style.display = 'none';
+        var f = document.getElementById('fatal');
+        f.textContent = 'Impossible de charger le contenu de la présentation (' +
+            (err && err.message ? err.message : 'erreur inconnue') +
+            '). Vérifiez que assets/config.json est accessible, puis rechargez la page.';
+        f.classList.add('open');
+    });
+})();
+</script>
+</body>
+</html>
