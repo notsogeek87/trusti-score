@@ -1,0 +1,13 @@
+services:
+  backend:
+    build: ./backend
+    container_name: trustiscore-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      - PORT=3001
+    ports:
+      # Le backend n'est joignable que depuis la machine locale.
+      # C'est nginx (déjà en écoute sur 80/443) qui l'expose publiquement via proxy_pass.
+      - "127.0.0.1:3001:3001"
