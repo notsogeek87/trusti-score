@@ -490,7 +490,10 @@
     function build(cfg) {
         var criteria = cfg.criteria || {};
         var grades = cfg.gradeDescriptions || {};
-        var keys = Object.keys(criteria);
+        // Même ordre que la page d'accueil : du critère le plus lourd au plus léger.
+        var keys = Object.keys(criteria).sort(function (a, b) {
+            return (criteria[b].weight || 0) - (criteria[a].weight || 0);
+        });
         var out = [];
 
         /* 1 — Couverture */

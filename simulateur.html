@@ -56,7 +56,8 @@
         .logo-container img {
             max-width: 150px;
             height: auto;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            border-radius: 20px;
+            box-shadow: 0 12px 32px rgba(2, 8, 20, 0.45);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -762,6 +763,31 @@
         }
 
         .sticky-cta:hover { background: rgba(255,255,255,0.25); }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.4rem 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover { text-decoration: underline; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -818,8 +844,14 @@
     </div>
 
     <footer>
+        <nav class="footer-links" aria-label="Informations légales">
+            <a href="index.html">Accueil</a>
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="confidentialite.html">Confidentialité</a>
+            <a href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">Code source</a>
+        </nav>
         <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
-        <p><a href="index.html" style="color: #60a5fa; text-decoration: none;">Retour à l'accueil</a></p>
+        <p>Vos réponses ne quittent pas votre navigateur.</p>
     </footer>
 
     <script src="assets/config-loader.js"></script>

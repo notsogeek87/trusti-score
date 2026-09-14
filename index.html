@@ -56,7 +56,10 @@
         .logo-container img {
             max-width: 180px;
             height: auto;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            /* Le PNG a un fond blanc : on l'assume en pastille plutôt que de
+               laisser un rectangle blanc flotter sur le dégradé. */
+            border-radius: 22px;
+            box-shadow: 0 12px 32px rgba(2, 8, 20, 0.45);
             animation: float 3s ease-in-out infinite;
         }
         
@@ -77,6 +80,9 @@
             font-size: 1.4rem;
             opacity: 0.95;
             font-weight: 300;
+            /* La règle globale `p { text-align: left }` l'emporte sur le
+               text-align hérité du header : on le rétablit explicitement. */
+            text-align: center;
         }
         
         .nav-link {
@@ -154,11 +160,13 @@
         }
         
         .grade-card {
+            /* display:grid pour que le bouton interne remplisse toute la hauteur
+               de la cellule : sinon la bordure colorée dépasse sous la carte. */
+            display: grid;
             border-radius: 12px;
             border-left: 5px solid;
             perspective: 800px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: default;
         }
 
         .grade-card:hover {
@@ -173,15 +181,33 @@
             grid-template-areas: "card";
             transform-style: preserve-3d;
             transition: transform 0.65s ease;
+            /* Le retournement est désormais porté par un <button> : il doit
+               fonctionner au clic et au clavier, pas uniquement au survol. */
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: none;
+            font: inherit;
+            color: inherit;
+            text-align: left;
+            cursor: pointer;
         }
 
-        .grade-card:hover .grade-card-inner {
+        .grade-card-inner[aria-expanded="true"] {
             transform: rotateY(180deg);
+        }
+
+        /* Le survol reste un bonus, uniquement là où un vrai pointeur existe. */
+        @media (hover: hover) and (pointer: fine) {
+            .grade-card:hover .grade-card-inner[aria-expanded="false"] {
+                transform: rotateY(180deg);
+            }
         }
 
         .grade-card-front,
         .grade-card-back {
             grid-area: card;
+            font-family: inherit;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             border-radius: 12px;
@@ -204,16 +230,41 @@
             border: 1px solid rgba(255,255,255,0.06);
         }
 
-        .grade-card-back p {
+        .grade-letter {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .grade-title {
+            color: #e0f2fe;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .grade-text {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .grade-card-back .grade-text {
             color: #e2e8f0;
             font-size: 1rem;
             line-height: 1.7;
-            margin: 0;
         }
+
+        .grade-a .grade-letter { color: #10b981; }
+        .grade-b .grade-letter { color: #06b6d4; }
+        .grade-c .grade-letter { color: #f59e0b; }
+        .grade-d .grade-letter { color: #f97316; }
+        .grade-e .grade-letter { color: #ef4444; }
 
         .flip-hint {
             display: block;
-            color: #64748b;
+            color: #94a3b8;
             font-size: 0.75rem;
             margin-top: auto;
             padding-top: 0.75rem;
@@ -733,9 +784,301 @@
         }
 
         .sticky-cta:hover { background: #2563eb; }
+
+        /* ================= Ajouts audit UX — P0 / P1 ================= */
+
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 1rem;
+            z-index: 200;
+            background: #fff;
+            color: #1e3a8a;
+            padding: 0.7rem 1.4rem;
+            border-radius: 0 0 8px 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 0; }
+
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* --- F03 : la promesse au-dessus de la ligne de flottaison --- */
+        .hero-pitch {
+            max-width: 780px;
+            margin: 2.5rem auto 0;
+            padding: 1.8rem 2rem;
+            background: rgba(15, 23, 42, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-pitch .hero-promise {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1.1rem;
+            line-height: 1.3;
+        }
+
+        .badge-strip {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .badge-strip span {
+            width: 2.6rem;
+            height: 2.6rem;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #06121f;
+        }
+
+        .badge-a { background: #10b981; }
+        .badge-b { background: #06b6d4; }
+        .badge-c { background: #f59e0b; }
+        .badge-d { background: #f97316; }
+        .badge-e { background: #ef4444; }
+
+        .hero-pitch p {
+            color: #e0f2fe;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 0 auto;
+            max-width: 62ch;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.6rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.02rem;
+            transition: all 0.25s ease;
+        }
+
+        .hero-primary { background: #fff; color: #1e3a8a; }
+        .hero-primary:hover { background: #f0f9ff; transform: translateY(-2px); }
+
+        .hero-secondary {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+        .hero-secondary:hover { background: rgba(255, 255, 255, 0.24); transform: translateY(-2px); }
+
+        /* --- F01 : bandeau discret si la config n'a pas pu être chargée --- */
+        .config-warning {
+            display: none;
+            max-width: 1200px;
+            margin: 1rem auto 0;
+            padding: 0.9rem 1.3rem;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            border-left-width: 4px;
+            border-radius: 8px;
+            color: #fcd34d;
+            font-size: 0.95rem;
+        }
+        .config-warning.show { display: block; }
+
+        /* --- F10 / F11 : poids visibles et comparables --- */
+        .criteria-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .criteria-item h3 {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .criteria-weight {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #e0f2fe;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .criteria-bar {
+            height: 6px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.9rem;
+        }
+
+        .criteria-bar-fill {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa, #93c5fd);
+            border-radius: 3px;
+        }
+
+        /* --- F09 : deux exemples qui rendent la note tangible --- */
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.75));
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 1.6rem;
+            display: flex;
+            gap: 1.3rem;
+            align-items: flex-start;
+        }
+
+        .example-badge {
+            width: 4.5rem;
+            height: 4.5rem;
+            flex: none;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #06121f;
+        }
+
+        .example-card h3 {
+            margin: 0 0 0.4rem;
+            font-size: 1.35rem;
+            color: #fff;
+        }
+
+        .example-card p {
+            font-size: 1rem;
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .example-verdict {
+            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- F04 : des liens là où le site promet de contribuer --- */
+        .link-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1rem;
+            margin: 1.8rem 0;
+        }
+
+        .link-card {
+            display: block;
+            padding: 1.2rem 1.4rem;
+            background: rgba(30, 58, 138, 0.3);
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .link-card:hover {
+            background: rgba(59, 130, 246, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .link-card strong {
+            display: block;
+            color: #e0f2fe;
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .link-card span {
+            color: #cbd5e1;
+            font-size: 0.92rem;
+        }
+
+        /* --- F05 : le pied de page porte enfin les pages obligatoires --- */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.4rem 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero-pitch {
+                margin-top: 1.5rem;
+                padding: 1.2rem 1rem;
+            }
+            .hero-pitch .hero-promise { font-size: 1.2rem; }
+            .hero-pitch p { font-size: 1rem; }
+            .badge-strip span { width: 2.1rem; height: 2.1rem; font-size: 1.1rem; }
+            .hero-actions a { width: 100%; justify-content: center; }
+            .example-card { flex-direction: column; gap: 1rem; }
+            .example-badge { width: 3.6rem; height: 3.6rem; font-size: 2rem; }
+        }
+
+        /* --- F14 (offert, une ligne) : respecter le réglage système --- */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <a href="#contenu" class="skip-link">Aller au contenu</a>
     <div id="stickyBar" class="sticky-bar" aria-hidden="true">
         <img src="assets/logo.png" alt="" class="sticky-logo" aria-hidden="true">
         <span class="sticky-title">TrustiScore</span>
@@ -748,134 +1091,285 @@
             </div>
             <h1>TrustiScore</h1>
             <p>Reprenez votre souveraineté numérique européenne</p>
-            <a href="simulateur.html" class="nav-link">🧮 Simulateur TrustiScore</a>
+
+            <div class="hero-pitch">
+                <p class="hero-promise">Après le Nutri-Score, le TrustiScore.</p>
+                <div class="badge-strip" aria-hidden="true">
+                    <span class="badge-a">A</span>
+                    <span class="badge-b">B</span>
+                    <span class="badge-c">C</span>
+                    <span class="badge-d">D</span>
+                    <span class="badge-e">E</span>
+                </div>
+                <p>
+                    Une note de <strong>A à E</strong> qui résume la souveraineté numérique d'une application :
+                    où vivent vos données, qui peut légalement y accéder, et ce que l'éditeur en dit publiquement.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://trusti-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="hero-primary">
+                        🔍 Consulter les notes
+                    </a>
+                    <a href="simulateur.html" class="hero-secondary">
+                        🧮 Tester mon application
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <section>
-            <h2>🎯 Pourquoi TrustiScore existe-t-il ?</h2>
-            
+    <div id="configWarning" class="config-warning" role="status">
+        ⚠️ Les notes et critères affichés proviennent de la version de secours embarquée dans la page :
+        ils peuvent ne pas refléter la dernière mise à jour de la grille.
+    </div>
+
+    <main id="contenu" class="container">
+        <section id="probleme">
+            <h2><span aria-hidden="true">🎯</span> Pourquoi TrustiScore existe-t-il&nbsp;?</h2>
+
             <p>
-                À l'ère du numérique, nous dépendons d'applications et services en ligne pour tout : communications, travail, loisirs. 
+                À l'ère du numérique, nous dépendons d'applications et services en ligne pour tout : communications, travail, loisirs.
                 Mais <strong>savons-nous vraiment où finissent nos données personnelles ?</strong>
             </p>
-            
+
             <div class="highlight-box">
-                <strong>L'enjeu est crucial :</strong> La majorité des éditeurs non-européens (GAFAM en tête) stockent nos 
-                informations hors UE, sous des lois extraterritoriales comme le <strong>Cloud Act américain</strong> (accès forcé 
-                aux données par les autorités US, même hébergées en Europe). Résultat ? Une perte de contrôle sur nos photos, 
+                <strong>L'enjeu est crucial :</strong> La majorité des éditeurs non-européens (GAFAM en tête) stockent nos
+                informations hors UE, sous des lois extraterritoriales comme le <strong>Cloud Act américain</strong> (accès forcé
+                aux données par les autorités US, même hébergées en Europe). Résultat ? Une perte de contrôle sur nos photos,
                 messages, historiques...
             </div>
-            
-            <h3>Comment tout a commencé ?</h3>
+
+            <h3>Mais déjà, c'est quoi la souveraineté numérique&nbsp;?</h3>
             <p>
-                Tout part d'un défi personnel – créer un smartphone "purgé" au maximum des « applications GAFAM ». 
-                Après des tests intensifs, l'idée émerge d'approfondir l'expérience en la partageant : Pourquoi ne pas créer 
-                <strong>une appli qui note objectivement la "souveraineté numérique" des autres applis ?</strong>
-            </p>
-            
-            <p>
-                Un peu de travail acharné plus tard, voici <strong>TrustiScore</strong> : une appli open source, appelée à grandir 
-                <strong>avec la communauté</strong> (contributions GitHub bienvenues !). Notre mission ? Vous aider à choisir des 
-                outils respectueux de votre vie privée et de la souveraineté européenne.
-            </p>
-            
-            <h3>Mais déjà, c'est quoi la souveraineté numérique?</h3>
-            <p>
-                <strong>La souveraineté numérique,</strong> c'est la capacité d'un État, d'un service, d'une personne, d'une 
-                appli etc… à conserver un contrôle juridique, technique et économique sur ses propres données sans avoir de 
+                <strong>La souveraineté numérique,</strong> c'est la capacité d'un État, d'un service, d'une personne, d'une
+                appli etc… à conserver un contrôle juridique, technique et économique sur ses propres données sans avoir de
                 dépendance excessive envers des puissances étrangères.
             </p>
-            
+
             <p>
-                Donc pour l'Europe et la France, cela nécessite le respect du Règlement général sur la protection des données (RGPD), 
-                la localisation des données en UE, la limitation des risques d'applications de réglementations étrangères comme le 
+                Donc pour l'Europe et la France, cela nécessite le respect du Règlement général sur la protection des données (RGPD),
+                la localisation des données en UE, la limitation des risques d'applications de réglementations étrangères comme le
                 Cloud Act etc…
             </p>
-            
+
             <p>
                 Ça paraît compliqué ? <strong>Trustiscore simplifie cela pour vous !</strong>
             </p>
-            
-            <div class="inline-cta">
-                <div class="inline-cta-text">
-                    <p>💡 <strong>Prêt à découvrir quelles applications respectent votre vie privée ?</strong> Consultez nos évaluations détaillées maintenant.</p>
-                </div>
-                <a href="https://trusti-alpha.vercel.app/" target="_blank" class="inline-cta-button">
-                    🔍 Découvrir les TrustiApps
-                </a>
-            </div>
         </section>
 
-        <section>
-            <h2>🔍 Comment ça marche ? (Simple et efficace)</h2>
-            
-            <p>Pas de complication :</p>
-            
-            <ol class="how-steps">
-                <li><strong>Recherchez une app ou service</strong> (ex: ProtonMail, ChatGPT, Vinted…).</li>
-                <li><strong>Découvrez son score TrustiScore</strong> : Une note globale de <strong>A à E</strong>, avec badges colorés 
-                    (🟢 A = excellent, 🔴 E = risque).</li>
-                <li><strong>Accédez aux détails</strong> : Explications complètes, Justification de la note.</li>
-                <li><strong>Pensez à une alternative</strong> : Des propositions d'applis plus respectueuses de la souveraineté numérique 
-                    avec leur Trustiscore.</li>
-                <li><strong>Partagez vos expériences</strong> : Proposez vous aussi des applis avec un Trustiscore basé sur la grille de notation.</li>
-            </ol>
-            
-            <div class="highlight-box">
-                <strong>Après le Nutriscore…le Trustiscore</strong> : De la même manière, un coup d'œil suffit pour se décider. 
-                Pas besoin d'être expert – TrustiScore démocratise l'accès à l'info sur le respect de la souveraineté numérique par les applis.
-            </div>
+        <section id="methode">
+            <h2><span aria-hidden="true">⚖️</span> La méthode : comment la note est calculée</h2>
 
-            <h3>L'échelle de notation</h3>
-            <div class="grade-scale">
-                <div class="loading-placeholder" aria-live="polite">Chargement des notes…</div>
-            </div>
-            
-            <h3>Exemples concrets</h3>
-            <ul>
-                <li><strong>ProtonMail (A)</strong> : Données en UE, transparence maximum</li>
-                <li><strong>TikTok (E)</strong> : Pratiques de transferts de données hors UE, opacité sur la gestion des données</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>⚖️ Le système de notation (transparent et équilibré)</h2>
-            
             <p>
-                Nous évaluons <strong>chaque appli sur 5 critères clés</strong>, notés de <strong>0 à 4 points</strong> 
-                (pondérés pour un score sur 100 et converti en A-E). Cette méthode rigoureuse est directement inspirée 
+                Nous évaluons <strong>chaque appli sur 5 critères clés</strong>, notés de <strong>0 à 4 points</strong>
+                (pondérés pour un score sur 100 et converti en A-E). Cette méthode rigoureuse est directement inspirée
                 des standards européens (SecNumCloud, ISO 27001).
             </p>
 
+            <h3>Les 5 critères, du plus lourd au plus léger</h3>
+
+            <!-- Contenu de secours : remplacé par config-loader.js quand la
+                 configuration (API puis config.json) est disponible. Il doit
+                 rester lisible tel quel, sans JavaScript. -->
             <div class="criteria-grid">
-                <div class="loading-placeholder" aria-live="polite">Chargement des critères…</div>
+                <div class="criteria-item">
+                    <div class="criteria-head">
+                        <h3><span aria-hidden="true">💾</span> Localisation des données</h3>
+                        <span class="criteria-weight">25<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                    </div>
+                    <div class="criteria-bar" aria-hidden="true"><span class="criteria-bar-fill" style="width:100%"></span></div>
+                    <p><strong>Note A :</strong> 100% en Union européenne (cloud souverain qualifié)<br>
+                       <strong>Note E :</strong> Stockage mondial sans garanties RGPD</p>
+                </div>
+                <div class="criteria-item">
+                    <div class="criteria-head">
+                        <h3><span aria-hidden="true">🗺️</span> Gouvernance et Juridiction</h3>
+                        <span class="criteria-weight">20<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                    </div>
+                    <div class="criteria-bar" aria-hidden="true"><span class="criteria-bar-fill" style="width:80%"></span></div>
+                    <p><strong>Note A :</strong> Siège/actionnaires en France ou en Union européenne, pas de lois intrusives<br>
+                       <strong>Note E :</strong> Siège aux USA, en Chine, risques extraterritoriaux</p>
+                </div>
+                <div class="criteria-item">
+                    <div class="criteria-head">
+                        <h3><span aria-hidden="true">🔧</span> Contrôle technique</h3>
+                        <span class="criteria-weight">20<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                    </div>
+                    <div class="criteria-bar" aria-hidden="true"><span class="criteria-bar-fill" style="width:80%"></span></div>
+                    <p><strong>Note A :</strong> Open source, réversible, sans dépendance GAFAM (Google, Apple, Facebook, Amazon, Microsoft)<br>
+                       <strong>Note E :</strong> Services critiques aux USA, Chine…</p>
+                </div>
+                <div class="criteria-item">
+                    <div class="criteria-head">
+                        <h3><span aria-hidden="true">✅</span> Conformité et Certifications</h3>
+                        <span class="criteria-weight">20<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                    </div>
+                    <div class="criteria-bar" aria-hidden="true"><span class="criteria-bar-fill" style="width:80%"></span></div>
+                    <p><strong>Note A :</strong> RGPD complet (DPO, DPIA), Normes telles que SecNumCloud/ISO<br>
+                       <strong>Note E :</strong> Infos minimales ou absentes</p>
+                </div>
+                <div class="criteria-item">
+                    <div class="criteria-head">
+                        <h3><span aria-hidden="true">📜</span> Transparence</h3>
+                        <span class="criteria-weight">15<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                    </div>
+                    <div class="criteria-bar" aria-hidden="true"><span class="criteria-bar-fill" style="width:60%"></span></div>
+                    <p><strong>Note A :</strong> Rapports détaillés, procédures de droit à l'oubli connues<br>
+                       <strong>Note E :</strong> CGU opaques, pas d'engagements</p>
+                </div>
             </div>
 
+            <h3>Le résultat : une échelle de A à E</h3>
+
+            <!-- Contenu de secours, même principe que la grille ci-dessus. -->
+            <div class="grade-scale">
+                <div class="grade-card grade-a">
+                    <button type="button" class="grade-card-inner" aria-expanded="false" aria-controls="grade-detail-a">
+                        <span class="grade-card-front">
+                            <span class="grade-letter">Note A</span>
+                            <span class="grade-title">Souverain &amp; Privé</span>
+                            <span class="grade-text">Siège et actionnaires en UE, données 100&nbsp;% européennes, open source, RGPD complet avec certifications.</span>
+                            <span class="flip-hint">Voir le détail</span>
+                        </span>
+                        <span class="grade-card-back" id="grade-detail-a">
+                            <span class="grade-text">Cette application offre une protection maximale de votre vie privée. Hébergement européen, transparence totale et respect du RGPD.</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="grade-card grade-b">
+                    <button type="button" class="grade-card-inner" aria-expanded="false" aria-controls="grade-detail-b">
+                        <span class="grade-card-front">
+                            <span class="grade-letter">Note B</span>
+                            <span class="grade-title">Bon</span>
+                            <span class="grade-text">Bonnes pratiques générales avec quelques points d'amélioration concernant la souveraineté ou la transparence.</span>
+                            <span class="flip-hint">Voir le détail</span>
+                        </span>
+                        <span class="grade-card-back" id="grade-detail-b">
+                            <span class="grade-text">Bonnes pratiques générales. Quelques points d'amélioration possibles mais globalement fiable pour un usage courant.</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="grade-card grade-c">
+                    <button type="button" class="grade-card-inner" aria-expanded="false" aria-controls="grade-detail-c">
+                        <span class="grade-card-front">
+                            <span class="grade-letter">Note C</span>
+                            <span class="grade-title">Moyen</span>
+                            <span class="grade-text">Service utile mais présence de risques modérés. Attention nécessaire sur certains points.</span>
+                            <span class="flip-hint">Voir le détail</span>
+                        </span>
+                        <span class="grade-card-back" id="grade-detail-c">
+                            <span class="grade-text">Service acceptable mais avec des risques modérés. Des améliorations sont nécessaires sur certains aspects de la souveraineté.</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="grade-card grade-d">
+                    <button type="button" class="grade-card-inner" aria-expanded="false" aria-controls="grade-detail-d">
+                        <span class="grade-card-front">
+                            <span class="grade-letter">Note D</span>
+                            <span class="grade-title">Faible</span>
+                            <span class="grade-text">Problèmes significatifs en termes de souveraineté et/ou de protection des données. Alternatives recommandées.</span>
+                            <span class="flip-hint">Voir le détail</span>
+                        </span>
+                        <span class="grade-card-back" id="grade-detail-d">
+                            <span class="grade-text">Problèmes significatifs en termes de souveraineté et de protection des données. Des alternatives plus respectueuses sont conseillées.</span>
+                        </span>
+                    </button>
+                </div>
+                <div class="grade-card grade-e">
+                    <button type="button" class="grade-card-inner" aria-expanded="false" aria-controls="grade-detail-e">
+                        <span class="grade-card-front">
+                            <span class="grade-letter">Note E</span>
+                            <span class="grade-title">Critique</span>
+                            <span class="grade-text">Siège hors UE sans garanties, stockage mondial, écosystème fermé, conformité RGPD absente ou invérifiable.</span>
+                            <span class="flip-hint">Voir le détail</span>
+                        </span>
+                        <span class="grade-card-back" id="grade-detail-e">
+                            <span class="grade-text">Risques majeurs pour la souveraineté numérique. Non-conformité RGPD, exposition au Cloud Act ou opacité totale. À éviter.</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <p>
+                <strong>Les seuils sont publics :</strong> A à partir de 80 points sur 100, B à partir de 60, C à partir de 40,
+                D à partir de 20, E en dessous. La note n'est pas une boîte noire.
+            </p>
+
             <div class="highlight-box">
-                <strong>Méthodologie rigoureuse :</strong> Chaque critère est évalué de manière objective sur la base 
-                de documents publics, d'analyses techniques et d'audits indépendants. Les notations sont régulièrement 
+                <strong>Méthodologie rigoureuse :</strong> Chaque critère est évalué de manière objective sur la base
+                de documents publics, d'analyses techniques et d'audits indépendants. Les notations sont régulièrement
                 mises à jour pour refléter l'évolution des pratiques des entreprises.
             </div>
         </section>
 
-        <section>
-            <h2>🧮 Et dans l'autre sens….Testez votre application avec le Simulateur !</h2>
-            
+        <section id="exemples">
+            <h2><span aria-hidden="true">🔍</span> Deux exemples, deux verdicts</h2>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-badge badge-a" aria-hidden="true">A</div>
+                    <div>
+                        <span class="example-verdict" style="color:#10b981">Note A — Souverain &amp; Privé</span>
+                        <h3>ProtonMail</h3>
+                        <p>Données hébergées en Union européenne, transparence maximale sur les pratiques de l'éditeur.</p>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <div class="example-badge badge-e" aria-hidden="true">E</div>
+                    <div>
+                        <span class="example-verdict" style="color:#ef4444">Note E — Critique</span>
+                        <h3>TikTok</h3>
+                        <p>Pratiques de transferts de données hors UE, opacité sur la gestion et la conservation des données.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Après le Nutriscore…le Trustiscore</strong> : De la même manière, un coup d'œil suffit pour se décider.
+                Pas besoin d'être expert – TrustiScore démocratise l'accès à l'info sur le respect de la souveraineté numérique par les applis.
+            </div>
+        </section>
+
+        <section id="utiliser">
+            <h2><span aria-hidden="true">🧭</span> Comment l'utiliser</h2>
+
+            <p>Pas de complication :</p>
+
+            <ol class="how-steps">
+                <li><strong>Recherchez une app ou service</strong> (ex: ProtonMail, ChatGPT, Vinted…).</li>
+                <li><strong>Découvrez son score TrustiScore</strong> : Une note globale de <strong>A à E</strong>, avec badges colorés
+                    (🟢 A = excellent, 🔴 E = risque).</li>
+                <li><strong>Accédez aux détails</strong> : Explications complètes, Justification de la note.</li>
+                <li><strong>Pensez à une alternative</strong> : Des propositions d'applis plus respectueuses de la souveraineté numérique
+                    avec leur Trustiscore.</li>
+                <li><strong>Partagez vos expériences</strong> : Proposez vous aussi des applis avec un Trustiscore basé sur la grille de notation.</li>
+            </ol>
+
+            <div class="inline-cta">
+                <div class="inline-cta-text">
+                    <p>💡 <strong>Prêt à découvrir quelles applications respectent votre vie privée ?</strong> Consultez nos évaluations détaillées maintenant.</p>
+                </div>
+                <a href="https://trusti-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-cta-button">
+                    🔍 Consulter les notes
+                </a>
+            </div>
+        </section>
+
+        <section id="simulateur">
+            <h2><span aria-hidden="true">🧮</span> Et dans l'autre sens…. Testez votre application avec le Simulateur&nbsp;!</h2>
+
             <p>
-                <strong>Développeurs, c'est pour vous !</strong> Utilisez notre <strong>simulateur gratuit</strong> pour évaluer 
+                <strong>Développeurs, c'est pour vous !</strong> Utilisez notre <strong>simulateur gratuit</strong> pour évaluer
                 votre propre projet pendant le développement. Répondez à quelques questions simples (5 min max) sur vos choix tech/juridiques :
             </p>
-            
+
             <h3>Pourquoi c'est génial ?</h3>
             <ul>
-                <li><strong>Auto-vérif souveraineté :</strong> Score instantané A-E pour valider que votre appli respecte au mieux 
+                <li><strong>Auto-vérif souveraineté :</strong> Score instantané A-E pour valider que votre appli respecte au mieux
                     les principes UE (RGPD, data UE).</li>
                 <li><strong>Bonnes pratiques immédiates :</strong> Conseils personnalisés (ex: "Passez à un cloud SecNumCloud pour +15 pts !").</li>
                 <li><strong>Amélioration continue :</strong> Identifiez au plus tôt les faiblesses et boostez votre note avant le lancement.</li>
             </ul>
-            
+
             <div class="highlight-box">
                 <strong>🚀 Passez de C à A en un sprint !</strong> Exemples :
                 <ul style="margin-top: 0.5rem; margin-bottom: 0;">
@@ -883,7 +1377,7 @@
                     <li>Ajoutez un DPO visible = +Conformité.</li>
                 </ul>
             </div>
-            
+
             <div class="inline-cta">
                 <div class="inline-cta-text">
                     <p>🎯 <strong>Testez votre application maintenant !</strong> Découvrez son score en quelques minutes.</p>
@@ -894,17 +1388,24 @@
             </div>
         </section>
 
-        <section>
-            <h2>🤝 Rejoignez la communauté !</h2>
-            
+        <section id="origine">
+            <h2><span aria-hidden="true">📖</span> L'origine du projet</h2>
+
             <p>
-                TrustiScore est <strong>open source</strong> : signalez des applis, proposez des mises à jour, votez les critères. 
-                Ensemble, construisons l'outil n°1 pour une <strong>privacy souveraine en France et en Europe</strong>.
+                Tout part d'un défi personnel – créer un smartphone "purgé" au maximum des « applications GAFAM ».
+                Après des tests intensifs, l'idée émerge d'approfondir l'expérience en la partageant : Pourquoi ne pas créer
+                <strong>une appli qui note objectivement la "souveraineté numérique" des autres applis ?</strong>
             </p>
-            
+
+            <p>
+                Un peu de travail acharné plus tard, voici <strong>TrustiScore</strong> : une appli open source, appelée à grandir
+                <strong>avec la communauté</strong>. Notre mission ? Vous aider à choisir des
+                outils respectueux de votre vie privée et de la souveraineté européenne.
+            </p>
+
             <h3>Notre engagement</h3>
             <p>
-                TrustiScore s'engage à fournir des évaluations <strong>indépendantes, objectives et transparentes</strong>. 
+                TrustiScore s'engage à fournir des évaluations <strong>indépendantes, objectives et transparentes</strong>.
                 Nous ne sommes affiliés à aucune entreprise et ne recevons aucune rémunération des services évalués.
             </p>
 
@@ -914,12 +1415,37 @@
                 <li><strong>Objectivité :</strong> Évaluations basées uniquement sur des faits vérifiables</li>
                 <li><strong>Transparence :</strong> Méthodologie publique et explications détaillées pour chaque note</li>
                 <li><strong>Mise à jour continue :</strong> Réévaluation régulière pour suivre l'évolution des services</li>
-                <li><strong>Respect de la vie privée :</strong> Nous pratiquons ce que nous prêchons</li>
+                <li><strong>Respect de la vie privée :</strong> Nous pratiquons ce que nous prêchons —
+                    <a href="confidentialite.html" style="color:#93c5fd">voir ce que nous collectons</a></li>
             </ol>
+        </section>
+
+        <section id="contribuer">
+            <h2><span aria-hidden="true">🤝</span> Rejoignez la communauté&nbsp;!</h2>
 
             <p>
-                <strong>Rejoignez le mouvement pour une souveraineté numérique européenne.</strong> 
-                En utilisant TrustiScore, vous participez activement à la construction d'un Internet plus respectueux 
+                TrustiScore est <strong>open source</strong> : signalez des applis, proposez des mises à jour, contestez une note.
+                Ensemble, construisons l'outil n°1 pour une <strong>privacy souveraine en France et en Europe</strong>.
+            </p>
+
+            <div class="link-row">
+                <a class="link-card" href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">
+                    <strong>💻 Le code source</strong>
+                    <span>Le dépôt GitHub du projet, ouvert aux contributions.</span>
+                </a>
+                <a class="link-card" href="https://github.com/notsogeek87/trusti-score/issues/new?title=Proposition%20d%27application%20%C3%A0%20%C3%A9valuer&amp;body=**Application%20propos%C3%A9e%20:**%20%0A**Site%20officiel%20:**%20%0A**Pourquoi%20elle%20m%C3%A9rite%20d%27%C3%AAtre%20%C3%A9valu%C3%A9e%20:**%20%0A%0A*Si%20vous%20avez%20d%C3%A9j%C3%A0%20des%20%C3%A9l%C3%A9ments%20sur%20les%205%20crit%C3%A8res,%20ajoutez-les%20ici.*" target="_blank" rel="noopener noreferrer">
+                    <strong>➕ Proposer une application</strong>
+                    <span>Un formulaire pré-rempli : nom, site, et ce que vous savez déjà.</span>
+                </a>
+                <a class="link-card" href="https://github.com/notsogeek87/trusti-score/issues/new?title=Contestation%20de%20note&amp;body=**Application%20concern%C3%A9e%20:**%20%0A**Note%20actuelle%20:**%20%0A**Crit%C3%A8re%20contest%C3%A9%20:**%20%0A**Source%20publique%20%C3%A0%20l%27appui%20:**%20" target="_blank" rel="noopener noreferrer">
+                    <strong>⚖️ Contester une note</strong>
+                    <span>Une source publique à l'appui, et la note est réexaminée.</span>
+                </a>
+            </div>
+
+            <p>
+                <strong>Rejoignez le mouvement pour une souveraineté numérique européenne.</strong>
+                En utilisant TrustiScore, vous participez activement à la construction d'un Internet plus respectueux
                 de vos droits et de votre vie privée.
             </p>
         </section>
@@ -928,15 +1454,15 @@
             <div class="cta-content">
                 <h2>🚀 Passez à l'action dès maintenant</h2>
                 <p>
-                    Ne laissez plus vos données entre les mains d'entreprises opaques. 
+                    Ne laissez plus vos données entre les mains d'entreprises opaques.
                     Découvrez quelles applications respectent vraiment votre vie privée et reprenez le contrôle.
                 </p>
-                
-                <a href="https://trusti-alpha.vercel.app/" target="_blank" class="cta-button">
-                    <span class="cta-icon">🛡️</span>
-                    <span>Accéder à l'application TrustiScore</span>
+
+                <a href="https://trusti-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="cta-button">
+                    <span class="cta-icon">🔍</span>
+                    <span>Consulter les notes</span>
                 </a>
-                
+
                 <div class="cta-features">
                     <div class="cta-feature">
                         <div class="cta-feature-icon">✅</div>
@@ -956,32 +1482,41 @@
                 </div>
             </div>
         </section>
-    </div>
+    </main>
 
     <footer>
+        <nav class="footer-links" aria-label="Informations légales">
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="confidentialite.html">Confidentialité</a>
+            <a href="simulateur.html">Simulateur</a>
+            <a href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">Code source</a>
+        </nav>
         <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
         <p>Données hébergées en Europe | Conformité RGPD | Open Source</p>
     </footer>
 
     <script src="assets/config-loader.js"></script>
     <script>
-        // Chargement de la configuration et initialisation
+        // Chargement de la configuration et initialisation.
+        // Le HTML contient déjà une version complète des notes et des critères :
+        // le JavaScript ne fait que la remplacer par la version à jour.
         async function initHomepage() {
             try {
                 await trustiConfig.load();
-                
-                // Appliquer la configuration au header et footer
+
                 trustiConfig.applyToHeader();
                 trustiConfig.applyToFooter();
-                
-                // Générer l'échelle de notation
+
                 generateGradeScale();
-                
-                // Générer la grille de critères
                 generateCriteriaGrid();
-                
+
             } catch (error) {
                 console.error('Erreur lors de l\'initialisation:', error);
+                // Le contenu de secours reste affiché : on le signale sans le masquer.
+                const warning = document.getElementById('configWarning');
+                if (warning) warning.classList.add('show');
+            } finally {
+                attachGradeCardToggles();
             }
         }
 
@@ -999,7 +1534,16 @@
             }
         }
 
-        // Initialiser au chargement de la page
+        // Les cartes A-E s'ouvrent au clic et au clavier, pas seulement au survol.
+        function attachGradeCardToggles() {
+            document.querySelectorAll('.grade-card-inner').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const open = button.getAttribute('aria-expanded') === 'true';
+                    button.setAttribute('aria-expanded', String(!open));
+                });
+            });
+        }
+
         initHomepage();
 
         // Sticky bar

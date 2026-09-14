@@ -114,6 +114,44 @@ class TrustiScoreConfig {
     }
 
     /**
+     * Obtient les critères triés par poids décroissant.
+     * L'ordre des clés JSON n'a pas de sens pour le lecteur : le poids, si.
+     * @returns {Array<[string, Object]>} Paires [clé, critère]
+     */
+    getSortedCriteria() {
+        return Object.entries(this.getCriteria())
+            .sort((a, b) => (b[1].weight || 0) - (a[1].weight || 0));
+    }
+
+    /**
+     * Extrait l'émoji de tête de `detailedDescription` (ex: "🗺️ Gouvernance…").
+     * Évite d'ajouter un champ au schéma géré par l'admin.
+     * @param {Object} criterion
+     * @returns {string} Émoji ou chaîne vide
+     */
+    getCriterionIcon(criterion) {
+        const source = String(criterion.detailedDescription || '').trim();
+        try {
+            const match = source.match(
+                /^(\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*)/u
+            );
+            return match ? match[1] : '';
+        } catch (e) {
+            // Navigateur sans support des propriétés Unicode dans les regex
+            return '';
+        }
+    }
+
+    /**
+     * Poids du critère le plus lourd, pour mettre les barres à la même échelle.
+     * @returns {number}
+     */
+    getMaxWeight() {
+        return Object.values(this.getCriteria())
+            .reduce((max, c) => Math.max(max, c.weight || 0), 1);
+    }
+
+    /**
      * Obtient un critère spécifique
      * @param {string} key - Clé du critère (ex: 'gouvernance')
      * @returns {Object} Données du critère
@@ -250,19 +288,21 @@ class TrustiScoreConfig {
         ['A', 'B', 'C', 'D', 'E'].forEach(grade => {
             const gradeData = grades[grade];
             if (gradeData) {
+                const id = `grade-detail-${grade.toLowerCase()}`;
                 html += `
                     <div class="grade-card grade-${grade.toLowerCase()}">
-                        <div class="grade-card-inner">
-                            <div class="grade-card-front">
-                                <h4>Note ${grade}</h4>
-                                <h5>${gradeData.title}</h5>
-                                <p>${gradeData.shortDescription || gradeData.description}</p>
-                                <small class="flip-hint">Survolez pour en savoir plus</small>
-                            </div>
-                            <div class="grade-card-back">
-                                <p>${gradeData.description}</p>
-                            </div>
-                        </div>
+                        <button type="button" class="grade-card-inner"
+                                aria-expanded="false" aria-controls="${id}">
+                            <span class="grade-card-front">
+                                <span class="grade-letter">Note ${grade}</span>
+                                <span class="grade-title">${gradeData.title}</span>
+                                <span class="grade-text">${gradeData.shortDescription || gradeData.description}</span>
+                                <span class="flip-hint">Voir le détail</span>
+                            </span>
+                            <span class="grade-card-back" id="${id}">
+                                <span class="grade-text">${gradeData.description}</span>
+                            </span>
+                        </button>
                     </div>
                 `;
             }
@@ -276,13 +316,21 @@ class TrustiScoreConfig {
      * @returns {string} HTML de la grille
      */
     generateCriteriaGrid() {
-        const criteria = this.getCriteria();
+        const maxWeight = this.getMaxWeight();
         let html = '';
 
-        Object.values(criteria).forEach(criterion => {
+        this.getSortedCriteria().forEach(([key, criterion]) => {
+            const icon = this.getCriterionIcon(criterion);
+            const share = Math.round((criterion.weight / maxWeight) * 100);
             html += `
                 <div class="criteria-item">
-                    <strong>${criterion.detailedDescription}</strong>
+                    <div class="criteria-head">
+                        <h3>${icon ? `<span aria-hidden="true">${icon}</span> ` : ''}${criterion.name}</h3>
+                        <span class="criteria-weight">${criterion.weight}<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                    </div>
+                    <div class="criteria-bar" aria-hidden="true">
+                        <span class="criteria-bar-fill" style="width:${share}%"></span>
+                    </div>
                     <p><strong>Note A :</strong> ${criterion.gradeAExample}<br>
                        <strong>Note E :</strong> ${criterion.gradeEExample}</p>
                 </div>
