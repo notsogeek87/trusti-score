@@ -654,7 +654,7 @@
             // La barre ne porte que la lettre : quelle que soit la longueur du
             // libellé édité dans l'admin, elle garde toujours la même hauteur,
             // sans jamais risquer de déborder de la plus petite marche (E).
-            bars += '<div class="scale-step" style="height:' + GRADE_HEIGHTS[g] + 'px;background:' + GRADE_COLORS[g] + '">' +
+            bars += '<div class="scale-step" style="height:' + GRADE_HEIGHTS[g] + 'px;background:' + GRADE_COLORS[g] + ';color:' + GRADE_INK[g] + '">' +
                 '<span class="letter">' + g + '</span></div>';
             legend += '<div style="border-top-color:' + GRADE_COLORS[g] + '">' +
                 '<div class="range">' + ranges[g] + '</div>' +
