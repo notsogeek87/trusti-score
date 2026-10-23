@@ -311,6 +311,20 @@
             if (progressIndicator) progressIndicator.classList.toggle('complete', filled === total);
         }
 
+        // Parcours guidé : après un choix, on défile jusqu'au critère suivant (ou au bouton de calcul)
+        function scrollToNextCriterion(current) {
+            const next = current.nextElementSibling;
+            const target = next && next.classList.contains('criterion-item')
+                ? next
+                : form.querySelector('.calculate-button');
+            if (!target) return;
+            const header = document.getElementById('progressIndicator');
+            const offset = (header ? header.offsetHeight : 0) + 72;
+            const y = target.getBoundingClientRect().top + window.scrollY - offset;
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            setTimeout(() => window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' }), 250);
+        }
+
         function attachEventListeners() {
             form.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
@@ -324,6 +338,7 @@
                     this.closest('.star-option').classList.add('selected');
                     updateCriterionVisual(criterionItem, score);
                     updateProgress();
+                    scrollToNextCriterion(criterionItem);
                 });
             });
 
