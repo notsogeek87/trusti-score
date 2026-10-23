@@ -328,7 +328,7 @@
         .present-toggle:hover { background: var(--paper-2); }
 
         @media print { .present-toggle, .sticky-bar { display: none; } }
-        @media (max-width: 700px) { .present-toggle { display: none; } }
+        @media (max-width: 700px), (pointer: coarse) { .present-toggle, .footer-links a[href="presentation.html"] { display: none; } }
 
         /* ---------- Cohérence avec l'application Trusti : coins arrondis, cartes blanches ---------- */
         .scale-bar { border-radius: var(--radius); font-weight: 900; }
