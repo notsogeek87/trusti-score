@@ -9,24 +9,24 @@
 <title>TrustiScore — Présentation</title>
 <style>
     :root {
-        --bg: oklch(0.19 0.02 255);
-        --surface: oklch(0.24 0.025 255);
-        --surface-2: oklch(0.29 0.028 255);
-        --line: oklch(0.36 0.025 255);
-        --text: oklch(0.95 0.01 85);
-        --text-2: oklch(0.80 0.015 255);
-        --text-3: oklch(0.70 0.02 255);
-        --accent: oklch(0.72 0.12 250);
-        --accent-light: oklch(0.82 0.10 250);
-        --accent-deep: oklch(0.32 0.09 255);
-        --a: oklch(0.74 0.15 150);
-        --b: oklch(0.82 0.16 130);
-        --c: oklch(0.88 0.15 95);
-        --d: oklch(0.77 0.15 58);
-        --e: oklch(0.68 0.19 27);
+        --bg: #0F1F35;
+        --surface: #162B47;
+        --surface-2: #1F3A5F;
+        --line: #34445A;
+        --text: #F4F8FB;
+        --text-2: #B8C8D5;
+        --text-3: #8EAED2;
+        --accent: #3B82C4;
+        --accent-light: #7BAEDB;
+        --accent-deep: #1F3A5F;
+        --a: #006837;
+        --b: #8dc63f;
+        --c: #fbb03b;
+        --d: #f7931e;
+        --e: #c1272d;
         --stage-w: 1280px;
         --stage-h: 720px;
-        --font-display: Charter, 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+        --font-display: Nunito, ui-rounded, 'Segoe UI', system-ui, Roboto, sans-serif;
         --font-mono: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
 
@@ -545,7 +545,8 @@
     'use strict';
 
     var APP_URL = 'https://trusti.lielu.eu';
-    var GRADE_COLORS = { A: 'oklch(0.74 0.15 150)', B: 'oklch(0.82 0.16 130)', C: 'oklch(0.88 0.15 95)', D: 'oklch(0.77 0.15 58)', E: 'oklch(0.68 0.19 27)' };
+    var GRADE_COLORS = { A: '#006837', B: '#8dc63f', C: '#fbb03b', D: '#f7931e', E: '#c1272d' };
+    var GRADE_INK = { A: '#fff', B: '#1B2A3A', C: '#1B2A3A', D: '#1B2A3A', E: '#fff' };
     var GRADE_HEIGHTS = { A: 200, B: 172, C: 144, D: 116, E: 88 };
 
     var stage = document.getElementById('stage');
@@ -720,11 +721,11 @@
             '<h2>Deux exemples, deux verdicts</h2>' +
             '<div class="body"><div class="examples">' +
             '<div class="app-card">' +
-            '<div class="app-grade" style="background:' + GRADE_COLORS.A + '">A</div>' +
+            '<div class="app-grade" style="background:' + GRADE_COLORS.A + ';color:#fff">A</div>' +
             '<div><h4>ProtonMail</h4><p>Données hébergées en UE, chiffrement de bout en bout, transparence maximale.</p></div>' +
             '</div>' +
             '<div class="app-card">' +
-            '<div class="app-grade" style="background:' + GRADE_COLORS.E + '">E</div>' +
+            '<div class="app-grade" style="background:' + GRADE_COLORS.E + ';color:#fff">E</div>' +
             '<div><h4>TikTok</h4><p>Transferts de données hors UE, opacité sur la gestion et la conservation.</p></div>' +
             '</div>' +
             '</div></div>',

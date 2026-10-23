@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="color-scheme" content="light dark">
+    <meta name="color-scheme" content="light">
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="Simulateur TrustiScore : évaluez en 5 minutes la souveraineté numérique de votre application et obtenez une note de A à E.">
     <link rel="icon" type="image/png" href="assets/logo.png">
@@ -100,6 +100,24 @@
         .present-toggle:hover { background: var(--paper-2); }
         @media print { .present-toggle, .sticky-bar { display: none; } }
         @media (max-width: 700px) { .present-toggle { display: none; } }
+
+        /* ---------- Cohérence avec l'application Trusti ---------- */
+        header h1 { color: var(--nuit); font-weight: 800; }
+        .criterion-item { background: var(--paper-2); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 20px; margin-bottom: 16px; }
+        .intro-section { border-top: 0; }
+        .star-option { border-radius: var(--radius); border-color: var(--line-strong); }
+        .star-option.selected { border-color: var(--azur); background: #EEF3F9; box-shadow: none; }
+        .star-label { font-weight: 700; }
+        .progress-indicator { background: var(--paper); }
+        .progress-bar-fill { background: var(--azur); }
+        .progress-bar-track { background: var(--line-strong); height: 8px; border-radius: 4px; }
+        .calculate-button { background: var(--nuit); border-radius: var(--radius); font-weight: 700; }
+        .reset-button { border-color: var(--nuit); color: var(--nuit); background: var(--paper-2); border-radius: var(--radius); }
+        .form-actions { border-top: 0; }
+        .result-container { background: var(--paper-2); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 28px 20px; }
+        .result-score { border-radius: 2rem; border: 4px solid #fff; box-shadow: var(--shadow); font-weight: 900; }
+        .present-toggle { border-color: var(--nuit); color: var(--nuit); box-shadow: var(--shadow); }
+        .score-excellent, .score-good, .score-average, .score-poor, .score-critical { padding-left: 20px; }
     </style>
 </head>
 <body class="simulateur">

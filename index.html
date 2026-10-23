@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="color-scheme" content="light dark">
+    <meta name="color-scheme" content="light">
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="TrustiScore évalue la souveraineté numérique des applications : hébergement européen, RGPD, transparence. Découvrez la note A-E de vos applications préférées.">
     <link rel="icon" type="image/png" href="assets/logo.png">
@@ -329,6 +329,34 @@
 
         @media print { .present-toggle, .sticky-bar { display: none; } }
         @media (max-width: 700px) { .present-toggle { display: none; } }
+
+        /* ---------- Cohérence avec l'application Trusti : coins arrondis, cartes blanches ---------- */
+        .scale-bar { border-radius: var(--radius); font-weight: 900; }
+        .scale { gap: 6px; }
+        .scale-note { margin-top: 18px; }
+        .highlight-box { border-top: 0; border-radius: var(--radius); box-shadow: var(--shadow); background: var(--paper-2); }
+        .band .highlight-box { background: var(--paper); box-shadow: none; }
+        .grade-card { border-top: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; }
+        .grade-card-inner { padding: 20px; }
+        .grade-letter { border-radius: 12px; padding: 4px 14px; font-weight: 900; }
+        .example-card { border-top: 0; background: var(--paper-2); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 20px; }
+        .example-badge { border-radius: var(--radius-lg); font-weight: 900; border: 4px solid #fff; box-shadow: var(--shadow); width: 84px; height: 84px; }
+        .criteria-item { background: var(--paper-2); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 20px; margin-bottom: 16px; }
+        .criteria-grid { gap: 0 16px; }
+        .criteria-bar { height: 8px; border-radius: 4px; }
+        .criteria-bar-fill { border-radius: 4px; background: var(--azur); }
+        .link-card { background: var(--paper-2); border: 0 !important; border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 10px; }
+        .link-row { margin-bottom: 20px; }
+        .inline-cta { background: var(--paper-2); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 20px; }
+        .band .inline-cta { background: var(--paper); box-shadow: none; }
+        .cta-feature { background: var(--paper-2); border: 0; border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }
+        .sticky-bar { box-shadow: var(--shadow); }
+        .sticky-logo, .brand img { border-radius: 12px; }
+        .home main > section { border-top: 0; }
+        .home main > section.band { border-bottom: 0; }
+        .home header h1, .home h2, .sec-body h3 { font-weight: 800; }
+        .home header h1 { color: var(--nuit); }
+        .present-toggle { border-color: var(--nuit); color: var(--nuit); box-shadow: var(--shadow); }
     </style>
 </head>
 <body class="home">
