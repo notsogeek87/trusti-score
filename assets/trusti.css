@@ -140,7 +140,7 @@ body:not(.home) header {
 }
 body:not(.home) header img {
     display: block;
-    height: 44px;
+    height: 56px;
     width: auto;
     border-radius: 10px;
     margin-bottom: 28px;
