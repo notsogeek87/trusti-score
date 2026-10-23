@@ -331,8 +331,6 @@ class TrustiScoreConfig {
                     <div class="criteria-bar" aria-hidden="true">
                         <span class="criteria-bar-fill" style="width:${share}%"></span>
                     </div>
-                    <p><strong>Note A :</strong> ${criterion.gradeAExample}<br>
-                       <strong>Note E :</strong> ${criterion.gradeEExample}</p>
                 </div>
             `;
         });
