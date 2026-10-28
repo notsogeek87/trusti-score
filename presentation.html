@@ -9,16 +9,19 @@
 <title>TrustiScore — Présentation</title>
 <style>
     :root {
-        --bg: #0F1F35;
-        --surface: #162B47;
-        --surface-2: #1F3A5F;
-        --line: #34445A;
-        --text: #F4F8FB;
-        --text-2: #B8C8D5;
-        --text-3: #8EAED2;
+        /* Charte « Ciel & encre bleue » (assets/trusti.css) : mode clair uniquement. */
+        --bg: #E9F0F6;
+        --surface: #FFFFFF;
+        --surface-2: #F4F8FB;
+        --line: #DCE8EF;
+        --line-strong: #B8C8D5;
+        --text: #1B2A3A;
+        --text-2: #44546A;
+        --text-3: #566A80;
         --accent: #3B82C4;
-        --accent-light: #7BAEDB;
+        --accent-light: #2F6BA5;
         --accent-deep: #1F3A5F;
+        --shadow: 0 2px 12px rgba(31, 58, 95, 0.10);
         --a: #006837;
         --b: #8dc63f;
         --c: #fbb03b;
@@ -120,7 +123,7 @@
         letter-spacing: -1px;
         text-wrap: balance;
         margin-bottom: 30px;
-        color: #fff;
+        color: var(--accent-deep);
     }
 
     .slide h3 {
@@ -134,7 +137,7 @@
     }
     .slide p { font-size: 23px; line-height: 1.55; color: var(--text-2); max-width: 62ch; }
     .slide p + p { margin-top: 16px; }
-    .slide strong { color: #fff; font-weight: 600; }
+    .slide strong { color: var(--text); font-weight: 600; }
     .lead { font-size: 28px !important; line-height: 1.45 !important; color: var(--text) !important; }
 
     .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
@@ -145,21 +148,21 @@
         justify-content: center;
         text-align: center;
         background:
-            radial-gradient(900px 500px at 50% 30%, rgba(59,130,246,0.22), transparent 65%),
-            linear-gradient(160deg, #101c37 0%, var(--bg) 60%);
+            radial-gradient(900px 500px at 50% 30%, rgba(59,130,196,0.18), transparent 65%),
+            linear-gradient(160deg, #F4F8FB 0%, var(--bg) 60%);
     }
     .slide-cover img {
         width: 132px; height: auto; margin-bottom: 28px;
         background: #fff; padding: 14px; box-sizing: border-box;
         border-radius: 28px;
-        box-shadow: 0 18px 50px rgba(2, 8, 20, 0.6);
+        box-shadow: 0 12px 36px rgba(31, 58, 95, 0.18);
     }
     .slide-cover h1 {
         font-family: var(--font-display);
         font-size: 108px;
         font-weight: 900;
         letter-spacing: -3px;
-        color: #fff;
+        color: var(--accent-deep);
         line-height: 1;
     }
     .slide-cover .tagline {
@@ -193,7 +196,7 @@
         line-height: 1.08;
         font-weight: 500;
         letter-spacing: -1.5px;
-        color: #fff;
+        color: var(--accent-deep);
         max-width: 15ch;
         text-wrap: balance;
     }
@@ -222,7 +225,7 @@
         color: var(--text-2);
         line-height: 1.45;
         padding: 12px 16px 12px 0;
-        border-bottom: 1px solid rgba(51,65,85,0.6);
+        border-bottom: 1px solid var(--line);
     }
     .steps li:last-child { border-bottom: 0; }
     .steps li::before {
@@ -230,8 +233,8 @@
         width: 46px; height: 46px;
         border-radius: 50%;
         display: grid; place-items: center;
-        background: rgba(59,130,246,0.14);
-        border: 1px solid rgba(96,165,250,0.35);
+        background: var(--surface);
+        border: 1.5px solid var(--line-strong);
         color: var(--accent-light);
         font-weight: 700; font-size: 18px;
     }
@@ -269,14 +272,14 @@
     /* min-height réserve la place de 2 lignes même quand le libellé n'en
        prend qu'une, pour que "points sur 100" reste aligné d'une colonne
        à l'autre quelle que soit la longueur du texte de chacune. */
-    .scale-legend .title { font-size: 15px; font-weight: 600; line-height: 1.35; margin-top: 6px; min-height: 62px; }
+    .scale-legend .title { font-size: 15px; font-weight: 600; line-height: 1.35; margin-top: 6px; min-height: 62px; color: var(--text-2); }
     .scale-legend .unit { font-size: 13px; color: var(--text-3); margin-top: 6px; }
 
     /* ---------- Barres de pondération ---------- */
     .weights { display: grid; gap: 18px; }
     .weight-row { display: grid; grid-template-columns: 300px 1fr 64px; gap: 20px; align-items: center; }
     .weight-name { font-size: 20px; color: var(--text); font-weight: 600; text-align: right; }
-    .weight-track { height: 26px; background: var(--surface); border-radius: 6px; overflow: hidden; }
+    .weight-track { height: 26px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); border-radius: 6px; overflow: hidden; }
     .weight-fill {
         height: 100%;
         background: linear-gradient(90deg, var(--accent-deep), var(--accent-light));
@@ -290,11 +293,11 @@
     .criterion-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 10px; }
     .criterion-weight {
         font-size: 20px; font-weight: 700; color: var(--accent-light);
-        border: 1px solid rgba(96,165,250,0.4); border-radius: 100px; padding: 5px 16px;
+        border: 1.5px solid var(--line-strong); background: var(--surface); border-radius: 100px; padding: 5px 16px;
         white-space: nowrap;
     }
     .verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 34px; }
-    .verdict { padding: 26px 28px; border-radius: 14px; background: var(--surface); border-top: 4px solid; }
+    .verdict { padding: 26px 28px; border-radius: 14px; background: var(--surface); border-top: 4px solid; box-shadow: var(--shadow); }
     .verdict.good { border-top-color: var(--a); }
     .verdict.bad { border-top-color: var(--e); }
     .verdict .badge { font-family: var(--font-display); font-size: 36px; font-weight: 800; line-height: 1; }
@@ -305,35 +308,35 @@
 
     /* ---------- Comparatif d'exemples ---------- */
     .examples { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .app-card { background: var(--surface); border-radius: 16px; padding: 32px; display: flex; gap: 26px; align-items: center; }
+    .app-card { background: var(--surface); box-shadow: var(--shadow); border-radius: 16px; padding: 32px; display: flex; gap: 26px; align-items: center; }
     .app-grade {
         width: 104px; height: 104px; flex: none; border-radius: 18px;
         display: grid; place-items: center;
         font-family: var(--font-display); font-size: 56px; font-weight: 900; color: oklch(0.2 0.03 255);
     }
-    .app-card h4 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .app-card h4 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--accent-deep); margin-bottom: 8px; }
     .app-card p { font-size: 19px !important; color: var(--text-2) !important; }
 
     /* ---------- Chiffres clés ---------- */
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-    .stat { background: var(--surface); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
-    .stat .n { font-family: var(--font-display); font-size: 54px; font-weight: 800; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+    .stat { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
+    .stat .n { font-family: var(--font-display); font-size: 54px; font-weight: 800; color: var(--accent-deep); line-height: 1; font-variant-numeric: tabular-nums; }
     .stat .l { font-size: 18px; color: var(--text-3); margin-top: 12px; line-height: 1.4; }
 
     /* ---------- Slide de clôture ---------- */
     .slide-outro {
         align-items: center; justify-content: center; text-align: center;
-        background: radial-gradient(900px 500px at 50% 40%, rgba(59,130,246,0.2), transparent 65%), var(--bg);
+        background: radial-gradient(900px 500px at 50% 40%, rgba(59,130,196,0.18), transparent 65%), var(--bg);
     }
     .slide-outro h2 { font-size: 78px; }
     .urls { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
     .url-chip {
         border: 1px solid var(--line); border-radius: 12px; padding: 18px 26px;
-        background: rgba(30,41,59,0.7); text-align: left;
+        background: var(--surface); box-shadow: var(--shadow); text-align: left;
         display: flex; align-items: center; gap: 14px;
         text-decoration: none; transition: border-color .15s, background .15s;
     }
-    a.url-chip:hover, a.url-chip:focus-visible { border-color: var(--accent-light); background: rgba(30,41,59,0.95); }
+    a.url-chip:hover, a.url-chip:focus-visible { border-color: var(--accent-light); background: var(--surface-2); }
     .url-chip .k { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
     .url-chip .v { font-size: 21px; color: var(--accent-light); font-weight: 600; margin-top: 5px; }
     .url-chip .play-icon { flex: none; width: 30px; height: 30px; }
@@ -344,7 +347,7 @@
         left: 80px; right: 80px; bottom: 32px;
         display: flex; align-items: center; justify-content: space-between;
         font-family: var(--font-mono);
-        font-size: 12px; color: #56647d; letter-spacing: 0.06em;
+        font-size: 12px; color: var(--text-3); letter-spacing: 0.06em;
     }
     .slide-cover .slide-foot, .slide-outro .slide-foot { display: none; }
 
@@ -358,8 +361,8 @@
     .controls {
         position: fixed; bottom: 16px; right: 20px; z-index: 50;
         display: flex; align-items: center; gap: 8px;
-        background: rgba(15,23,42,0.86);
-        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.92);
+        border: 1px solid var(--line-strong);
         border-radius: 100px; padding: 7px 10px;
         backdrop-filter: blur(10px);
         opacity: 0.35; transition: opacity 0.25s ease;
@@ -374,7 +377,7 @@
         transition: background 0.2s ease, color 0.2s ease;
     }
     .controls button:hover,
-    .controls a.control-link:hover { background: rgba(59,130,246,0.25); color: #fff; }
+    .controls a.control-link:hover { background: rgba(59,130,196,0.18); color: var(--accent-deep); }
 
     .controls .sep {
         width: 1px; height: 20px; background: var(--line); flex: none; margin: 0 2px;
@@ -384,8 +387,9 @@
     /* ---------- Notes orateur ---------- */
     .notes {
         position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
-        background: rgba(8,13,25,0.96);
-        border-top: 1px solid var(--line);
+        background: rgba(255,255,255,0.97);
+        border-top: 1px solid var(--line-strong);
+        box-shadow: 0 -4px 20px rgba(31, 58, 95, 0.12);
         padding: 20px 28px 24px;
         font-size: 17px; line-height: 1.55; color: var(--text-2);
         max-height: 34vh; overflow-y: auto;
@@ -406,12 +410,12 @@
         display: grid; place-items: center;
         transition: background 0.2s ease, color 0.2s ease;
     }
-    .notes-close:hover { background: rgba(59,130,246,0.25); color: #fff; }
+    .notes-close:hover { background: rgba(59,130,196,0.18); color: var(--accent-deep); }
 
     /* ---------- Sommaire (touche S) ---------- */
     .overview {
         position: fixed; inset: 0; z-index: 50;
-        background: rgba(8,13,25,0.97);
+        background: rgba(233,240,246,0.98);
         padding: 40px; overflow-y: auto;
         display: none;
     }
@@ -425,26 +429,26 @@
         transition: border-color 0.2s ease, transform 0.2s ease;
     }
     .ov-item:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .ov-item.current { border-color: var(--accent-light); background: rgba(59,130,246,0.16); color: #fff; }
+    .ov-item.current { border-color: var(--accent-light); background: #fff; box-shadow: 0 0 0 2px var(--accent-light); color: var(--accent-deep); }
     .ov-item .num { display: block; font-size: 12px; color: var(--text-3); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
 
     /* ---------- Aide (touche ?) ---------- */
     .help {
         position: fixed; inset: 0; z-index: 60; display: none;
-        place-items: center; background: rgba(8,13,25,0.9);
+        place-items: center; background: rgba(27,42,58,0.55);
     }
     .help.open { display: grid; }
     .help-panel {
         background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
         padding: 32px 36px; max-width: 520px; width: calc(100% - 48px);
     }
-    .help-panel h4 { font-size: 20px; color: #fff; margin-bottom: 20px; }
+    .help-panel h4 { font-size: 20px; color: var(--accent-deep); margin-bottom: 20px; }
     .help-panel dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; align-items: baseline; }
     .help-panel dt { text-align: right; }
     .help-panel dd { font-size: 16px; color: var(--text-2); }
     kbd {
         background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px;
-        border-radius: 6px; padding: 3px 9px; font-family: inherit; font-size: 14px; color: #fff;
+        border-radius: 6px; padding: 3px 9px; font-family: inherit; font-size: 14px; color: var(--text);
         white-space: nowrap;
     }
 
@@ -453,7 +457,7 @@
         font-size: 19px; color: var(--text-3); text-align: center; padding: 32px; z-index: 70;
         background: var(--bg);
     }
-    .fatal { display: none; color: #fca5a5; }
+    .fatal { display: none; color: #B3261E; }
     .fatal.open { display: grid; }
 
     :focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; border-radius: 4px; }
@@ -662,7 +666,7 @@
                 '<span class="letter">' + g + '</span></div>';
             legend += '<div style="border-top-color:' + GRADE_COLORS[g] + '">' +
                 '<div class="range">' + ranges[g] + '</div>' +
-                '<div class="title" style="color:' + GRADE_COLORS[g] + '">' + esc(d.title || '') + '</div>' +
+                '<div class="title">' + esc(d.title || '') + '</div>' +
                 '<div class="unit">points sur 100</div></div>';
         });
         out.push(slide('',
@@ -671,7 +675,7 @@
             '<div class="body">' +
             '<div class="scale-row">' + bars + '</div>' +
             '<div class="scale-legend">' + legend + '</div>' +
-            '<p style="margin-top:34px;font-size:19px;color:#8b9bb4">Les seuils sont publics et documentés : ' +
+            '<p style="margin-top:34px;font-size:19px;color:var(--text-2)">Les seuils sont publics et documentés : ' +
             'la note n\'est pas une boîte noire, elle se recalcule à chaque réévaluation du service.</p>' +
             '</div>',
             'La méthode', 'L\'échelle A à E',
@@ -694,7 +698,7 @@
             '<div class="eyebrow">La méthode</div>' +
             '<h2>' + keys.length + ' critères, pondérés</h2>' +
             '<div class="body"><div class="weights">' + rows + '</div>' +
-            '<p style="margin-top:34px;font-size:19px;color:#8b9bb4">Chaque critère est noté de 0 à 4 points, ' +
+            '<p style="margin-top:34px;font-size:19px;color:var(--text-2)">Chaque critère est noté de 0 à 4 points, ' +
             'pondéré, puis converti sur 100. Méthode inspirée des référentiels européens SecNumCloud et ISO&nbsp;27001.</p>' +
             '</div>',
             'La méthode', 'Les critères et leurs poids',
@@ -787,7 +791,7 @@
             '<div class="k">Le simulateur</div>' +
             '</a>' +
             '</div>' +
-            '<p style="margin-top:34px;font-size:17px;color:#56647d">Appuyez sur <b style="color:#8b9bb4">Q</b> pour revenir au site.</p>',
+            '<p style="margin-top:34px;font-size:17px;color:var(--text-3)">Appuyez sur <b style="color:var(--text)">Q</b> pour revenir au site.</p>',
             '', 'Conclusion',
             'Appel à l\'action précis selon le public : tester une appli ce soir, ou contribuer à une évaluation, ' +
             'ou passer le simulateur sur leur propre produit. Laisser ce slide affiché pendant les questions.'));
