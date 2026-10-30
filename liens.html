@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trusti – Liens</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <style>
+        :root {
+            --bg: #E9F0F6;
+            --surface: #FFFFFF;
+            --line: #DCE8EF;
+            --text: #1B2A3A;
+            --accent: #3B82C4;
+            --accent-deep: #1F3A5F;
+            --shadow: 0 2px 12px rgba(31, 58, 95, 0.10);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Nunito, ui-rounded, 'Segoe UI', system-ui, Roboto, sans-serif;
+        }
+        main { width: 100%; max-width: 360px; text-align: center; }
+        .logo { width: 88px; height: 88px; margin-bottom: 12px; }
+        h1 { margin: 0 0 28px; font-size: 28px; color: var(--accent-deep); }
+        a.btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 56px;
+            margin-bottom: 14px;
+            padding: 12px 20px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            color: var(--accent-deep);
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        a.btn:hover, a.btn:focus-visible { border-color: var(--accent); outline: none; }
+        a.btn svg { width: 24px; height: 24px; flex: none; }
+    </style>
+</head>
+<body>
+    <main>
+        <img class="logo" src="assets/logo.png" alt="Trusti">
+        <h1>Trusti</h1>
+        <a class="btn" href="https://trusti.lielu.eu" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            Application Web
+        </a>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=eu.trusti.app" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>
+            Google Play
+        </a>
+    </main>
+</body>
+</html>
