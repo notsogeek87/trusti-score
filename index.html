@@ -328,10 +328,10 @@
             font-weight: 600; font-size: 0.9375rem; text-decoration: none;
         }
         .present-toggle:hover { background: var(--paper-2); }
-        .present-inline { display: none; margin: 12px 0 0; font-size: 0.9375rem; }
+        .present-inline { display: none; }
 
         @media print { .present-toggle, .sticky-bar { display: none; } }
-        @media (max-width: 700px), (pointer: coarse) { .present-toggle { display: none; } .present-inline { display: block; } }
+        @media (max-width: 700px), (pointer: coarse) { .present-toggle { display: none; } .present-inline { display: inline-flex; align-items: center; } }
 
         /* ---------- Cohérence avec l'application Trusti : coins arrondis, cartes blanches ---------- */
         .scale-bar { border-radius: var(--radius); font-weight: 900; }
@@ -416,9 +416,9 @@
                 <div class="hero-actions">
                     <a href="https://trusti.lielu.eu" target="_blank" rel="noopener noreferrer" class="hero-primary btn btn-primary">Application Web</a>
                     <a href="https://play.google.com/store/apps/details?id=eu.trusti.app" target="_blank" rel="noopener noreferrer" class="hero-primary btn btn-primary"><svg class="playstore-icon" viewBox="0 0 512 512" width="18" height="18" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>Google Play</a>
+                    <a href="presentation.html" class="present-inline btn btn-ghost"><span aria-hidden="true">▶</span>&nbsp;Voir la présentation</a>
                 </div>
                 <p class="playstore-note"><strong>Gratuit pour le grand public.</strong> Vous êtes développeur&nbsp;? <a href="simulateur.html">Testez la note de votre application</a>.</p>
-                <p class="present-inline"><a href="presentation.html">▶ Voir la présentation</a></p>
             </div>
 
             <div class="scale-block">
