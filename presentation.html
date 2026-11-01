@@ -318,6 +318,18 @@
     .app-card p { font-size: 19px !important; color: var(--text-2) !important; }
 
     /* ---------- Chiffres clés ---------- */
+    /* ---------- Slide « besoins » ---------- */
+    .slide-needs h2 { font-size: 52px; margin-bottom: 26px; }
+    .needs { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 44px; align-items: stretch; }
+    .needs .steps { gap: 4px; }
+    .needs .steps li { grid-template-columns: 36px 1fr; gap: 16px; font-size: 19px; padding: 8px 12px 8px 0; align-items: center; }
+    .needs .steps li::before { width: 36px; height: 36px; font-size: 16px; }
+    .needs-budget { display: flex; flex-direction: column; gap: 14px; }
+    .needs-budget h3 { font-size: 24px; margin-bottom: 2px; }
+    .needs-budget .stat { padding: 18px 22px; }
+    .needs-budget .stat .n { font-size: 40px; }
+    .needs-budget .stat .l { font-size: 16px; margin-top: 8px; }
+    .needs-budget .now { font-size: 15px !important; color: var(--text-3) !important; line-height: 1.4 !important; }
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
     .stat { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
     .stat .n { font-family: var(--font-display); font-size: 54px; font-weight: 800; color: var(--accent-deep); line-height: 1; font-variant-numeric: tabular-nums; }
@@ -797,6 +809,32 @@
             '', 'Conclusion',
             'Appel à l\'action précis selon le public : tester une appli ce soir, ou contribuer à une évaluation, ' +
             'ou passer le simulateur sur leur propre produit. Laisser ce slide affiché pendant les questions.'));
+
+        /* 17 — Nos besoins */
+        out.push(slide('slide-needs',
+            '<div class="eyebrow">Nos besoins</div>' +
+            '<h2>Ce dont TrustiScore a besoin aujourd\'hui</h2>' +
+            '<div class="needs">' +
+            '<ol class="steps">' +
+            '<li><span class="step-text"><strong>Un regard expert</strong> sur la grille : DSI, DPO, RSSI.</span></li>' +
+            '<li><span class="step-text"><strong>Vos logiciels du quotidien</strong>, à noter en priorité.</span></li>' +
+            '<li><span class="step-text"><strong>Vos retours</strong> sur un usage pour les organisations.</span></li>' +
+            '<li><span class="step-text"><strong>Des relais</strong> : collectivités, réseaux, médias.</span></li>' +
+            '<li><span class="step-text"><strong>Des contributeurs</strong> : étudiants, développeurs, juristes.</span></li>' +
+            '<li><span class="step-text"><strong>Un hébergement souverain</strong> et un nom de domaine.</span></li>' +
+            '</ol>' +
+            '<div class="needs-budget">' +
+            '<h3>Devenir 100&nbsp;% souverain</h3>' +
+            '<div class="stat"><div class="n">≈&nbsp;100&nbsp;€/an</div><div class="l">un serveur européen et un nom de domaine</div></div>' +
+            '<div class="stat"><div class="n">≈&nbsp;250&nbsp;€/an</div><div class="l">avec une base de données gérée en France</div></div>' +
+            '<p class="now">Aujourd\'hui, faute de moyens, TrustiScore tourne sur des offres gratuites américaines (Vercel, Neon).</p>' +
+            '</div>' +
+            '</div>',
+            'Nos besoins', 'Nos besoins',
+            'Le dire avant qu\'on vous le demande : notre propre hébergement serait mal noté sur notre grille. ' +
+            'C\'est une des raisons de notre présence ici. Chiffres : option simple 85 à 135 €/an (VPS Infomaniak + .fr), ' +
+            'option base gérée Scaleway 200 à 250 €/an. Prix en hausse en 2026 : vérifier sur les sites officiels avant la présentation. ' +
+            'Finir par une demande précise à chaque interlocuteur : relire 3 notes, citer 3 outils, se recontacter.'));
 
         stage.innerHTML = out.join('');
         slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
