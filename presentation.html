@@ -248,6 +248,7 @@
 
     /* ---------- Échelle A-E ---------- */
     .scale-row { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 34px; }
+    .scale-row .scale-step .letter { font-size: 36px; }
     .scale-step {
         flex: 1;
         border-radius: 12px 12px 4px 4px;
@@ -319,18 +320,18 @@
 
     /* ---------- Chiffres clés ---------- */
     /* ---------- Slide « besoins » ---------- */
-    .slide-needs h2 { font-size: 52px; margin-bottom: 26px; }
-    .needs { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 44px; align-items: stretch; }
-    .needs .steps { gap: 2px; }
-    .needs .steps .sub { display: block; font-size: 15px; line-height: 1.35; color: var(--text-3); margin-top: 2px; }
-    .needs .steps li { grid-template-columns: 36px 1fr; gap: 16px; font-size: 19px; line-height: 1.3; padding: 7px 12px 7px 0; align-items: center; }
-    .needs .steps li::before { width: 36px; height: 36px; font-size: 16px; }
-    .needs-budget { display: flex; flex-direction: column; gap: 14px; }
-    .needs-budget h3 { font-size: 24px; margin-bottom: 2px; }
-    .needs-budget .stat { padding: 18px 22px; }
-    .needs-budget .stat .n { font-size: 40px; }
-    .needs-budget .stat .l { font-size: 16px; margin-top: 8px; }
-    .needs-budget .now { font-size: 15px !important; color: var(--text-3) !important; line-height: 1.4 !important; }
+    .slide-needs h2 { margin-bottom: 36px; }
+    .needs { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 56px; align-items: start; }
+    .needs .steps { gap: 4px; }
+    .needs .steps .sub { display: block; font-size: 19px; line-height: 1.35; color: var(--text-3); margin-top: 4px; }
+    .needs .steps li { grid-template-columns: 44px 1fr; gap: 18px; font-size: 26px; line-height: 1.25; padding: 12px 12px 12px 0; align-items: center; }
+    .needs .steps li::before { width: 44px; height: 44px; font-size: 19px; }
+    .needs-budget { display: flex; flex-direction: column; gap: 16px; }
+    .needs-budget h3 { font-size: 28px; margin-bottom: 2px; }
+    .needs-budget .stat { padding: 24px 26px; }
+    .needs-budget .stat .n { font-size: 44px; }
+    .needs-budget .stat .l { font-size: 18px; margin-top: 10px; }
+    .needs-budget .now { font-size: 18px !important; color: var(--text-3) !important; line-height: 1.4 !important; }
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
     .stat { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
     .stat .n { font-family: var(--font-display); font-size: 54px; font-weight: 800; color: var(--accent-deep); line-height: 1; font-variant-numeric: tabular-nums; }
@@ -596,106 +597,51 @@
 
     function build(cfg) {
         var criteria = cfg.criteria || {};
-        var grades = cfg.gradeDescriptions || {};
         // Même ordre que la page d'accueil : du critère le plus lourd au plus léger.
         var keys = Object.keys(criteria).sort(function (a, b) {
             return (criteria[b].weight || 0) - (criteria[a].weight || 0);
         });
         var out = [];
 
-        /* 1 — Couverture */
+        /* 1 — Couverture : la demande est annoncée dès l'ouverture */
         out.push(slide('slide-cover',
             '<img src="assets/logo.png" alt="">' +
             '<h1>' + esc(cfg.siteName || 'TrustiScore') + '</h1>' +
-            '<p class="tagline">' + esc(cfg.siteTagline || '') + '</p>' +
-            '<div class="cover-meta"><span>Souveraineté numérique</span><span>RGPD</span><span>Open source</span></div>',
+            '<p class="tagline">Le Nutri-Score de la souveraineté numérique</p>' +
+            '<div class="cover-meta"><span>On cherche : vos avis</span><span>vos outils</span><span>des pilotes</span></div>',
             '', 'TrustiScore',
-            'Se présenter en une phrase. Annoncer le plan : le problème, la solution, la méthode, la démo.'));
+            'Une phrase : « On note les applis de A à E selon où vont vos données. On est là pour trouver des pilotes. »'));
 
         /* 2 — Le problème */
         out.push(slide('slide-statement',
-            '<div class="eyebrow">Le constat</div>' +
-            '<p class="statement">Nous utilisons ces applications tous les jours. <em>Savons-nous où finissent nos données ?</em></p>' +
-            '<p class="statement-note">La majorité des éditeurs non-européens stockent nos informations hors UE, ' +
-            'sous des lois extraterritoriales comme le <strong>Cloud&nbsp;Act</strong> américain — qui permet aux autorités ' +
-            'américaines d\'accéder aux données, même hébergées en Europe.</p>',
-            'Le problème', 'Le constat',
-            'Prendre un exemple dans la salle : téléphone, messagerie, cloud photo. Insister sur le Cloud Act : ' +
-            'l\'hébergement en Europe ne suffit pas si l\'éditeur est soumis au droit américain.'));
+            '<div class="eyebrow">Le problème</div>' +
+            '<p class="statement">Vos outils sont-ils soumis au <em>Cloud&nbsp;Act</em>&nbsp;?</p>' +
+            '<p class="statement-note">Un éditeur américain reste soumis au droit américain, même avec des serveurs en Europe. ' +
+            'Et rien ne permet de le voir d\'un coup d\'œil.</p>',
+            'Le problème', 'Le problème',
+            'Demander à la salle : « Qui sait où sont stockés vos mails ? » 30 secondes max.'));
 
-        /* 3 — Définition */
-        out.push(slide('',
-            '<div class="eyebrow">Définition</div>' +
-            '<h2>C\'est quoi, la souveraineté numérique&nbsp;?</h2>' +
-            '<div class="body">' +
-            '<p class="lead">La capacité d\'un État, d\'une entreprise ou d\'une personne à garder un contrôle ' +
-            '<strong>juridique, technique et économique</strong> sur ses propres données, sans dépendance excessive ' +
-            'envers des puissances étrangères.</p>' +
-            '<p style="margin-top:26px">Concrètement, en Europe : respect du RGPD, localisation des données dans l\'UE, ' +
-            'et limitation de l\'exposition aux réglementations étrangères.</p>' +
-            '</div>',
-            'Le problème', 'Définition',
-            'Ne pas s\'attarder. Le message : c\'est un sujet juridique ET technique ET économique — c\'est ce qui le rend ' +
-            'illisible pour le grand public. D\'où TrustiScore.'));
-
-        /* 4 — La proposition */
-        out.push(slide('slide-statement',
-            '<div class="eyebrow">La proposition</div>' +
-            '<p class="statement">Après le Nutri-Score, <em>le TrustiScore</em>.</p>' +
-            '<p class="statement-note">Une note unique, de <strong>A à E</strong>, qui résume la souveraineté numérique ' +
-            'd\'une application. Un coup d\'œil suffit pour se décider — pas besoin d\'être expert.</p>',
-            'La solution', 'Après le Nutri-Score',
-            'C\'est LE slide à retenir. L\'analogie Nutri-Score fait tout le travail pédagogique : ' +
-            'personne ne lit les étiquettes nutritionnelles, tout le monde lit la lettre.'));
-
-        /* 5 — Parcours utilisateur */
-        out.push(slide('',
-            '<div class="eyebrow">Le parcours</div>' +
-            '<h2>Comment ça marche</h2>' +
-            '<div class="body"><ol class="steps">' +
-            '<li><span class="step-text"><strong>Recherchez</strong> une application ou un service — ProtonMail, ChatGPT, Vinted…</span></li>' +
-            '<li><span class="step-text"><strong>Découvrez sa note</strong> TrustiScore, de A à E, avec son badge coloré.</span></li>' +
-            '<li><span class="step-text"><strong>Lisez le détail</strong> : la justification critère par critère.</span></li>' +
-            '<li><span class="step-text"><strong>Trouvez une alternative</strong> plus respectueuse, avec son propre TrustiScore.</span></li>' +
-            '<li><span class="step-text"><strong>Contribuez</strong> : proposez vos propres évaluations selon la grille publique.</span></li>' +
-            '</ol></div>',
-            'La solution', 'Comment ça marche',
-            'Faire la démo live ici si le réseau le permet : ouvrir l\'application et chercher une appli que ' +
-            'le public connaît. Sinon, enchaîner.'));
-
-        /* 6 — L'échelle A → E */
-        var th = cfg.gradeThresholds || { A: 80, B: 60, C: 40, D: 20 };
-        var ranges = {
-            A: th.A + ' – 100', B: th.B + ' – ' + (th.A - 1), C: th.C + ' – ' + (th.B - 1),
-            D: th.D + ' – ' + (th.C - 1), E: '0 – ' + (th.D - 1)
-        };
-        var bars = '', legend = '';
+        /* 3 — La réponse : la note + deux exemples */
+        var bars = '';
         ['A', 'B', 'C', 'D', 'E'].forEach(function (g) {
-            var d = grades[g] || {};
-            // La barre ne porte que la lettre : quelle que soit la longueur du
-            // libellé édité dans l'admin, elle garde toujours la même hauteur,
-            // sans jamais risquer de déborder de la plus petite marche (E).
-            bars += '<div class="scale-step" style="height:' + GRADE_HEIGHTS[g] + 'px;background:' + GRADE_COLORS[g] + ';color:' + GRADE_INK[g] + '">' +
-                '<span class="letter">' + g + '</span></div>';
-            legend += '<div style="border-top-color:' + GRADE_COLORS[g] + '">' +
-                '<div class="range">' + ranges[g] + '</div>' +
-                '<div class="title">' + esc(d.title || '') + '</div>' +
-                '<div class="unit">points sur 100</div></div>';
+            bars += '<div class="scale-step" style="height:' + Math.round(GRADE_HEIGHTS[g] * 0.6) + 'px;background:' +
+                GRADE_COLORS[g] + ';color:' + GRADE_INK[g] + '"><span class="letter">' + g + '</span></div>';
         });
         out.push(slide('',
-            '<div class="eyebrow">Le résultat</div>' +
-            '<h2>Une échelle de A à E</h2>' +
+            '<div class="eyebrow">La réponse</div>' +
+            '<h2>Une note de A à E</h2>' +
             '<div class="body">' +
             '<div class="scale-row">' + bars + '</div>' +
-            '<div class="scale-legend">' + legend + '</div>' +
-            '<p style="margin-top:34px;font-size:19px;color:var(--text-2)">Les seuils sont publics et documentés : ' +
-            'la note n\'est pas une boîte noire, elle se recalcule à chaque réévaluation du service.</p>' +
-            '</div>',
-            'La méthode', 'L\'échelle A à E',
-            'Préciser que les seuils sont publics et paramétrables — c\'est un gage de transparence, ' +
-            'pas une boîte noire.'));
+            '<div class="examples">' +
+            '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.A + ';color:#fff">A</div>' +
+            '<div><h4>ProtonMail</h4><p>Hébergé en Europe, chiffré, open source.</p></div></div>' +
+            '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.E + ';color:#fff">E</div>' +
+            '<div><h4>TikTok</h4><p>Données envoyées hors UE, gestion opaque.</p></div></div>' +
+            '</div></div>',
+            'La réponse', 'Une note de A à E',
+            'Faire deviner la note de TikTok avant de l\'afficher. Démo live de l\'appli si le réseau suit.'));
 
-        /* 7 — Pondération des critères */
+        /* 4 — La méthode : tous les critères sur une seule slide */
         var rows = '';
         var maxWeight = keys.reduce(function (m, k) { return Math.max(m, criteria[k].weight); }, 1);
         keys.forEach(function (k) {
@@ -709,87 +655,39 @@
         });
         out.push(slide('',
             '<div class="eyebrow">La méthode</div>' +
-            '<h2>' + keys.length + ' critères, pondérés</h2>' +
+            '<h2>' + keys.length + ' critères, une grille publique</h2>' +
             '<div class="body"><div class="weights">' + rows + '</div>' +
-            '<p style="margin-top:34px;font-size:19px;color:var(--text-2)">Chaque critère est noté de 0 à 4 points, ' +
-            'pondéré, puis converti sur 100. Méthode inspirée des référentiels européens SecNumCloud et ISO&nbsp;27001.</p>' +
+            '<p style="margin-top:34px;font-size:20px;color:var(--text-2)">Chaque note est sourcée. ' +
+            'Les éditeurs peuvent noter leur propre appli avec le simulateur, gratuitement.</p>' +
             '</div>',
-            'La méthode', 'Les critères et leurs poids',
-            'Justifier la pondération : la localisation des données pèse le plus (25%) parce que c\'est le ' +
-            'critère le plus difficile à contourner. La transparence pèse le moins (15%) car elle est déclarative.'));
+            'La méthode', 'Les critères',
+            'Ne pas détailler chaque critère. Si question : la localisation pèse le plus car c\'est le plus dur à contourner.'));
 
-        /* 8..12 — Une fiche par critère */
-        keys.forEach(function (k) {
-            var c = criteria[k];
-            out.push(slide('',
-                '<div class="eyebrow">Critère</div>' +
-                '<div class="criterion-head"><h2 style="margin-bottom:0">' + esc(c.name) + '</h2>' +
-                '<span class="criterion-weight">' + c.weight + '%</span></div>' +
-                '<div class="body">' +
-                '<p class="lead">' + esc(c.description) + '</p>' +
-                '<div class="verdicts">' +
-                '<div class="verdict good"><div class="badge"><small>Note A</small>4 points</div><p>' + esc(c.gradeAExample) + '</p></div>' +
-                '<div class="verdict bad"><div class="badge"><small>Note E</small>0 point</div><p>' + esc(c.gradeEExample) + '</p></div>' +
-                '</div></div>',
-                'La méthode — ' + c.weight + '%', c.name,
-                'Donner un exemple concret d\'éditeur pour chaque extrémité. Ne pas lire les encadrés : ' +
-                'le public les lit plus vite que vous.'));
-        });
-
-        /* 13 — Exemples réels */
-        out.push(slide('',
-            '<div class="eyebrow">En pratique</div>' +
-            '<h2>Deux exemples, deux verdicts</h2>' +
-            '<div class="body"><div class="examples">' +
-            '<div class="app-card">' +
-            '<div class="app-grade" style="background:' + GRADE_COLORS.A + ';color:#fff">A</div>' +
-            '<div><h4>ProtonMail</h4><p>Données hébergées en UE, chiffrement de bout en bout, transparence maximale.</p></div>' +
+        /* 5 — Ce qu'on vient chercher (slide principale) */
+        out.push(slide('slide-needs',
+            '<div class="eyebrow">Pourquoi on est là</div>' +
+            '<h2>Ce qu\'on vient chercher</h2>' +
+            '<div class="needs">' +
+            '<ol class="steps">' +
+            '<li><span class="step-text"><strong>Vos avis sur la grille</strong><span class="sub">DSI, DPO, RSSI : dites-nous ce qui ne tient pas.</span></span></li>' +
+            '<li><span class="step-text"><strong>La liste de vos outils</strong><span class="sub">On les note en priorité, avec des alternatives.</span></span></li>' +
+            '<li><span class="step-text"><strong>Des organisations pilotes</strong><span class="sub">Audit de votre parc, sensibilisation des équipes.</span></span></li>' +
+            '<li><span class="step-text"><strong>Des relais</strong><span class="sub">Réseaux, collectivités, médias, contributeurs.</span></span></li>' +
+            '</ol>' +
+            '<div class="needs-budget">' +
+            '<h3>Et un coup de pouce</h3>' +
+            '<div class="stat"><div class="n">100 à 250&nbsp;€/an</div><div class="l">pour héberger TrustiScore en Europe</div></div>' +
+            '<p class="now">Aujourd\'hui, on tourne sur des offres gratuites américaines. On le sait.</p>' +
             '</div>' +
-            '<div class="app-card">' +
-            '<div class="app-grade" style="background:' + GRADE_COLORS.E + ';color:#fff">E</div>' +
-            '<div><h4>TikTok</h4><p>Transferts de données hors UE, opacité sur la gestion et la conservation.</p></div>' +
-            '</div>' +
-            '</div></div>',
-            'En pratique', 'Deux exemples',
-            'Demander à la salle de deviner la note avant de l\'afficher — ça marche toujours. ' +
-            'Adapter les deux exemples au public (secteur public, santé, éducation…).'));
+            '</div>',
+            'Pourquoi on est là', 'Ce qu\'on vient chercher',
+            'Le dire avant qu\'on vous le demande : notre hébergement serait mal noté sur notre propre grille. ' +
+            'Finir par une demande précise à chacun : 3 outils à noter, un rendez-vous.'));
 
-        /* 14 — Le simulateur */
-        out.push(slide('',
-            '<div class="eyebrow">Pour les éditeurs</div>' +
-            '<h2>Et dans l\'autre sens : le simulateur</h2>' +
-            '<div class="body">' +
-            '<p class="lead">Vous construisez une application&nbsp;? Évaluez-la vous-même, en 5&nbsp;minutes, ' +
-            '<strong>avant</strong> le lancement.</p>' +
-            '<div class="stats" style="margin-top:36px">' +
-            '<div class="stat"><div class="n">' + keys.length + '</div><div class="l">questions sur vos choix techniques et juridiques</div></div>' +
-            '<div class="stat"><div class="n">A–E</div><div class="l">score instantané, calculé selon la même grille publique</div></div>' +
-            '<div class="stat"><div class="n">0&nbsp;€</div><div class="l">gratuit, sans compte, sans envoi de vos réponses</div></div>' +
-            '</div></div>',
-            'Pour les éditeurs', 'Le simulateur',
-            'Enchaîner sur une démo live du simulateur : simulateur.html. Remplir 5 réponses, ' +
-            'montrer le radar. Message clé : on identifie les points faibles avant le lancement, pas après.'));
-
-        /* 15 — Engagement */
-        out.push(slide('',
-            '<div class="eyebrow">Notre engagement</div>' +
-            '<h2>Indépendant, objectif, transparent</h2>' +
-            '<div class="body"><ol class="steps">' +
-            '<li><span class="step-text"><strong>Indépendance totale</strong> — aucun lien financier avec les services évalués.</span></li>' +
-            '<li><span class="step-text"><strong>Objectivité</strong> — des faits vérifiables et des sources publiques, rien d\'autre.</span></li>' +
-            '<li><span class="step-text"><strong>Transparence</strong> — grille de notation publique, justification pour chaque note.</span></li>' +
-            '<li><span class="step-text"><strong>Mise à jour continue</strong> — réévaluation au fil de l\'évolution des services.</span></li>' +
-            '<li><span class="step-text"><strong>Respect de la vie privée</strong> — nous appliquons ce que nous recommandons.</span></li>' +
-            '</ol></div>',
-            'L\'engagement', 'Nos principes',
-            'C\'est le slide qui répond à la question « qui êtes-vous pour noter ? ». ' +
-            'Anticiper la question du modèle économique.'));
-
-        /* 16 — Clôture */
+        /* 6 — Contact */
         out.push(slide('slide-outro',
-            '<h2>Reprenez le contrôle<br>de vos données</h2>' +
-            '<p class="lead" style="max-width:56ch;text-align:center">TrustiScore est open source et grandit avec sa communauté : ' +
-            'proposez des applications, contestez une note, faites évoluer la grille.</p>' +
+            '<h2>On en parle&nbsp;?</h2>' +
+            '<p class="lead" style="max-width:56ch;text-align:center">contact@lielu.eu</p>' +
             '<div class="urls">' +
             '<a class="url-chip" href="https://youtube.com/shorts/45mTjVWKRe8?is=mIsF9wE4JEMu18Il" target="_blank" rel="noopener noreferrer">' +
             '<svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8z"/><path fill="#fff" d="m9.6 15.6 6.2-3.6-6.2-3.6z"/></svg>' +
@@ -807,35 +705,8 @@
             '</a>' +
             '</div>' +
             '<p style="margin-top:34px;font-size:17px;color:var(--text-3)">Appuyez sur <b style="color:var(--text)">Q</b> pour revenir au site.</p>',
-            '', 'Conclusion',
-            'Appel à l\'action précis selon le public : tester une appli ce soir, ou contribuer à une évaluation, ' +
-            'ou passer le simulateur sur leur propre produit. Laisser ce slide affiché pendant les questions.'));
-
-        /* 17 — Nos besoins */
-        out.push(slide('slide-needs',
-            '<div class="eyebrow">Nos besoins</div>' +
-            '<h2>Ce dont TrustiScore a besoin aujourd\'hui</h2>' +
-            '<div class="needs">' +
-            '<ol class="steps">' +
-            '<li><span class="step-text"><strong>Un regard expert sur la grille</strong><span class="sub">Des DSI, DPO et RSSI pour relire et challenger nos critères.</span></span></li>' +
-            '<li><span class="step-text"><strong>Vos logiciels du quotidien</strong><span class="sub">Les outils de vos équipes, à évaluer en priorité avec leurs alternatives.</span></span></li>' +
-            '<li><span class="step-text"><strong>Des organisations pilotes</strong><span class="sub">Pour tester avec nous l\'audit de parc et la formation des équipes aux apps respectueuses.</span></span></li>' +
-            '<li><span class="step-text"><strong>Des relais</strong><span class="sub">Collectivités, réseaux et médias pour faire connaître TrustiScore.</span></span></li>' +
-            '<li><span class="step-text"><strong>Des contributeurs</strong><span class="sub">Étudiants, développeurs, juristes : le projet est open source.</span></span></li>' +
-            '<li><span class="step-text"><strong>Un hébergement souverain</strong><span class="sub">Pour appliquer enfin ce que l\'on recommande.</span></span></li>' +
-            '</ol>' +
-            '<div class="needs-budget">' +
-            '<h3>Devenir 100&nbsp;% souverain</h3>' +
-            '<div class="stat"><div class="n">≈&nbsp;100&nbsp;€/an</div><div class="l">un serveur européen et un nom de domaine</div></div>' +
-            '<div class="stat"><div class="n">≈&nbsp;250&nbsp;€/an</div><div class="l">avec une base de données gérée en France</div></div>' +
-            '<p class="now">Aujourd\'hui, faute de moyens, TrustiScore tourne sur des offres gratuites américaines (Vercel, Neon).</p>' +
-            '</div>' +
-            '</div>',
-            'Nos besoins', 'Nos besoins',
-            'Le dire avant qu\'on vous le demande : notre propre hébergement serait mal noté sur notre grille. ' +
-            'C\'est une des raisons de notre présence ici. Chiffres : option simple 85 à 135 €/an (VPS Infomaniak + .fr), ' +
-            'option base gérée Scaleway 200 à 250 €/an. Prix en hausse en 2026 : vérifier sur les sites officiels avant la présentation. ' +
-            'Finir par une demande précise à chaque interlocuteur : relire 3 notes, citer 3 outils, se recontacter.'));
+            '', 'Contact',
+            'Laisser affiché pendant les questions.'));
 
         stage.innerHTML = out.join('');
         slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
