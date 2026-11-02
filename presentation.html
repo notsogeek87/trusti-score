@@ -253,6 +253,9 @@
     /* ---------- Échelle A-E ---------- */
     .scale-row { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 34px; }
     .scale-row .scale-step .letter { font-size: 36px; }
+    .slide .grade-intro { font-size: 21px; line-height: 1.45; max-width: none; margin-bottom: 18px; }
+    .slide .scale-legend { display: flex; justify-content: space-between; gap: 32px; font-size: 16px; line-height: 1.4; color: var(--text-3); max-width: none; margin: -14px 0 22px; }
+    .scale-legend b { color: var(--text); }
     .scale-step {
         flex: 1;
         border-radius: 12px 12px 4px 4px;
@@ -630,14 +633,18 @@
         /* 3 — La réponse : la note + deux exemples */
         var bars = '';
         ['A', 'B', 'C', 'D', 'E'].forEach(function (g) {
-            bars += '<div class="scale-step" style="height:' + Math.round(GRADE_HEIGHTS[g] * 0.6) + 'px;background:' +
+            bars += '<div class="scale-step" style="height:' + Math.max(52, Math.round(GRADE_HEIGHTS[g] * 0.42)) + 'px;background:' +
                 GRADE_COLORS[g] + ';color:' + GRADE_INK[g] + '"><span class="letter">' + g + '</span></div>';
         });
         out.push(slide('',
             '<div class="eyebrow">La réponse</div>' +
             '<h2>Une note de A à E</h2>' +
             '<div class="body">' +
+            '<p class="grade-intro">Chaque application reçoit une note, comme le Nutri-Score pour l\'alimentation. ' +
+            'Elle résume en un coup d\'œil où vont vos données, qui y a accès et quel contrôle vous gardez.</p>' +
             '<div class="scale-row">' + bars + '</div>' +
+            '<p class="scale-legend"><span><b>A</b> : très respectueuse de vos données et de votre souveraineté</span>' +
+            '<span><b>E</b> : à éviter, ou à utiliser en connaissance de cause</span></p>' +
             '<div class="examples">' +
             '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.A + ';color:#fff">A</div>' +
             '<div><h4>ProtonMail</h4><p>Hébergé en Europe, chiffré, open source.</p></div></div>' +
@@ -645,7 +652,7 @@
             '<div><h4>TikTok</h4><p>Données envoyées hors UE, gestion opaque.</p></div></div>' +
             '</div></div>',
             'La réponse', 'Une note de A à E',
-            'Faire deviner la note de TikTok avant de l\'afficher. Démo live de l\'appli si le réseau suit.'));
+            'Expliquer : une lettre, cinq critères pondérés, une justification publique. Faire deviner la note de TikTok avant de l\'afficher. Démo live de l\'appli si le réseau suit.'));
 
         /* 4 — La méthode : tous les critères sur une seule slide */
         var rows = '';
