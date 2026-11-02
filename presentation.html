@@ -210,6 +210,10 @@
         max-width: 56ch;
     }
 
+    .slide-statement .statement-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+    .slide-statement .statement-grid .statement { font-size: 52px; max-width: none; }
+    .slide-statement .statement-img { width: 100%; border-radius: 24px; box-shadow: var(--shadow); display: block; }
+
     /* ---------- Grilles ---------- */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
     .two-col.narrow-left { grid-template-columns: 0.9fr 1.1fr; }
@@ -615,9 +619,11 @@
         /* 2 — Le problème */
         out.push(slide('slide-statement',
             '<div class="eyebrow">Le problème</div>' +
+            '<div class="statement-grid"><div>' +
             '<p class="statement">Les applications font partie intégrante de notre quotidien. <em>Savons-nous où finissent nos données ?</em></p>' +
             '<p class="statement-note">Derrière chaque application, il y a un éditeur, un pays et des lois. ' +
-            'Nos données peuvent être stockées, analysées ou transmises sans que nous le sachions vraiment.</p>',
+            'Nos données peuvent être stockées, analysées ou transmises sans que nous le sachions vraiment.</p>' +
+            '</div><img class="statement-img" src="assets/applications.jpg" alt="Un téléphone entouré des applications du quotidien"></div>',
             'Le problème', 'Le problème',
             'Demander à la salle : « Qui sait où sont stockés vos mails ? » 30 secondes max.'));
 
