@@ -338,6 +338,9 @@
     .needs-budget .stat { padding: 24px 26px; }
     .needs-budget .stat .n { font-size: 44px; }
     .needs-budget .stat .l { font-size: 18px; margin-top: 10px; }
+    .needs-budget .stat-ios { display: flex; align-items: center; gap: 18px; padding: 20px 26px; }
+    .needs-budget .stat-ios .n { font-size: 38px; }
+    .needs-budget .stat-ios .ios-icon { width: 38px; height: 38px; flex: none; color: var(--accent-light); }
     .needs-budget .now { font-size: 18px !important; color: var(--text-3) !important; line-height: 1.4 !important; }
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
     .stat { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
@@ -691,6 +694,8 @@
             '<h3>Et un coup de pouce</h3>' +
             '<div class="stat"><div class="n">100 à 250&nbsp;€/an</div><div class="l">pour héberger TrustiScore en Europe</div></div>' +
             '<p class="now">Aujourd\'hui, on tourne sur des offres gratuites américaines. On le sait.</p>' +
+            '<div class="stat stat-ios"><svg class="ios-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/></svg>' +
+            '<div><div class="n">99&nbsp;$/an</div><div class="l">compte développeur Apple pour l\'app iPhone (web et Android existent déjà)</div></div></div>' +
             '</div>' +
             '</div>',
             'Pourquoi on est là', 'Ce qu\'on vient chercher',
