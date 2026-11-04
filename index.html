@@ -955,6 +955,8 @@
                 button.addEventListener('click', function () {
                     const open = button.getAttribute('aria-expanded') === 'true';
                     button.setAttribute('aria-expanded', String(!open));
+                    const hint = button.querySelector('.flip-hint');
+                    if (hint) hint.textContent = open ? 'Voir le détail' : 'Moins de détails';
                 });
             });
         }
