@@ -300,6 +300,16 @@
         .lc-text span { color: var(--ink-2); font-size: 0.9375rem; }
         .gh-alt { font-size: 0.9375rem; color: var(--ink-2); margin: -8px 0 24px; }
 
+        /* Fenêtre « Écrire à Trusti » (repli quand aucun client mail n'est configuré) */
+        .mail-dialog { margin: auto; border: 0; border-radius: var(--radius-lg, 16px); padding: 28px; width: min(92vw, 460px); box-shadow: 0 20px 60px rgba(0,0,0,.25); color: var(--ink); background: var(--paper); }
+        .mail-dialog::backdrop { background: rgba(20,30,45,.5); }
+        .mail-dialog h3 { margin: 0 0 8px; }
+        .mail-dialog p { margin: 0 0 16px; color: var(--ink-2); font-size: 0.9375rem; }
+        .mail-dialog .md-actions { display: grid; gap: 10px; }
+        .mail-dialog .md-actions .btn { justify-content: center; text-align: center; }
+        .mail-dialog .md-close { margin-top: 14px; background: none; border: 0; color: var(--ink-2); text-decoration: underline; cursor: pointer; font: inherit; }
+        .mail-dialog .md-status { min-height: 1.4em; margin: 10px 0 0; font-size: 0.875rem; color: var(--accent); }
+
         /* Appel final */
         .cta-content { flex: 1 1 100%; min-width: 0; }
         .cta-content h2 { margin-bottom: 14px; }
@@ -760,15 +770,15 @@
                     </p>
 
                     <div class="link-row">
-                        <a class="link-card" href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">
+                        <a class="link-card" href="https://github.com/notsogeek87/trusti" target="_blank" rel="noopener noreferrer">
                             <span class="lc-text"><strong>Le code source</strong>
-                            <span>Le dépôt GitHub du projet, ouvert aux contributions.</span></span>
+                            <span>Le dépôt GitHub de l'application, ouvert aux contributions.</span></span>
                         </a>
-                        <a class="link-card" href="mailto:contact@lielu.eu?subject=Proposition%20d%27application%20%C3%A0%20%C3%A9valuer&amp;body=Application%20propos%C3%A9e%20%3A%0ASite%20officiel%20%3A%0APourquoi%20elle%20m%C3%A9rite%20d%27%C3%AAtre%20%C3%A9valu%C3%A9e%20%3A%0A%0A%28Si%20vous%20avez%20d%C3%A9j%C3%A0%20des%20%C3%A9l%C3%A9ments%20sur%20les%205%20crit%C3%A8res%2C%20ajoutez-les%20ici.%29">
+                        <a class="link-card" data-mail href="mailto:contact@lielu.eu?subject=Proposition%20d%27application%20%C3%A0%20%C3%A9valuer&amp;body=Application%20propos%C3%A9e%20%3A%0ASite%20officiel%20%3A%0APourquoi%20elle%20m%C3%A9rite%20d%27%C3%AAtre%20%C3%A9valu%C3%A9e%20%3A%0A%0A%28Si%20vous%20avez%20d%C3%A9j%C3%A0%20des%20%C3%A9l%C3%A9ments%20sur%20les%205%20crit%C3%A8res%2C%20ajoutez-les%20ici.%29">
                             <span class="lc-text"><strong>Proposer une application</strong>
                             <span>Un e-mail déjà rédigé&nbsp;: nom, site, et ce que vous savez déjà. Aucun compte requis.</span></span>
                         </a>
-                        <a class="link-card" href="mailto:contact@lielu.eu?subject=Contestation%20de%20note&amp;body=Application%20concern%C3%A9e%20%3A%0ANote%20actuelle%20%3A%0ACrit%C3%A8re%20contest%C3%A9%20%3A%0ASource%20publique%20%C3%A0%20l%27appui%20%3A">
+                        <a class="link-card" data-mail href="mailto:contact@lielu.eu?subject=Contestation%20de%20note&amp;body=Application%20concern%C3%A9e%20%3A%0ANote%20actuelle%20%3A%0ACrit%C3%A8re%20contest%C3%A9%20%3A%0ASource%20publique%20%C3%A0%20l%27appui%20%3A">
                             <span class="lc-text"><strong>Contester une note</strong>
                             <span>Un e-mail déjà rédigé&nbsp;: une source publique à l'appui, et la note est réexaminée.</span></span>
                         </a>
@@ -831,12 +841,53 @@
             <a href="confidentialite.html">Confidentialité</a>
             <a href="simulateur.html">Simulateur</a>
             <a href="presentation.html">Mode présentation</a>
-            <a href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">Code source</a>
+            <a href="https://github.com/notsogeek87/trusti" target="_blank" rel="noopener noreferrer">Code source</a>
         </nav>
         <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
         <p>Données hébergées en Europe | Conformité RGPD | Open Source</p>
     </footer>
 
+    <dialog class="mail-dialog" id="mailDialog" aria-labelledby="mdTitle">
+        <h3 id="mdTitle">Écrire à Trusti</h3>
+        <p>Le message est déjà rédigé. Choisissez comment l'envoyer à <strong>contact@lielu.eu</strong>&nbsp;:</p>
+        <div class="md-actions">
+            <a class="btn btn-primary" id="mdGmail" target="_blank" rel="noopener noreferrer">Ouvrir dans Gmail</a>
+            <a class="btn btn-ghost" id="mdOutlook" target="_blank" rel="noopener noreferrer">Ouvrir dans Outlook</a>
+            <a class="btn btn-ghost" id="mdMailto">Mon application de messagerie</a>
+            <button type="button" class="btn btn-ghost" id="mdCopy">Copier le message</button>
+        </div>
+        <p class="md-status" id="mdStatus" role="status"></p>
+        <button type="button" class="md-close" id="mdClose">Fermer</button>
+    </dialog>
+    <script>
+        (function () {
+            var dlg = document.getElementById('mailDialog');
+            if (!dlg || typeof dlg.showModal !== 'function') return;
+            var to = 'contact@lielu.eu', current = null;
+            function status(t) { document.getElementById('mdStatus').textContent = t; }
+            document.querySelectorAll('a[data-mail]').forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var q = new URLSearchParams(a.getAttribute('href').split('?')[1] || '');
+                    current = { subject: q.get('subject') || '', body: q.get('body') || '' };
+                    var qs = 'to=' + encodeURIComponent(to) + '&subject=' + encodeURIComponent(current.subject) + '&body=' + encodeURIComponent(current.body);
+                    document.getElementById('mdGmail').href = 'https://mail.google.com/mail/?view=cm&fs=1&' + qs;
+                    document.getElementById('mdOutlook').href = 'https://outlook.live.com/mail/0/deeplink/compose?' + qs;
+                    document.getElementById('mdMailto').href = a.getAttribute('href');
+                    status('');
+                    dlg.showModal();
+                });
+            });
+            document.getElementById('mdCopy').addEventListener('click', function () {
+                var txt = 'À : ' + to + '\nObjet : ' + current.subject + '\n\n' + current.body;
+                var done = function () { status('Message copié. Collez-le dans votre messagerie.'); };
+                var fail = function () { status('Copie impossible : écrivez à ' + to + '.'); };
+                if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fail); else fail();
+            });
+            document.getElementById('mdClose').addEventListener('click', function () { dlg.close(); });
+            dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+        })();
+    </script>
     <script src="assets/config-loader.js"></script>
     <script>
         // Chargement de la configuration et initialisation.
