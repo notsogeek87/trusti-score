@@ -509,6 +509,10 @@
             page-break-after: always; break-after: page;
             -webkit-print-color-adjust: exact; print-color-adjust: exact;
         }
+        /* Marges internes réduites à l'export : le contenu occupe mieux la page. */
+        html, body { margin: 0; padding: 0; }
+        .slide { padding: 40px 52px 68px; }
+        .slide-foot { left: 52px; right: 52px; bottom: 24px; }
         .progress, .controls, .notes, .overview, .help, .loading { display: none !important; }
     }
 </style>
@@ -817,6 +821,17 @@
     document.getElementById('btnNotesClose').addEventListener('click', function () { toggleNotes(false); });
     document.getElementById('btnFull').addEventListener('click', toggleFullscreen);
     document.getElementById('btnPdf').addEventListener('click', function () { window.print(); });
+    // Barres de pondération : à l'export PDF, toutes les slides sont imprimées d'un coup,
+    // il faut donc les remplir toutes (sans animation) avant l'impression.
+    window.addEventListener('beforeprint', function () {
+        Array.prototype.forEach.call(document.querySelectorAll('.weight-fill'), function (el) {
+            el.style.transition = 'none';
+            el.style.width = el.dataset.w + '%';
+        });
+    });
+    window.addEventListener('afterprint', function () {
+        Array.prototype.forEach.call(document.querySelectorAll('.weight-fill'), function (el) { el.style.transition = ''; });
+    });
     document.getElementById('btnHelp').addEventListener('click', function () { toggleHelp(); });
     document.getElementById('help').addEventListener('click', function (e) {
         if (e.target === this) toggleHelp(false);
