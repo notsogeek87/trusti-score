@@ -310,6 +310,16 @@
         .mail-dialog .md-close { margin-top: 14px; background: none; border: 0; color: var(--ink-2); text-decoration: underline; cursor: pointer; font: inherit; }
         .mail-dialog .md-status { min-height: 1.4em; margin: 10px 0 0; font-size: 0.875rem; color: var(--accent); }
 
+        /* Grands écrans : les 5 notes (et les 5 critères) sur une seule ligne, sans orpheline */
+        @media (min-width: 1100px) {
+            .grade-scale { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        }
+        /* Critères : 3 par ligne, la dernière ligne (2 cartes) centrée */
+        @media (min-width: 800px) {
+            .criteria-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 16px; }
+            .criteria-grid .criteria-item { flex: 0 1 calc((100% - 32px) / 3); }
+        }
+
         /* Appel final */
         .cta-content { flex: 1 1 100%; min-width: 0; }
         .cta-content h2 { margin-bottom: 14px; }
