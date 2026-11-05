@@ -31,7 +31,7 @@
         main { width: 100%; max-width: 360px; text-align: center; }
         .logo { width: 88px; height: 88px; margin-bottom: 12px; }
         h1 { margin: 0 0 28px; font-size: 28px; color: var(--accent-deep); }
-        a.btn {
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -48,8 +48,52 @@
             font-weight: 700;
             text-decoration: none;
         }
-        a.btn:hover, a.btn:focus-visible { border-color: var(--accent); outline: none; }
-        a.btn svg { width: 24px; height: 24px; flex: none; }
+        .btn { width: 100%; font-family: inherit; cursor: pointer; }
+        .btn:hover, .btn:focus-visible { border-color: var(--accent); outline: none; }
+        .btn svg { width: 24px; height: 24px; flex: none; }
+        dialog {
+            width: calc(100% - 32px);
+            max-width: 380px;
+            padding: 24px 20px 20px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 8px 32px rgba(31, 58, 95, 0.25);
+            font-family: inherit;
+        }
+        dialog::backdrop { background: rgba(27, 42, 58, 0.45); }
+        dialog h2 { margin: 0 0 16px; font-size: 20px; color: var(--accent-deep); text-align: center; }
+        dialog ul { list-style: none; margin: 0 0 16px; padding: 0; }
+        dialog li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        dialog li:last-child { border-bottom: none; }
+        dialog li span { font-size: 15px; overflow-wrap: anywhere; text-align: left; }
+        dialog button { font-family: inherit; font-weight: 700; cursor: pointer; border-radius: 10px; }
+        .copy {
+            flex: none;
+            min-width: 76px;
+            padding: 8px 12px;
+            border: 1px solid var(--accent);
+            background: var(--surface);
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .copy.ok { background: var(--accent); color: #fff; }
+        .close {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: var(--accent-deep);
+            color: #fff;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -64,10 +108,45 @@
             <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>
             Google Play
         </a>
-        <a class="btn" href="mailto:contact@lielu.eu,davidg.c.d@proton.me,melimel06@proton.me?subject=Contact%20Trusti">
+        <button class="btn" type="button" id="contact-open">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
             Nous contacter
-        </a>
+        </button>
     </main>
+    <dialog id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Nous contacter</h2>
+        <ul>
+            <li><span>contact@lielu.eu</span><button type="button" class="copy" data-email="contact@lielu.eu">Copier</button></li>
+            <li><span>davidg.c.d@proton.me</span><button type="button" class="copy" data-email="davidg.c.d@proton.me">Copier</button></li>
+            <li><span>melimel06@proton.me</span><button type="button" class="copy" data-email="melimel06@proton.me">Copier</button></li>
+        </ul>
+        <button type="button" class="close" id="contact-close">Fermer</button>
+    </dialog>
+    <script>
+        (function () {
+            var dlg = document.getElementById('contact');
+            document.getElementById('contact-open').addEventListener('click', function () { dlg.showModal(); });
+            document.getElementById('contact-close').addEventListener('click', function () { dlg.close(); });
+            dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+            function fallbackCopy(text) {
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+                dlg.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); } finally { ta.remove(); }
+            }
+            dlg.querySelectorAll('.copy').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var email = btn.dataset.email;
+                    var done = function () {
+                        btn.textContent = 'Copié !'; btn.classList.add('ok');
+                        setTimeout(function () { btn.textContent = 'Copier'; btn.classList.remove('ok'); }, 1500);
+                    };
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(email).then(done, function () { fallbackCopy(email); done(); });
+                    } else { fallbackCopy(email); done(); }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
