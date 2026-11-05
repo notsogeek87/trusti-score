@@ -322,6 +322,7 @@
         display: grid; place-items: center;
         font-family: var(--font-display); font-size: 56px; font-weight: 900; color: oklch(0.2 0.03 255);
     }
+    .app-logo { flex: none; width: 64px; height: 64px; border-radius: 14px; }
     .app-card h4 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--accent-deep); margin-bottom: 8px; }
     .app-card p { font-size: 19px !important; color: var(--text-2) !important; }
 
@@ -657,7 +658,8 @@
             '<span><b>E</b> : à éviter, ou à utiliser en connaissance de cause</span></p>' +
             '<div class="examples">' +
             '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.A + ';color:#fff">A</div>' +
-            '<div><h4>ProtonMail</h4><p>Hébergé en Europe, chiffré, open source.</p></div></div>' +
+            '<img class="app-logo" src="assets/tuta.png" alt="" width="64" height="64">' +
+            '<div><h4>Tuta Mail</h4><p>Hébergé en Allemagne, chiffré, open source.</p></div></div>' +
             '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.E + ';color:#fff">E</div>' +
             '<div><h4>TikTok</h4><p>Données envoyées hors UE, gestion opaque.</p></div></div>' +
             '</div></div>',
