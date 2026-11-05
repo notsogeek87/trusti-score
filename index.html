@@ -308,6 +308,17 @@
         .mail-dialog .md-actions { display: grid; gap: 10px; }
         .mail-dialog .md-actions .btn { justify-content: center; text-align: center; }
         .mail-dialog .md-close { margin-top: 14px; background: none; border: 0; color: var(--ink-2); text-decoration: underline; cursor: pointer; font: inherit; }
+        .contact-dialog h3 { text-align: center; margin-bottom: 12px; }
+        .contact-dialog h4 { margin: 8px 0 4px; font-size: 0.9375rem; color: var(--ink); }
+        .contact-dialog .cd-list { list-style: none; margin: 0 0 12px; padding: 0; }
+        .contact-dialog .cd-list li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+        .contact-dialog .cd-list li:last-child { border-bottom: 0; }
+        .contact-dialog .cd-list span { font-size: 0.9375rem; overflow-wrap: anywhere; }
+        .contact-dialog .cd-copy { flex: none; min-width: 76px; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 10px; background: var(--paper); color: var(--accent); font: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer; }
+        .contact-dialog .cd-copy.ok { background: var(--accent); color: #fff; }
+        .contact-dialog .cd-social a { display: flex; align-items: center; gap: 10px; color: var(--accent); font-weight: 700; text-decoration: none; }
+        .contact-dialog .cd-social a:hover, .contact-dialog .cd-social a:focus-visible { text-decoration: underline; }
+        .contact-dialog .md-close { display: block; margin: 8px auto 0; }
         .mail-dialog .md-status { min-height: 1.4em; margin: 10px 0 0; font-size: 0.875rem; color: var(--accent); }
 
         /* Grands écrans : les 5 notes (et les 5 critères) sur une seule ligne, sans orpheline */
@@ -450,6 +461,7 @@
                     <a href="https://trusti.lielu.eu" target="_blank" rel="noopener noreferrer" class="hero-primary btn btn-primary">Application Web</a>
                     <a href="https://play.google.com/store/apps/details?id=eu.trusti.app" target="_blank" rel="noopener noreferrer" class="hero-primary btn btn-primary"><svg class="playstore-icon" viewBox="0 0 512 512" width="18" height="18" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>Google Play</a>
                     <a href="presentation.html" class="present-inline btn btn-ghost"><span aria-hidden="true">▶</span>&nbsp;Voir la présentation</a>
+                    <button type="button" class="btn btn-ghost" id="contactOpen"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>&nbsp;Nous contacter</button>
                 </div>
                 <p class="playstore-note"><strong>Gratuit pour le grand public.</strong> Vous êtes développeur&nbsp;? <a href="simulateur.html">Testez la note de votre application</a>.</p>
             </div>
@@ -908,6 +920,47 @@
             });
             document.getElementById('mdClose').addEventListener('click', function () { dlg.close(); });
             dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+        })();
+    </script>
+    <dialog class="mail-dialog contact-dialog" id="contactDialog" aria-labelledby="cdTitle">
+        <h3 id="cdTitle">Nous contacter</h3>
+        <ul class="cd-list">
+            <li><span>contact@lielu.eu</span><button type="button" class="cd-copy" data-email="contact@lielu.eu">Copier</button></li>
+            <li><span>davidg.c.d@proton.me</span><button type="button" class="cd-copy" data-email="davidg.c.d@proton.me">Copier</button></li>
+            <li><span>melimel06@proton.me</span><button type="button" class="cd-copy" data-email="melimel06@proton.me">Copier</button></li>
+        </ul>
+        <h4>LinkedIn</h4>
+        <ul class="cd-list cd-social">
+            <li><a href="https://www.linkedin.com/in/david-geslin-58879b28" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>David Geslin</a></li>
+            <li><a href="https://www.linkedin.com/in/m%C3%A9lissa-melesse-30a77059" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Mélissa Melesse</a></li>
+        </ul>
+        <button type="button" class="md-close" id="cdClose">Fermer</button>
+    </dialog>
+    <script>
+        (function () {
+            var dlg = document.getElementById('contactDialog');
+            if (!dlg || typeof dlg.showModal !== 'function') return;
+            document.getElementById('contactOpen').addEventListener('click', function () { dlg.showModal(); });
+            document.getElementById('cdClose').addEventListener('click', function () { dlg.close(); });
+            dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+            function fallbackCopy(text) {
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+                dlg.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); } finally { ta.remove(); }
+            }
+            dlg.querySelectorAll('.cd-copy').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var email = btn.dataset.email;
+                    var done = function () {
+                        btn.textContent = 'Copié !'; btn.classList.add('ok');
+                        setTimeout(function () { btn.textContent = 'Copier'; btn.classList.remove('ok'); }, 1500);
+                    };
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(email).then(done, function () { fallbackCopy(email); done(); });
+                    } else { fallbackCopy(email); done(); }
+                });
+            });
         })();
     </script>
     <script src="assets/config-loader.js"></script>
