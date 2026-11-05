@@ -353,6 +353,9 @@
         background: radial-gradient(900px 500px at 50% 40%, rgba(59,130,196,0.18), transparent 65%), var(--bg);
     }
     .slide-outro h2 { font-size: 78px; }
+    .qr-card { margin-top: 30px; padding: 18px; background: #fff; border-radius: 18px; box-shadow: var(--shadow); line-height: 0; }
+    .qr-card img { width: 320px; height: 320px; image-rendering: pixelated; }
+    .qr-url { margin-top: 18px; font-family: var(--font-mono); font-size: 20px; color: var(--accent-light); font-weight: 600; }
     .urls { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
     .url-chip {
         border: 1px solid var(--line); border-radius: 12px; padding: 18px 26px;
@@ -727,10 +730,19 @@
             '<svg class="play-icon" viewBox="0 0 512 512" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>' +
             '<div><div class="k">Google Play</div><div class="v" style="font-size:16px;margin-top:4px">Installer sur Android</div></div>' +
             '</a>' +
-            '</div>' +
-            '<p style="margin-top:34px;font-size:17px;color:var(--text-3)">Appuyez sur <b style="color:var(--text)">Q</b> pour revenir au site.</p>',
+            '</div>',
             '', 'Contact',
             'Laisser affiché pendant les questions.'));
+
+        /* 7 — QR code vers la page des liens */
+        out.push(slide('slide-outro slide-qr',
+            '<h2>Tous nos liens</h2>' +
+            '<p class="lead" style="text-align:center">Scannez pour retrouver l\'appli, Google Play et nos contacts.</p>' +
+            '<div class="qr-card"><img src="assets/qr-liens.png" alt="QR code vers trusti-score.lielu.eu/liens.html" width="320" height="320"></div>' +
+            '<p class="qr-url">trusti-score.lielu.eu/liens</p>' +
+            '<p style="margin-top:26px;font-size:17px;color:var(--text-3)">Appuyez sur <b style="color:var(--text)">Q</b> pour revenir au site.</p>',
+            '', 'QR code',
+            'Laisser le temps de scanner.'));
 
         stage.innerHTML = out.join('');
         slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
