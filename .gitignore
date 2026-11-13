@@ -30,3 +30,6 @@ __pycache__/
 *.tmp
 *.temp
 .cache/
+
+# Logo téléchargé au build Hyperfluid
+deploy/hyperfluid/*.svg

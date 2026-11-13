@@ -21,6 +21,9 @@ COPY backend/seed-config.json* ./backend/
 # Pages publiques uniquement (pas les .md, scripts ni exemples de config)
 COPY *.html robots.txt ./public/
 COPY assets ./public/assets
+# Mention « Hébergé en France par Hyperfluid » (script + logo récupéré par le workflow)
+COPY deploy/hyperfluid/hosting.js ./public/assets/hosting.js
+COPY deploy/hyperfluid/*.svg ./public/assets/hosting/
 # server.js lit aussi ../assets/config.json (configuration par défaut)
 RUN ln -s /app/public/assets /app/assets
 USER node

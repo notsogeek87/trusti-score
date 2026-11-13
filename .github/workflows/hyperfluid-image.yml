@@ -32,6 +32,12 @@ jobs:
           echo "VERSION=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
           echo "NEW_TAG=hyperfluid-v1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
 
+      - name: Logo Hyperfluid (mention d'hébergement)
+        run: |
+          curl -fsSL --max-time 30 https://www.hyperfluid.cloud/images/hyperfluid-icon.svg -o deploy/hyperfluid/hyperfluid.svg \
+            && grep -q "<svg" deploy/hyperfluid/hyperfluid.svg \
+            || { echo "Logo indisponible : mention sans logo"; printf '<svg xmlns="http://www.w3.org/2000/svg"/>' > deploy/hyperfluid/hyperfluid.svg; }
+
       - name: Construire l'image
         run: docker build -t "ghcr.io/notsogeek87/trusti-score:${VERSION}" .
 
