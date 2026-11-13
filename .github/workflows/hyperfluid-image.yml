@@ -35,12 +35,11 @@ jobs:
       - name: Construire l'image
         run: docker build -t "ghcr.io/notsogeek87/trusti-score:${VERSION}" .
 
-      - name: Test de démarrage (sans base, l'image doit au moins se lancer)
+      - name: Vérifier que l'image charge ses dépendances
         run: |
-          docker run -d --name t -e DATABASE_URL=postgres://x:x@127.0.0.1:1/x "ghcr.io/notsogeek87/trusti-score:${VERSION}"
-          sleep 5
-          docker logs t 2>&1 | tail -5
-          docker rm -f t >/dev/null
+          docker run --rm -w /app/backend "ghcr.io/notsogeek87/trusti-score:${VERSION}" \
+            node -e "Promise.all(['express','pg','bcrypt','cors','dotenv'].map(m=>import(m))).then(()=>console.log('Dépendances OK'))"
+          docker run --rm "ghcr.io/notsogeek87/trusti-score:${VERSION}" ls /app/public /app/backend
 
       - name: Publier sur ghcr.io
         run: |
