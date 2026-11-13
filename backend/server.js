@@ -46,7 +46,9 @@ app.disable('x-powered-by');
 // Anciennes adresses : renvoyées vers l'adresse officielle, chemin et paramètres conservés.
 const CANONICAL_ORIGIN = 'https://trusti-score.eu';
 const LEGACY_HOSTS = new Set(['trusti-score.lielu.eu', 'www.trusti-score.eu']);
+// Uniquement dans le conteneur Hyperfluid : sur Vercel (VERCEL=1), le site reste servi tel quel.
 app.use((req, res, next) => {
+    if (process.env.VERCEL) return next();
     const host = String(req.hostname || '').toLowerCase();
     if (!LEGACY_HOSTS.has(host)) return next();
     const code = req.method === 'GET' || req.method === 'HEAD' ? 301 : 308;
