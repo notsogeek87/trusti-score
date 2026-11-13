@@ -5,7 +5,8 @@
   var title = document.querySelector('header h1') || document.querySelector('h1');
   if (!title || document.getElementById('hosting-credit')) return;
 
-  var p = document.createElement('p');
+  // <div> et non <p> : des scripts du site visent « header p » (slogan) et l'écraseraient.
+  var p = document.createElement('div');
   p.id = 'hosting-credit';
   p.style.cssText = 'margin:.35rem 0 0;font-size:12px;line-height:1.3;opacity:.8;';
 

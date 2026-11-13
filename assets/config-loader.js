@@ -248,7 +248,9 @@ class TrustiScoreConfig {
      */
     applyToHeader() {
         const headerTitle = document.querySelector('header h1');
-        const headerSubtitle = document.querySelector('header p');
+        const headerSubtitle =
+            document.querySelector('header .tagline') ||
+            document.querySelector('header p:not(#hosting-credit)');
 
         if (headerTitle) {
             headerTitle.textContent = this.getSiteName();
