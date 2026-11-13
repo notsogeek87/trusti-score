@@ -78,7 +78,7 @@ TrustiScore est **open source** : signalez des applis, proposez des mises à jou
 - **Hébergement** : image Docker construite par `.github/workflows/hyperfluid-image.yml` et déployée sur Hyperfluid
 
 Les textes, critères et seuils du site sont stockés dans la table `trustiscore_config`
-(voir [README-CONFIG.md](README-CONFIG.md)). Il n'y a plus d'interface d'administration :
+(voir [le guide de configuration](docs/guides/configuration.md)). Il n'y a plus d'interface d'administration :
 la configuration se modifie directement en base.
 
 ### Démarrage local
@@ -95,8 +95,10 @@ python3 -m http.server 8000
 
 ### Documentation
 
-- **[README-CONFIG.md](README-CONFIG.md)** - Configuration du contenu du site
-- **[backend/README.md](backend/README.md)** - API
+- **[docs/README.md](docs/README.md)** - Index de la documentation
+- **[Configuration du contenu du site](docs/guides/configuration.md)**
+- **[Référence API](docs/api/README.md)**
+- **[Déploiement sur Hyperfluid](docs/guides/deploiement.md)**
 
 ---
 

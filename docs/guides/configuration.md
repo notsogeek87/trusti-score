@@ -1,5 +1,8 @@
 # 🚀 TrustiScore - Système de Configuration Paramétrable
 
+> **Pour qui / Pourquoi** : pour toute personne qui doit modifier les textes, critères
+> ou seuils du site, ou comprendre comment les pages chargent leur contenu.
+
 ## 📌 Vue d'ensemble
 
 Le site TrustiScore est entièrement paramétrable. Tous les textes explicatifs, descriptions, critères de notation et seuils peuvent être modifiés sans toucher au code HTML ou JavaScript.
@@ -79,7 +82,7 @@ Pour chaque critère (gouvernance, localisation, contrôle, conformité, transpa
 
 Il n'y a plus d'interface d'administration. La configuration publiée vit dans la
 table `trustiscore_config` (colonne `config_data`, JSONB) et se modifie en SQL
-(voir [backend/README.md](backend/README.md)). `assets/config.json` sert de
+(voir [la référence API](../api/README.md)). `assets/config.json` sert de
 configuration par défaut si la table est vide.
 
 ### Pour un Développeur
@@ -221,9 +224,9 @@ Les couleurs sont dans les fichiers HTML (section `<style>`). Pour une personnal
 
 ## 📚 Ressources
 
-- [backend/README.md](backend/README.md) : API et base de données
-- [config.json](assets/config.json) : Configuration par défaut
-- [config-loader.js](assets/config-loader.js) : Documentation du code
+- [Référence API](../api/README.md) : API et base de données
+- [config.json](../../assets/config.json) : Configuration par défaut
+- [config-loader.js](../../assets/config-loader.js) : Documentation du code
 
 ## 🤝 Contribution
 

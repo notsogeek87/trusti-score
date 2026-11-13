@@ -1,5 +1,8 @@
 # TrustiScore Backend API
 
+> **Pour qui / Pourquoi** : pour qui consomme ou modifie l'API (`backend/server.js`)
+> ou doit intervenir sur la configuration stockée en base.
+
 API Node.js + Express + PostgreSQL qui sert la configuration du site TrustiScore
 (textes, critères, seuils) et les pages statiques dans l'image Docker.
 
