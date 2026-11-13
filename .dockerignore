@@ -1,0 +1,9 @@
+.git
+.github
+node_modules
+backend/node_modules
+backend/.env
+.env*
+*.md
+*.ps1
+*.example

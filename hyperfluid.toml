@@ -1,0 +1,3 @@
+[containers.trusti-score.image]
+repository = "ghcr.io/notsogeek87/trusti-score"
+tag        = "{git_version}"
