@@ -25,5 +25,10 @@
   a.appendChild(img);
 
   p.appendChild(a);
+  // La mention se colle sous le titre : on lui transfère la marge basse du titre,
+  // sinon elle tombe loin du titre, près du contenu suivant (cas de liens.html).
+  var gap = window.getComputedStyle(title).marginBottom;
+  title.style.marginBottom = '0';
+  p.style.marginBottom = gap;
   title.insertAdjacentElement('afterend', p);
 })();

@@ -1,0 +1,54 @@
+name: QR code liens (ponctuel)
+
+# Régénère assets/qr-liens.png (diapo 7 de presentation.html) vers https://trusti-score.eu/liens,
+# vérifie qu'il se relit correctement, le commite, puis relance la construction de l'image Hyperfluid.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/qr-liens.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  URL: https://trusti-score.eu/liens
+
+jobs:
+  qr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Générer le QR code
+        run: |
+          set -e
+          pip install --quiet "qrcode[pil]"
+          python3 - <<'PY'
+          import os, qrcode
+          qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, border=4)
+          qr.add_data(os.environ["URL"]); qr.make(fit=True)
+          img = qr.make_image(fill_color="black", back_color="white").convert("1")
+          img = img.resize((1000, 1000), 0)
+          img.save("assets/qr-liens.png")
+          PY
+      - name: Vérifier que le QR code se relit
+        run: |
+          set -e
+          sudo apt-get install -y -qq zbar-tools > /dev/null
+          LU=$(zbarimg --quiet --raw assets/qr-liens.png)
+          echo "Lu : $LU"
+          [ "$LU" = "$URL" ]
+      - name: Commiter et relancer l'image
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          git add assets/qr-liens.png
+          if git diff --cached --quiet; then echo "Inchangé"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: QR code de la présentation vers https://trusti-score.eu/liens"
+          git push
+          gh workflow run hyperfluid-image.yml --ref main

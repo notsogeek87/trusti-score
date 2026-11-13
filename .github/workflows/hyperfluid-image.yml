@@ -9,6 +9,8 @@ on:
     paths-ignore:
       - "**.md"
       - ".github/workflows/seed-config.yml"
+      - ".github/workflows/qr-liens.yml"
+  workflow_dispatch:
 
 concurrency:
   group: hyperfluid-image
