@@ -72,58 +72,33 @@ TrustiScore est **open source** : signalez des applis, proposez des mises à jou
 
 ## 🛠️ Architecture Technique
 
-### Stack Moderne avec Base de Données
-
-TrustiScore utilise une architecture moderne et scalable :
-
 - **Frontend** : HTML5/CSS3/JavaScript vanilla (responsive)
-- **Backend API** : Node.js + Express.js
-- **Base de données** : PostgreSQL (Neon.tech cloud)
-- **Authentification** : Bcrypt + Sessions sécurisées
-- **Protection** : Rate limiting, brute force protection
+- **Backend API** : Node.js + Express.js (`backend/server.js`), en lecture seule
+- **Base de données** : PostgreSQL, hébergée chez Hyperfluid
+- **Hébergement** : image Docker construite par `.github/workflows/hyperfluid-image.yml` et déployée sur Hyperfluid
 
-### Fonctionnalités Admin
+Les textes, critères et seuils du site sont stockés dans la table `trustiscore_config`
+(voir [le guide de configuration](docs/guides/configuration.md)). Il n'y a plus d'interface d'administration :
+la configuration se modifie directement en base.
 
-- ⚙️ **Interface d'administration** complète
-- 📝 **Configuration dynamique** de tous les textes et paramètres
-- 💾 **Sauvegarde automatique** en base de données
-- 📊 **Historique** des modifications (audit trail)
-- 🔒 **Authentification sécurisée** avec protection anti-brute-force
+### Démarrage local
 
-### Démarrage Rapide
-
-```powershell
-# 1. Démarrer le système
-.\start.ps1
-
-# Ou manuellement :
-
-# Terminal 1 - Backend
+```bash
 cd backend
+cp .env.example .env   # renseigner DATABASE_URL
 npm install
-npm start
+npm start              # API sur http://localhost:3001
 
-# Terminal 2 - Frontend
-python -m http.server 8000
+# Dans un autre terminal, à la racine :
+python3 -m http.server 8000
 ```
-
-**Interface admin :** http://localhost:8000/admin.html
 
 ### Documentation
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Guide de démarrage rapide
-- **[NEON-SETUP.md](NEON-SETUP.md)** - Configuration base de données
-- **[VERCEL-UPDATE.md](VERCEL-UPDATE.md)** - ⚡ Mise à jour Vercel (déjà déployé)
-- **[VERCEL-DEPLOY.md](VERCEL-DEPLOY.md)** - Déploiement Vercel complet
-- **[CLOUDFLARE-SETUP.md](CLOUDFLARE-SETUP.md)** - Déploiement production
-- **[STATUS.md](STATUS.md)** - État du système et utilisation
-- **[COMMANDS.md](COMMANDS.md)** - Commandes rapides
-
-### Tests
-
-```powershell
-.\test-system.ps1
-```
+- **[docs/README.md](docs/README.md)** - Index de la documentation
+- **[Configuration du contenu du site](docs/guides/configuration.md)**
+- **[Référence API](docs/api/README.md)**
+- **[Déploiement sur Hyperfluid](docs/guides/deploiement.md)**
 
 ---
 

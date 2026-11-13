@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /admin.html
 Disallow: /assets/config.json
 Allow: /
 

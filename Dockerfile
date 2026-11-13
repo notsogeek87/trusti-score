@@ -1,10 +1,9 @@
 # Image du site TrustiScore pour Hyperfluid : pages statiques + API Express (backend/).
 # Construite par .github/workflows/hyperfluid-image.yml, déployée via hyperfluid.toml.
 
-# --- Dépendances (bcrypt peut avoir besoin de compiler) ---
+# --- Dépendances ---
 FROM node:22-alpine AS deps
 WORKDIR /app/backend
-RUN apk add --no-cache python3 make g++
 COPY backend/package.json backend/package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
