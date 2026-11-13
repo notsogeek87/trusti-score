@@ -118,7 +118,7 @@ class TrustiScoreConfig {
 
     /**
      * Extrait l'émoji de tête de `detailedDescription` (ex: "🗺️ Gouvernance…").
-     * Évite d'ajouter un champ au schéma géré par l'admin.
+     * Évite d'ajouter un champ au schéma de configuration.
      * @param {Object} criterion
      * @returns {string} Émoji ou chaîne vide
      */

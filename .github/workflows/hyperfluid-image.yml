@@ -46,7 +46,7 @@ jobs:
       - name: Vérifier que l'image charge ses dépendances
         run: |
           docker run --rm -w /app/backend "ghcr.io/notsogeek87/trusti-score:${VERSION}" \
-            node -e "Promise.all(['express','pg','bcrypt','cors','dotenv'].map(m=>import(m))).then(()=>console.log('Dépendances OK'))"
+            node -e "Promise.all(['express','pg','cors','dotenv'].map(m=>import(m))).then(()=>console.log('Dépendances OK'))"
           docker run --rm "ghcr.io/notsogeek87/trusti-score:${VERSION}" ls /app/public /app/backend
 
       - name: Publier sur ghcr.io

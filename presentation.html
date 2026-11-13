@@ -274,7 +274,7 @@
     .scale-legend > div { border-top: 2px solid; padding-top: 12px; }
     .scale-legend .range { font-size: 22px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
     /* Libellé de la note (ex. "Critique, très risqué…") : sa longueur dépend
-       de la configuration éditée dans l'admin, donc jamais de hauteur fixe
+       de la configuration stockée en base, donc jamais de hauteur fixe
        ici — seule la barre colorée ci-dessus a une hauteur imposée, et elle
        ne porte plus que la lettre. */
     /* min-height réserve la place de 2 lignes même quand le libellé n'en
@@ -598,7 +598,7 @@
     }
 
     /* La config autorise <strong> dans certains champs : on la considère comme
-       contenu de confiance (elle vient de l'admin), donc innerHTML direct. */
+       contenu de confiance (elle vient de la configuration en base), donc innerHTML direct. */
     function foot(chapter) {
         return '<div class="slide-foot"><span>TrustiScore — Souveraineté numérique</span><span>' + esc(chapter) + '</span></div>';
     }

@@ -2,7 +2,7 @@
 
 ## 📌 Vue d'ensemble
 
-Le site TrustiScore est maintenant entièrement paramétrable par un administrateur. Tous les textes explicatifs, descriptions, critères de notation et seuils peuvent être modifiés sans toucher au code HTML ou JavaScript.
+Le site TrustiScore est entièrement paramétrable. Tous les textes explicatifs, descriptions, critères de notation et seuils peuvent être modifiés sans toucher au code HTML ou JavaScript.
 
 ## 🏗️ Architecture
 
@@ -10,7 +10,7 @@ Le site TrustiScore est maintenant entièrement paramétrable par un administrat
 
 1. **assets/config.json** : Fichier de configuration contenant tous les textes et paramètres
 2. **assets/config-loader.js** : Script de chargement et gestion de la configuration
-3. **admin.html** : Interface d'administration web pour modifier la configuration
+3. **Table `trustiscore_config`** (PostgreSQL) : configuration publiée, servie par `GET /api/config`
 4. **index.html** : Page d'accueil (modifiée pour utiliser la config dynamique)
 5. **simulateur.html** : Simulateur (modifié pour utiliser la config dynamique)
 
@@ -32,19 +32,6 @@ Le site TrustiScore est maintenant entièrement paramétrable par un administrat
 │  simulateur.html│
 └─────────────────┘
 
-┌─────────────────┐
-│   admin.html    │ ← Interface pour modifier
-└────────┬────────┘
-         │
-         ↓
-┌─────────────────┐
-│  localStorage   │ ← Stockage temporaire
-└────────┬────────┘
-         │
-         ↓ (export)
-┌─────────────────┐
-│  config.json    │ ← Mise à jour permanente
-└─────────────────┘
 ```
 
 ## ✨ Fonctionnalités
@@ -88,14 +75,12 @@ Pour chaque critère (gouvernance, localisation, contrôle, conformité, transpa
 
 ## 🎯 Utilisation
 
-### Pour un Administrateur
+### Modifier le contenu
 
-1. **Ouvrir l'interface admin** : `admin.html`
-2. **Naviguer entre les onglets** : Général, Notes, Critères, Simulateur, Page d'accueil
-3. **Modifier les textes** dans les formulaires
-4. **Sauvegarder** : Les modifications sont stockées dans le navigateur
-5. **Exporter** : Télécharger le fichier `config.json` modifié
-6. **Appliquer** : Remplacer `assets/config.json` par le fichier exporté
+Il n'y a plus d'interface d'administration. La configuration publiée vit dans la
+table `trustiscore_config` (colonne `config_data`, JSONB) et se modifie en SQL
+(voir [backend/README.md](backend/README.md)). `assets/config.json` sert de
+configuration par défaut si la table est vide.
 
 ### Pour un Développeur
 
@@ -121,8 +106,8 @@ const criteriaHTML = trustiConfig.generateCriteriaGrid();
 
 ### Priorité de Chargement
 
-1. **localStorage** : Si présent, utilisé en priorité (modifications de l'admin non exportées)
-2. **config.json** : Fichier par défaut si pas de localStorage
+1. **API** (`GET /api/config`) : configuration stockée en base
+2. **assets/config.json** : configuration par défaut si l'API ne répond pas
 
 ### Génération Dynamique
 
@@ -174,12 +159,10 @@ const grade = getGradeFromThresholds(score);
 
 ## 🔐 Sécurité
 
-### Recommandations Production
+### Recommandations
 
-1. **Ne pas exposer admin.html** sur le serveur public
-2. **Protéger l'accès** via authentification si exposé
-3. **Valider le JSON** avant de l'appliquer
-4. **Sauvegarder** l'ancien config.json avant remplacement
+1. **Valider le JSON** avant de l'écrire en base
+2. L'historique (`trustiscore_config_history`) permet de revenir à une version précédente
 
 ### Validation
 
@@ -235,12 +218,10 @@ Les couleurs sont dans les fichiers HTML (section `<style>`). Pour une personnal
 - [ ] Système de thèmes (couleurs dans config.json)
 - [ ] Import/Export de critères individuels
 - [ ] Historique des versions de configuration
-- [ ] API pour modifier la config à distance
-- [ ] Prévisualisation en temps réel dans l'admin
 
 ## 📚 Ressources
 
-- [README-ADMIN.md](README-ADMIN.md) : Guide d'utilisation détaillé
+- [backend/README.md](backend/README.md) : API et base de données
 - [config.json](assets/config.json) : Configuration par défaut
 - [config-loader.js](assets/config-loader.js) : Documentation du code
 

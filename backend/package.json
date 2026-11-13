@@ -6,10 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js",
-    "init": "node init-database.js",
-    "force-init": "node force-init-database.js",
-    "create-sessions": "node create-sessions-table.js"
+    "dev": "node --watch server.js"
   },
   "keywords": [
     "trustiscore",
@@ -20,7 +17,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
