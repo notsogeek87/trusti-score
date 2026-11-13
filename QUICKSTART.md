@@ -352,8 +352,8 @@ netstat -ano | findstr :3001
 
 ## 🚀 Prochaines Étapes
 
-1. ✅ **Déployer le backend** sur Render/Railway/Vercel
-2. ✅ **Déployer le frontend** sur Netlify/Vercel/GitHub Pages
+1. ✅ **Déployer le backend** sur Hyperfluid
+2. ✅ **Déployer le frontend** sur Hyperfluid (même image)
 3. ✅ **Configurer Cloudflare** pour la protection DDoS
 4. ✅ **Changer le mot de passe** en production
 

@@ -32,7 +32,7 @@
 
 **Note :** Si vous n'avez pas encore de domaine, vous pouvez :
 - En acheter un sur Namecheap, OVH, Gandi, etc. (10-15€/an)
-- Pour tester : utilisez un sous-domaine gratuit sur vercel.app ou netlify.app
+- Pour tester : utilisez un sous-domaine gratuit fourni par l'hébergeur
 
 ---
 

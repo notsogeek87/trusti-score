@@ -228,8 +228,8 @@ C'est normal ! Les sessions expirent après 4 heures.
 
 ### 1. Déployer en production
 
-**Backend :** Render.com, Railway.app, ou Vercel  
-**Frontend :** Netlify, Vercel, ou GitHub Pages  
+**Backend :** Hyperfluid  
+**Frontend :** Hyperfluid (même image)  
 **Protection :** Cloudflare (gratuit)
 
 Voir [CLOUDFLARE-SETUP.md](CLOUDFLARE-SETUP.md)

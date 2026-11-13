@@ -129,15 +129,8 @@ node --input-type=module -e "import bcrypt from 'bcrypt'; console.log(bcrypt.has
 
 ### Options recommandées
 
-**Backend API :**
-- Render.com (gratuit)
-- Railway.app (gratuit)
-- Vercel (gratuit)
-
-**Frontend :**
-- Netlify (gratuit)
-- Vercel (gratuit)
-- GitHub Pages (gratuit)
+**Site et API :**
+- Hyperfluid (image Docker unique, base PostgreSQL interne)
 
 **Protection :**
 - Cloudflare (gratuit) - Voir [CLOUDFLARE-SETUP.md](CLOUDFLARE-SETUP.md)

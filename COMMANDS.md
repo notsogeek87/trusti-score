@@ -52,7 +52,7 @@ cd backend
 npm run force-init
 ```
 
-### Créer la table de sessions (Vercel)
+### Créer la table de sessions
 ```bash
 cd backend
 npm run create-sessions
@@ -74,38 +74,10 @@ node -e "const bcrypt = require('bcrypt'); console.log(bcrypt.hashSync('VotreMot
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```
 
-## 🌐 Déploiement Vercel
+## 🌐 Déploiement
 
-### Via Interface Web
-1. Push sur GitHub
-2. Aller sur https://vercel.com
-3. Import Git Repository
-4. Configurer les variables d'environnement
-5. Deploy
-
-### Via CLI
-```bash
-# Installer Vercel CLI
-npm install -g vercel
-
-# Se connecter
-vercel login
-
-# Déployer
-vercel
-
-# Déployer en production
-vercel --prod
-```
-
-### Variables d'environnement Vercel
-```
-DATABASE_URL=postgresql://...neon.tech/neondb
-ADMIN_PASSWORD_HASH=$2b$10$...
-SESSION_SECRET=...
-NODE_ENV=production
-PORT=3001
-```
+Le site est déployé sur Hyperfluid : l'image Docker est construite par le workflow
+`.github/workflows/hyperfluid-image.yml` à chaque push sur `main`.
 
 ## 🧪 Tests
 
@@ -203,9 +175,6 @@ DELETE FROM admin_sessions WHERE expires_at < EXTRACT(epoch FROM NOW()) * 1000;
 ```bash
 # Logs backend (dans le terminal où npm start tourne)
 # Les logs s'affichent en temps réel
-
-# Logs Vercel
-# Dashboard Vercel → Functions → View Logs
 ```
 
 ## 🐛 Dépannage
@@ -248,7 +217,7 @@ grep ADMIN_PASSWORD_HASH .env
 | `assets/config.json` | Configuration par défaut |
 | `assets/config-loader.js` | Loader de config dynamique |
 | `admin.html` | Interface d'administration |
-| `vercel.json` | Configuration Vercel |
+| `Dockerfile` / `hyperfluid.toml` | Image et configuration Hyperfluid |
 | `start.ps1` | Script de démarrage rapide |
 
 ## 🔗 Ressources
@@ -256,14 +225,12 @@ grep ADMIN_PASSWORD_HASH .env
 - **Documentation** : Voir les fichiers .md à la racine
 - **GitHub** : https://github.com/notsogeek87/trusti-score
 - **Neon** : https://console.neon.tech
-- **Vercel** : https://vercel.com/dashboard
+- **Hyperfluid** : https://www.hyperfluid.cloud/
 
 ## 🆘 Support
 
 1. Vérifier [STATUS.md](STATUS.md) pour l'état du système
 2. Consulter [QUICKSTART.md](QUICKSTART.md) pour le guide complet
-3. Voir [VERCEL-DEPLOY.md](VERCEL-DEPLOY.md) pour le déploiement
-4. Lire [VERCEL-CHANGES.md](VERCEL-CHANGES.md) pour les modifications récentes
 
 ---
 

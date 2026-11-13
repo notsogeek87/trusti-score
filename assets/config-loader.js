@@ -23,14 +23,7 @@ class TrustiScoreConfig {
             return 'http://localhost:3001';
         }
         
-        // Production sur Vercel
-        if (hostname.includes('vercel.app')) {
-            // Utiliser la même base URL que le frontend
-            return window.location.origin;
-        }
-        
-        // Domaine personnalisé ou autre
-        // Par défaut, utiliser la même base URL que le frontend
+        // Production : l'API est servie par le même serveur que le site
         return window.location.origin;
     }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test API Vercel - TrustiScore</title>
+    <title>Test API - TrustiScore</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -53,7 +53,7 @@
     </style>
 </head>
 <body>
-    <h1>🧪 Test API Vercel - TrustiScore</h1>
+    <h1>🧪 Test API - TrustiScore</h1>
     
     <div class="test" id="test1">
         <h2>Test 1 : Health Check</h2>
@@ -154,7 +154,7 @@
                     resultDiv.innerHTML = `
                         <div class="status">❌ Authentification échouée (${response.status})</div>
                         <pre>${JSON.stringify(data, null, 2)}</pre>
-                        <p><strong>Cause probable:</strong> Variable ADMIN_PASSWORD_HASH non configurée sur Vercel</p>
+                        <p><strong>Cause probable:</strong> Variable ADMIN_PASSWORD_HASH non configurée sur le serveur</p>
                     `;
                 }
             } catch (error) {

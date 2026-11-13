@@ -33,7 +33,7 @@ const DATABASE_URL = resolveDatabaseUrl();
 // SSL pour Neon (ou si l'adresse le demande) ; pas pour la base interne Hyperfluid.
 const useSsl = /neon\.tech/.test(DATABASE_URL) || /sslmode=require/.test(DATABASE_URL);
 
-// Configuration PostgreSQL (Neon sur Vercel, PostgreSQL interne sur Hyperfluid)
+// Configuration PostgreSQL (base interne Hyperfluid)
 const pool = new pg.Pool({
     connectionString: DATABASE_URL,
     ssl: useSsl ? { rejectUnauthorized: false } : false
@@ -46,9 +46,7 @@ app.disable('x-powered-by');
 // Anciennes adresses : renvoyées vers l'adresse officielle, chemin et paramètres conservés.
 const CANONICAL_ORIGIN = 'https://trusti-score.eu';
 const LEGACY_HOSTS = new Set(['trusti-score.lielu.eu', 'www.trusti-score.eu', 'trustiscore.eu', 'www.trustiscore.eu']);
-// Uniquement dans le conteneur Hyperfluid : sur Vercel (VERCEL=1), le site reste servi tel quel.
 app.use((req, res, next) => {
-    if (process.env.VERCEL) return next();
     const host = String(req.hostname || '').toLowerCase();
     if (!LEGACY_HOSTS.has(host)) return next();
     const code = req.method === 'GET' || req.method === 'HEAD' ? 301 : 308;
@@ -91,7 +89,7 @@ app.get('/api/health', async (req, res) => {
 // AUTHENTIFICATION
 // ========================================
 
-// Sessions stockées dans PostgreSQL (compatible Vercel serverless)
+// Sessions stockées dans PostgreSQL
 
 app.post('/api/auth/login', async (req, res) => {
     const { password } = req.body;
@@ -297,7 +295,7 @@ async function initDatabase() {
             )
         `);
 
-        // Créer la table de sessions pour Vercel serverless
+        // Créer la table de sessions
         await pool.query(`
             CREATE TABLE IF NOT EXISTS admin_sessions (
                 token VARCHAR(64) PRIMARY KEY,
@@ -334,7 +332,7 @@ async function initDatabase() {
 
         await seedConfigIfEmpty();
 
-        console.log('✅ Base de données initialisée (compatible Vercel serverless)');
+        console.log('✅ Base de données initialisée ');
 
     } catch (error) {
         console.error('❌ Erreur lors de l\'initialisation de la BDD:', error);
@@ -364,9 +362,8 @@ async function seedConfigIfEmpty() {
 }
 
 // ========================================
-// SITE STATIQUE (serveur conteneur uniquement)
+// SITE STATIQUE
 // ========================================
-// Sur Vercel, les pages sont servies par @vercel/static (vercel.json).
 // Dans l'image Docker, les pages publiques sont copiées dans ../public.
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 if (fs.existsSync(PUBLIC_DIR)) {

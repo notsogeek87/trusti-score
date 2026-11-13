@@ -140,8 +140,8 @@ Visiteurs voient les modifications (temps réel)
 
 ### 🌐 En Production
 
-**Frontend :** Peut être déployé sur Netlify/Vercel (statique)  
-**Backend :** DOIT être déployé sur Render/Railway/Vercel (API)
+**Frontend :** Peut être déployé sur Hyperfluid (image Docker)  
+**Backend :** DOIT être déployé sur Hyperfluid (même image que le site)
 
 **Configuration prod dans config-loader.js :**
 ```javascript

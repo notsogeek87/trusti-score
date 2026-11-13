@@ -1,6 +1,6 @@
 /**
- * Script de création de la table de sessions pour Vercel serverless
- * Exécutez ce script UNE FOIS après avoir déployé sur Vercel
+ * Script de création de la table de sessions admin
+ * À exécuter une fois sur une base neuve (la table est aussi créée au démarrage du serveur)
  */
 
 import pg from 'pg';
@@ -66,7 +66,7 @@ async function createSessionsTable() {
         console.log('  ✅ Configuration réussie !');
         console.log('========================================');
         console.log('');
-        console.log('Votre backend est maintenant compatible Vercel serverless.');
+        console.log('Table de sessions prête.');
         console.log('Les sessions sont stockées dans PostgreSQL.');
         console.log('');
         

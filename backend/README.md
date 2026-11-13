@@ -240,13 +240,6 @@ curl -Method PUT -Uri "http://localhost:3001/api/config" -Headers $headers -Body
 4. Railway détecte automatiquement Node.js
 5. Ajoutez les variables d'environnement
 
-### Option 3 : Vercel (Gratuit)
-
-1. Installez Vercel CLI : `npm install -g vercel`
-2. Dans le dossier backend : `vercel`
-3. Suivez les instructions
-4. Ajoutez les variables d'environnement via dashboard
-
 ### Variables d'environnement en production
 
 ```env
