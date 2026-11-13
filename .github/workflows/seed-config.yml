@@ -1,0 +1,33 @@
+name: Seed config (ponctuel)
+
+# Copie la configuration publiée (GET /api/config du site actuel, données publiques)
+# dans backend/seed-config.json : la base Hyperfluid neuve démarre avec elle.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/seed-config.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Récupérer la configuration
+        run: |
+          set -e
+          curl -fsSL --max-time 30 https://trusti-score.lielu.eu/api/config -o backend/seed-config.json
+          python3 -c "import json;d=json.load(open('backend/seed-config.json'));assert 'criteria' in d and 'gradeThresholds' in d;print('OK :', len(json.dumps(d)), 'caractères')"
+      - name: Commiter
+        run: |
+          set -e
+          git add backend/seed-config.json
+          if git diff --cached --quiet; then echo "Inchangé"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: configuration initiale pour la base Hyperfluid (copie de /api/config)"
+          git push
