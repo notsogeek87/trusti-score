@@ -1,0 +1,201 @@
+{
+    "footer": {
+        "copyright": "© 2026 TrustiScore - Für eine europäische digitale Souveränität",
+        "additionalInfo": "Daten in Europa gehostet | DSGVO-konform | Open Source"
+    },
+    "criteria": {
+        "controle": {
+            "name": "Technische Kontrolle",
+            "options": [
+                { "label": "4 Pkt. - Vollständig offen", "description": "Code zu 100 % Open Source, volle Reversibilität, unabhängiger Technologie-Stack" },
+                { "label": "3 Pkt. - Teilweise offen", "description": "Hauptkomponenten Open Source, Datenexport in Standardformaten" },
+                { "label": "2 Pkt. - Geringe Abh.", "description": "Geringe Abhängigkeiten von Big Tech, Export mit etwas Aufwand möglich" },
+                { "label": "1 Pkt. - Starke Abh.", "description": "Starke Abhängigkeiten von ausländischer Infrastruktur" },
+                { "label": "0 Pkt. - Gefangen", "description": "Vollständig proprietäres Ökosystem, keine Reversibilität" }
+            ],
+            "description": "Open Source, Reversibilität und Unabhängigkeit von Big Tech",
+            "gradeAExample": "Open Source, reversibel, keine Abhängigkeit von Big Tech (Google, Apple, Facebook, Amazon, Microsoft)",
+            "gradeEExample": "Kritische Dienste in den USA, in China…",
+            "detailedDescription": "🔧 Technische Kontrolle (20 %)"
+        },
+        "conformite": {
+            "name": "Konformität und Zertifizierungen",
+            "options": [
+                { "label": "4 Pkt. - DSGVO+Zertif.", "description": "Vollständige DSGVO-Umsetzung (DSB, DSFA), Zertifizierungen wie SecNumCloud, ISO 27001, HDS" },
+                { "label": "3 Pkt. - DSGVO-Basis", "description": "DSGVO eingehalten, Datenschutzbeauftragter benannt, grundlegende Zertifizierungen (ISO 27001)" },
+                { "label": "2 Pkt. - Minimal", "description": "Minimale DSGVO-Konformität, unvollständige Dokumentation" },
+                { "label": "1 Pkt. - Lückenhaft", "description": "Teilweise Konformität, unzureichende Informationen" },
+                { "label": "0 Pkt. - Nicht konform", "description": "Keine erkennbare DSGVO-Konformität, kein Datenschutzbeauftragter" }
+            ],
+            "description": "Einhaltung der DSGVO, ein Datenschutzbeauftragter (DSB), Zertifizierungen (SecNumCloud, ISO 27001...)",
+            "gradeAExample": "Vollständige DSGVO-Umsetzung (DSB, DSFA), Standards wie SecNumCloud/ISO",
+            "gradeEExample": "Kaum oder keine Informationen",
+            "detailedDescription": "✅ Konformität & Zertifizierungen (20 %)"
+        },
+        "gouvernance": {
+            "name": "Governance und Rechtsraum",
+            "options": [
+                { "label": "4 Pkt. - FR/EU", "description": "Unternehmen aus Frankreich oder der Europäischen Union, mehrheitlich europäische Eigentümer, keine extraterritorialen Risiken" },
+                { "label": "3 Pkt. - EU gemischt", "description": "Europäische Tochter eines gemischten Konzerns, teilweiser Schutz vor extraterritorialen Gesetzen" },
+                { "label": "2 Pkt. - Tochter", "description": "Europäische Tochter eines ausländischen Konzerns, mittleres Risiko durch extraterritoriale Gesetze" },
+                { "label": "1 Pkt. - Garantien", "description": "Ausländisches Unternehmen mit einigen minimalen vertraglichen Garantien" },
+                { "label": "0 Pkt. - CLOUD Act", "description": "Unternehmen unterliegt dem CLOUD Act oder anderen extraterritorialen Gesetzen, ohne Schutzmaßnahmen" }
+            ],
+            "description": "Firmensitz, Eigentümerstruktur und Risiko durch extraterritoriale Gesetze",
+            "gradeAExample": "Sitz/Anteilseigner in Frankreich oder der Europäischen Union, keine übergriffigen Gesetze",
+            "gradeEExample": "Sitz in den USA oder in China, extraterritoriale Risiken",
+            "detailedDescription": "🗺️ Governance & Rechtsraum (20 %)"
+        },
+        "localisation": {
+            "name": "Datenstandort",
+            "options": [
+                { "label": "4 Pkt. - 100 % EU", "description": "Alle Daten werden ausschließlich in der Europäischen Union gespeichert" },
+                { "label": "3 Pkt. - ≥90 % EU", "description": "Mindestens 90 % der Daten in der EU, kritische Daten nur in der EU" },
+                { "label": "2 Pkt. - ≥70 % EU", "description": "Mindestens 70 % der Daten in der EU, einige Daten außerhalb der EU mit Garantien" },
+                { "label": "1 Pkt. - <50 % EU", "description": "Weniger als 50 % der Daten in der EU, Speicherung in mehreren Regionen" },
+                { "label": "0 Pkt. - Weltweit", "description": "Daten überwiegend außerhalb der EU gespeichert, keine Garantien" }
+            ],
+            "description": "Physischer Speicherort der Daten und Einhaltung europäischer Standards",
+            "gradeAExample": "100 % in der Europäischen Union (qualifizierte souveräne Cloud)",
+            "gradeEExample": "Weltweite Speicherung ohne DSGVO-Garantien",
+            "detailedDescription": "💾 Datenstandort (25 %)"
+        },
+        "transparence": {
+            "name": "Transparenz",
+            "options": [
+                { "label": "4 Pkt. - Ausführliche Berichte", "description": "Regelmäßige Transparenzberichte, klare AGB, dokumentierte Verfahren" },
+                { "label": "3 Pkt. - Klare AGB", "description": "Verständliche AGB und Datenschutzerklärung, zugängliche Informationen, Recht auf Vergessenwerden gewahrt" },
+                { "label": "2 Pkt. - Standard", "description": "Standarddokumentation, minimale konforme Informationen" },
+                { "label": "1 Pkt. - Undurchsichtig", "description": "Komplizierte AGB und Datenschutzerklärung, unklare Verfahren" },
+                { "label": "0 Pkt. - Keine Infos", "description": "Keinerlei Transparenz, keine zugänglichen AGB oder Datenschutzerklärung" }
+            ],
+            "description": "Klarheit der AGB, Jahresberichte, Verfahren zum Recht auf Vergessenwerden",
+            "gradeAExample": "Ausführliche Berichte, bekannte Verfahren zum Recht auf Vergessenwerden",
+            "gradeEExample": "Undurchsichtige AGB und Datenschutzerklärung, keine Zusagen",
+            "detailedDescription": "📜 Transparenz (15 %)"
+        }
+    },
+    "homepage": {
+        "sections": [
+            {
+                "title": "🎯 Warum gibt es TrustiScore?",
+                "content": [
+                    { "text": "Im digitalen Zeitalter sind wir für alles auf Apps und Onlinedienste angewiesen: Kommunikation, Arbeit, Freizeit. Aber <strong>wissen wir wirklich, wo unsere persönlichen Daten landen?</strong>" },
+                    { "text": "<strong>Es steht viel auf dem Spiel:</strong> Die meisten nicht-europäischen Anbieter (allen voran Big Tech) speichern unsere Informationen außerhalb der EU, unter extraterritorialen Gesetzen wie dem <strong>US-amerikanischen CLOUD Act</strong> (erzwungener Zugriff von US-Behörden auf Daten, selbst wenn sie in Europa gehostet werden). Das Ergebnis? Wir verlieren die Kontrolle über unsere Fotos, Nachrichten, Verläufe..." },
+                    { "text": "Wie hat alles angefangen?" },
+                    { "text": "Alles begann mit einer persönlichen Herausforderung: ein Smartphone so weit wie möglich von Big-Tech-Apps zu „befreien“. Nach ausgiebigen Tests entstand die Idee, die Erfahrung weiterzuführen und zu teilen: Warum nicht <strong>eine App entwickeln, die die „digitale Souveränität“ anderer Apps objektiv bewertet?</strong>" },
+                    { "text": "Etwas harte Arbeit später ist <strong>TrustiScore</strong> da: eine Open-Source-App, die <strong>mit der Community</strong> wachsen soll (Beiträge auf GitHub sind willkommen!). Unsere Mission? Ihnen helfen, Werkzeuge zu wählen, die Ihre Privatsphäre und die europäische Souveränität respektieren." },
+                    { "text": "Aber zuerst: Was ist digitale Souveränität?" },
+                    { "text": "<strong>Digitale Souveränität</strong> ist die Fähigkeit eines Staates, eines Dienstes, einer Person, einer App usw., die rechtliche, technische und wirtschaftliche Kontrolle über die eigenen Daten zu behalten, ohne übermäßige Abhängigkeit von ausländischen Mächten." },
+                    { "text": "Für Europa bedeutet das: Einhaltung der Datenschutz-Grundverordnung (DSGVO), Speicherung der Daten in der EU und möglichst geringes Risiko, dass ausländische Vorschriften wie der CLOUD Act greifen…" },
+                    { "text": "Klingt kompliziert? <strong>TrustiScore macht es Ihnen einfach!</strong>" }
+                ]
+            },
+            {
+                "title": "🔍 Wie funktioniert es? (Einfach und wirksam)",
+                "content": [
+                    { "text": "Ganz unkompliziert:" },
+                    {
+                        "items": [
+                            "<strong>Suchen Sie eine App oder einen Dienst</strong> (z. B. Tuta Mail, ChatGPT, Vinted…).",
+                            "<strong>Sehen Sie den TrustiScore</strong>: eine Gesamtnote von <strong>A bis E</strong> mit farbigen Abzeichen (🟢 A = hervorragend, 🔴 E = riskant).",
+                            "<strong>Lesen Sie die Details</strong>: ausführliche Erklärungen und die Begründung der Note.",
+                            "<strong>Denken Sie an eine Alternative</strong>: Vorschläge für Apps, die die digitale Souveränität besser respektieren, mit ihrem TrustiScore.",
+                            "<strong>Teilen Sie Ihre Erfahrungen</strong>: Schlagen Sie selbst Apps vor, mit einem TrustiScore auf Basis des Bewertungsrasters."
+                        ]
+                    },
+                    { "text": "<strong>Nach dem Nutri-Score… der TrustiScore</strong>: Genau wie beim Lebensmittel-Label genügt ein Blick, um sich zu entscheiden. Man muss kein Experte sein – TrustiScore macht für alle zugänglich, wie Apps mit digitaler Souveränität umgehen." },
+                    { "text": "Konkrete Beispiele" },
+                    {
+                        "items": [
+                            "<strong>Tuta Mail (A)</strong>: in Deutschland gehostet, verschlüsselt, Open Source",
+                            "<strong>TikTok (E)</strong>: überträgt Daten außerhalb der EU, undurchsichtiger Umgang mit Daten"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Das Bewertungssystem (transparent und ausgewogen)",
+                "content": [
+                    { "text": "Wir bewerten <strong>jede App anhand von 5 Schlüsselkriterien</strong> mit <strong>0 bis 4 Punkten</strong> (gewichtet zu einer Punktzahl von 100 und in A-E umgerechnet). Diese strenge Methode orientiert sich direkt an europäischen Standards (SecNumCloud, ISO 27001)." },
+                    { "text": "<strong>Strenge Methodik:</strong> Jedes Kriterium wird objektiv auf Grundlage öffentlicher Dokumente, technischer Analysen und unabhängiger Audits bewertet. Die Bewertungen werden regelmäßig aktualisiert, um Veränderungen in der Praxis der Unternehmen abzubilden." }
+                ]
+            },
+            {
+                "title": "🧮 Und umgekehrt… Testen Sie Ihre eigene App mit dem Simulator!",
+                "content": [
+                    { "text": "<strong>Entwicklerinnen und Entwickler, das ist für Sie!</strong> Nutzen Sie unseren <strong>kostenlosen Simulator</strong>, um Ihr eigenes Projekt schon während der Entwicklung zu bewerten. Beantworten Sie ein paar einfache Fragen (max. 5 Min.) zu Ihren technischen und rechtlichen Entscheidungen:" },
+                    { "text": "Warum ist das so praktisch?" },
+                    {
+                        "items": [
+                            "<strong>Souveränitäts-Selbstcheck:</strong> sofort eine Note von A bis E, um zu prüfen, ob Ihre App die EU-Grundsätze bestmöglich einhält (DSGVO, Daten in der EU).",
+                            "<strong>Sofort umsetzbare Tipps:</strong> individuelle Empfehlungen (z. B. „Wechseln Sie zu einer SecNumCloud-qualifizierten Cloud für +15 Pkt.!“).",
+                            "<strong>Kontinuierliche Verbesserung:</strong> Erkennen Sie Schwachstellen früh und verbessern Sie Ihre Note vor dem Start."
+                        ]
+                    },
+                    { "text": "<strong>🚀 In einem Sprint von C zu A!</strong> Beispiele:<ul style=\"margin-top: 0.5rem; margin-bottom: 0;\"><li>Hosting bei OVHcloud (FR) = +Governance.</li><li>Ein sichtbarer Datenschutzbeauftragter = +Konformität.</li></ul>" }
+                ]
+            },
+            {
+                "title": "🤝 Machen Sie mit!",
+                "content": [
+                    { "text": "TrustiScore ist <strong>Open Source</strong>: Melden Sie Apps, schlagen Sie Aktualisierungen vor, stimmen Sie über die Kriterien ab. Bauen wir gemeinsam das führende Werkzeug für <strong>souveränen Datenschutz in Europa</strong>." },
+                    { "text": "Unser Versprechen" },
+                    { "text": "TrustiScore verpflichtet sich zu <strong>unabhängigen, objektiven und transparenten</strong> Bewertungen. Wir sind mit keinem Unternehmen verbunden und erhalten keine Vergütung von den bewerteten Diensten." },
+                    { "text": "Unsere Grundsätze" },
+                    {
+                        "items": [
+                            "<strong>Volle Unabhängigkeit:</strong> keine Interessenkonflikte mit den bewerteten Unternehmen",
+                            "<strong>Objektivität:</strong> Bewertungen ausschließlich auf Basis überprüfbarer Fakten",
+                            "<strong>Transparenz:</strong> öffentliche Methodik und ausführliche Erklärungen zu jeder Note",
+                            "<strong>Laufende Aktualisierung:</strong> regelmäßige Neubewertung, um mit der Entwicklung der Dienste Schritt zu halten",
+                            "<strong>Achtung der Privatsphäre:</strong> Wir leben, was wir predigen"
+                        ]
+                    },
+                    { "text": "<strong>Werden Sie Teil der Bewegung für eine europäische digitale Souveränität.</strong> Mit TrustiScore tragen Sie aktiv zu einem Internet bei, das Ihre Rechte und Ihre Privatsphäre besser respektiert." }
+                ]
+            }
+        ]
+    },
+    "simulator": {
+        "title": "TrustiScore-Simulator",
+        "subtitle": "Berechnen Sie Ihre Note",
+        "introTitle": "🧮 Testen Sie Ihre App!",
+        "resultTitle": "Ihr TrustiScore",
+        "submitButton": "🧮 TrustiScore berechnen",
+        "introDescription": [
+            "<strong>Entwicklerinnen und Entwickler, das ist für Sie!</strong> Nutzen Sie diesen kostenlosen Simulator, um Ihr eigenes Projekt schon während der Entwicklung zu bewerten.",
+            "Beantworten Sie ein paar einfache Fragen (max. 5 Min.) zu Ihren technischen und rechtlichen Entscheidungen und erhalten Sie sofort eine Note von A bis E, um zu prüfen, ob Ihre App die EU-Grundsätze bestmöglich einhält (DSGVO, Daten in der EU).",
+            "<strong>🚀 In einem Sprint von C zu A!</strong> Erkennen Sie, wo Sie sich verbessern können, und steigern Sie Ihre Note vor dem Start."
+        ],
+        "resultDetailsTitle": "Details der Bewertung"
+    },
+    "siteTagline": "Holen Sie sich Ihre europäische digitale Souveränität zurück",
+    "gradeDescriptions": {
+        "A": {
+            "title": "Vorbildliche Souveränität",
+            "description": "Diese App bietet optimalen Schutz Ihrer Privatsphäre. Hosting in Europa und/oder lokal, volle Transparenz und uneingeschränkter Respekt für Ihre Daten. Uneingeschränkt empfehlenswert.",
+            "shortDescription": "Z. B.: überwiegend europäisches Kapital ohne Tochter- oder Muttergesellschaft in einem Land mit rechtlichem Risiko (China, USA...), Daten ausschließlich in einem zertifizierten Rechenzentrum in der EU gehostet, überwiegend Open-Source-Code, einfache Reversibilität für den Export der eigenen Daten, keine Abhängigkeit von Big Tech, kein CLOUD-Act-Risiko, vollständige DSGVO-Umsetzung, ausführliche Berichte..."
+        },
+        "B": {
+            "title": "Sehr gut, mit einigen Grenzen",
+            "description": "Gute allgemeine Praxis. Einige Verbesserungsmöglichkeiten, aber insgesamt zuverlässig für den Alltag.",
+            "shortDescription": "Z. B.: Daten überwiegend in der EU gehostet, Sitz in der EU, aber Partner und/oder Investoren teilweise extraterritorialen Gesetzen unterworfen, insgesamt gute DSGVO-Konformität, zufriedenstellende Transparenz mit zugänglicher Datenschutzerklärung, ordentliche Reversibilität, aber in einem umständlichen Format..."
+        },
+        "C": {
+            "title": "Mittel, akzeptabel, aber im Auge behalten",
+            "description": "Ein akzeptabler Dienst, aber mit mäßigen Risiken. Bei einigen Aspekten der digitalen Souveränität sind Verbesserungen nötig.",
+            "shortDescription": "Z. B.: Daten verteilt auf die EU und Regionen außerhalb der EU (etwa eine US-Cloud) mit begrenzten DSGVO-Garantien, europäischer Sitz, aber Holding oder technische Dienste außerhalb der EU, minimale DSGVO-Konformität (Cookies, Impressum), aber mangelnde Transparenz, komplizierte Reversibilität..."
+        },
+        "D": {
+            "title": "Schwache Souveränität, riskante Nutzung",
+            "description": "Erhebliche Probleme bei Souveränität und Datenschutz. Respektvollere Alternativen werden empfohlen.",
+            "shortDescription": "Z. B.: Daten überwiegend außerhalb der EU ohne klare Rechtsgrundlage gespeichert, keine Garantie für Reversibilität, DSGVO nur im Minimum umgesetzt, mangelnde Transparenz (insbesondere beim Weiterverkauf von Daten), recht starke Abhängigkeit von Big Tech..."
+        },
+        "E": {
+            "title": "Kritisch, sehr riskant für die Souveränität",
+            "description": "Große Risiken für die digitale Souveränität. Keine DSGVO-Konformität, Risiko durch den CLOUD Act oder völlige Intransparenz. Unbedingt meiden.",
+            "shortDescription": "Z. B.: Speicherung der Daten in Ländern mit hohem rechtlichem und/oder politischem Risiko (China, USA), undurchsichtige Governance mit schwer greifbaren Eigentümern und Anteilseignern, starke Abhängigkeit von Big Tech, keine erkennbaren DSGVO-Bemühungen, vage und bewusst unklare AGB, massiver Weiterverkauf von Daten..."
+        }
+    }
+}

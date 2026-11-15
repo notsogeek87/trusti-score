@@ -111,6 +111,9 @@ const criteriaHTML = trustiConfig.generateCriteriaGrid();
 
 1. **API** (`GET /api/config`) : configuration stockée en base
 2. **assets/config.json** : configuration par défaut si l'API ne répond pas
+3. **Pages EN/DE** : la traduction des textes (`assets/i18n/config.<lang>.json`) est ensuite
+   appliquée par-dessus. Les nombres (poids, seuils) restent ceux de la configuration FR.
+   Voir [la traduction du site](traduction.md).
 
 ### Génération Dynamique
 

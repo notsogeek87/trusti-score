@@ -3,10 +3,49 @@
  * Charge et gère la configuration paramétrable du site
  */
 
+// Dossier de ce script (…/assets/) : les pages traduites vivent dans /en/ et /de/,
+// un chemin relatif à la page ('assets/…') n'y fonctionnerait pas.
+const TRUSTI_ASSETS_BASE = (function () {
+    const script = document.currentScript;
+    return script && script.src ? new URL('.', script.src).href : 'assets/';
+})();
+
+// Textes générés par ce script, par langue de page (<html lang>).
+const TRUSTI_UI = {
+    fr: { grade: 'Note', more: 'Voir le détail', percent: ' pour cent du score', rating: 'Évaluation :', finalScore: 'Score final', details: "Détails de l'évaluation", tagline: 'Reprenez votre souveraineté numérique' },
+    en: { grade: 'Grade', more: 'See details', percent: ' percent of the score', rating: 'Rating:', finalScore: 'Final score', details: 'Assessment details', tagline: 'Take back your digital sovereignty' },
+    de: { grade: 'Note', more: 'Details anzeigen', percent: ' Prozent der Punktzahl', rating: 'Bewertung:', finalScore: 'Endergebnis', details: 'Details der Bewertung', tagline: 'Holen Sie sich Ihre digitale Souveränität zurück' }
+};
+
+/**
+ * Applique une surcouche de traduction (textes seulement) sur la configuration.
+ * Objets : clé par clé ; tableaux : position par position ; chaînes : remplacées.
+ * Les nombres (poids, seuils, valeurs) ne viennent jamais de la surcouche.
+ */
+function trustiMergeTexts(base, over) {
+    if (Array.isArray(base)) {
+        if (!Array.isArray(over)) return base;
+        return base.map((v, i) => (i < over.length ? trustiMergeTexts(v, over[i]) : v));
+    }
+    if (base && typeof base === 'object') {
+        if (!over || typeof over !== 'object' || Array.isArray(over)) return base;
+        const out = { ...base };
+        for (const key of Object.keys(over)) {
+            if (key in base) out[key] = trustiMergeTexts(base[key], over[key]);
+        }
+        return out;
+    }
+    return typeof base === 'string' && typeof over === 'string' ? over : base;
+}
+
 class TrustiScoreConfig {
     constructor() {
         this.config = null;
         this.loaded = false;
+        // Langue de la page : fr (par défaut), en ou de
+        const lang = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
+        this.lang = TRUSTI_UI[lang] ? lang : 'fr';
+        this.ui = TRUSTI_UI[this.lang];
         // Détection automatique de l'URL de l'API
         this.apiUrl = this.getApiUrl();
     }
@@ -28,10 +67,29 @@ class TrustiScoreConfig {
     }
 
     /**
-     * Charge la configuration depuis l'API (BDD) avec fallback sur fichier local
+     * Charge la configuration (FR) puis, sur une page EN/DE, sa traduction
+     * (assets/i18n/config.<lang>.json). Sans traduction disponible, le français reste affiché.
      * @returns {Promise<Object>} Configuration chargée
      */
     async load() {
+        await this.loadBase();
+        if (this.lang !== 'fr') {
+            try {
+                const res = await fetch(`${TRUSTI_ASSETS_BASE}i18n/config.${this.lang}.json`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                this.config = trustiMergeTexts(this.config, await res.json());
+            } catch (e) {
+                console.warn(`Traduction ${this.lang} de la configuration indisponible :`, e.message);
+            }
+        }
+        return this.config;
+    }
+
+    /**
+     * Charge la configuration depuis l'API (BDD) avec fallback sur fichier local
+     * @returns {Promise<Object>} Configuration chargée
+     */
+    async loadBase() {
         try {
             // 1. PRIORITÉ : Charger depuis l'API (Base de données)
             console.log('🔄 Tentative de chargement depuis l\'API...');
@@ -56,7 +114,7 @@ class TrustiScoreConfig {
             console.warn('⚠️ API non disponible, chargement depuis le fichier local...', apiError.message);
             
             try {
-                const fileResponse = await fetch('assets/config.json');
+                const fileResponse = await fetch(`${TRUSTI_ASSETS_BASE}config.json`);
                 if (!fileResponse.ok) {
                     throw new Error('Erreur de chargement du fichier config.json');
                 }
@@ -214,7 +272,7 @@ class TrustiScoreConfig {
      * @returns {string} Slogan
      */
     getSiteTagline() {
-        return this.get('siteTagline', 'Reprenez votre souveraineté numérique');
+        return this.get('siteTagline', this.ui.tagline);
     }
 
     /**
@@ -289,10 +347,10 @@ class TrustiScoreConfig {
                         <button type="button" class="grade-card-inner"
                                 aria-expanded="false" aria-controls="${id}">
                             <span class="grade-card-front">
-                                <span class="grade-letter">Note ${grade}</span>
+                                <span class="grade-letter">${this.ui.grade} ${grade}</span>
                                 <span class="grade-title">${gradeData.title}</span>
                                 <span class="grade-text">${gradeData.shortDescription || gradeData.description}</span>
-                                <span class="flip-hint">Voir le détail</span>
+                                <span class="flip-hint">${this.ui.more}</span>
                             </span>
                             <span class="grade-card-back" id="${id}">
                                 <span class="grade-text">${gradeData.description}</span>
@@ -321,7 +379,7 @@ class TrustiScoreConfig {
                 <div class="criteria-item">
                     <div class="criteria-head">
                         <h3>${icon ? `<span aria-hidden="true">${icon}</span> ` : ''}${criterion.name}</h3>
-                        <span class="criteria-weight">${criterion.weight}<span aria-hidden="true"> %</span><span class="sr-only"> pour cent du score</span></span>
+                        <span class="criteria-weight">${criterion.weight}<span aria-hidden="true"> %</span><span class="sr-only">${this.ui.percent}</span></span>
                     </div>
                     <div class="criteria-bar" aria-hidden="true">
                         <span class="criteria-bar-fill" style="width:${share}%"></span>
@@ -351,7 +409,7 @@ class TrustiScoreConfig {
                         <p>${criterion.description}</p>
                     </div>
                     <div class="criterion-select">
-                        <label>Évaluation :</label>
+                        <label>${this.ui.rating}</label>
                         <div class="star-rating">
         `;
 
@@ -429,11 +487,11 @@ class TrustiScoreConfig {
                 <strong>${gradeData.title}</strong><br>
                 ${gradeData.description}<br>
                 <small style="color: #94a3b8; margin-top: 1rem; display: block;">
-                    Score final : ${score} / 100
+                    ${this.ui.finalScore} : ${score} / 100
                 </small>
             </div>
             <div class="result-details">
-                <h3>Détails de l'évaluation</h3>
+                <h3>${this.ui.details}</h3>
                 <div class="result-breakdown">
         `;
 

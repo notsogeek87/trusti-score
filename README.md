@@ -81,6 +81,10 @@ Les textes, critères et seuils du site sont stockés dans la table `trustiscore
 (voir [le guide de configuration](docs/guides/configuration.md)). Il n'y a plus d'interface d'administration :
 la configuration se modifie directement en base.
 
+Le site existe en **français, anglais et allemand** (`/`, `/en/`, `/de/`). Toute modification d'une
+page FR doit être reportée dans `en/` et `de/` : `node scripts/check-i18n.mjs` le vérifie, en CI
+aussi (voir [le guide de traduction](docs/guides/traduction.md)).
+
 ### Démarrage local
 
 ```bash
@@ -99,6 +103,7 @@ python3 -m http.server 8000
 - **[Configuration du contenu du site](docs/guides/configuration.md)**
 - **[Référence API](docs/api/README.md)**
 - **[Déploiement sur Hyperfluid](docs/guides/deploiement.md)**
+- **[Traduction du site (FR, EN, DE)](docs/guides/traduction.md)**
 
 ---
 

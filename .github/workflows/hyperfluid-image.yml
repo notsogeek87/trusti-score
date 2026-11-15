@@ -29,6 +29,9 @@ jobs:
       - name: Vérifier la syntaxe du serveur
         run: node --check backend/server.js
 
+      - name: Vérifier les traductions (EN, DE)
+        run: node scripts/check-i18n.mjs
+
       - name: Version
         run: |
           echo "VERSION=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"

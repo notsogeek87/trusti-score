@@ -131,6 +131,30 @@ footer p { font-size: 0.9375rem; opacity: 0.9; margin: 0.4rem 0 0; max-width: 70
     align-items: center;
 }
 
+/* ---------- Sélecteur de langue (FR · EN · DE) ---------- */
+
+.lang-switch { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.topbar .lang-switch { gap: 4px; }
+.lang-switch a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 10px;
+    border-radius: 999px;
+    color: inherit;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+}
+.lang-switch a:hover { text-decoration: underline; }
+.lang-switch a[aria-current="true"] { box-shadow: inset 0 0 0 1.5px currentColor; }
+header .lang-switch { margin-left: 16px; vertical-align: middle; }
+.topbar .lang-switch { margin-left: 0; }
+footer .lang-switch { margin: 0 0 8px -10px; color: var(--foot-fg); }
+
 /* ---------- Pages d'information (confidentialité, mentions légales) ---------- */
 
 body:not(.home) header {

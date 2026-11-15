@@ -6,6 +6,10 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Présentation TrustiScore : support de conférence sur la souveraineté numérique et la notation A-E des applications.">
 <link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="alternate" hreflang="fr" href="https://trusti-score.eu/presentation">
+<link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/presentation">
+<link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/presentation">
+<link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/presentation">
 <title>TrustiScore — Présentation</title>
 <style>
     :root {
@@ -458,6 +462,9 @@
     }
     .ov-item:hover { border-color: var(--accent); transform: translateY(-2px); }
     .ov-item.current { border-color: var(--accent-light); background: #fff; box-shadow: 0 0 0 2px var(--accent-light); color: var(--accent-deep); }
+    .overview .lang-switch { display: flex; gap: 6px; margin: -8px 0 20px; }
+    .overview .lang-switch a { display: inline-grid; place-items: center; min-width: 44px; min-height: 36px; padding: 0 10px; border-radius: 100px; border: 1px solid var(--line); background: var(--surface); color: var(--accent-deep); font-size: 14px; font-weight: 700; text-decoration: none; }
+    .overview .lang-switch a[aria-current="true"] { border-color: var(--accent-light); box-shadow: 0 0 0 1px var(--accent-light); }
     .ov-item .num { display: block; font-size: 12px; color: var(--text-3); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
 
     /* ---------- Aide (touche ?) ---------- */
@@ -521,7 +528,7 @@
     }
 </style>
 </head>
-<body>
+<body data-no-lang-banner>
 
 <div id="loading" class="loading">Chargement de la présentation…</div>
 <div id="fatal" class="fatal"></div>
@@ -555,6 +562,7 @@
 
 <div class="overview" id="overview" role="dialog" aria-modal="true" aria-label="Sommaire">
     <h4>Sommaire — cliquez pour aller à une slide</h4>
+    <nav class="lang-switch" aria-label="Langue"><a href="presentation.html" hreflang="fr" lang="fr" title="Français" aria-current="true">FR</a><a href="en/presentation.html" hreflang="en" lang="en" title="English">EN</a><a href="de/presentation.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
     <div class="overview-grid" id="overviewGrid"></div>
 </div>
 
@@ -915,5 +923,6 @@
     });
 })();
 </script>
+<script src="assets/i18n.js" defer></script>
 </body>
 </html>

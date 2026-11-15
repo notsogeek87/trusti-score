@@ -7,6 +7,10 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="description" content="Simulateur TrustiScore : évaluez en 5 minutes la souveraineté numérique de votre application et obtenez une note de A à E.">
     <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/simulateur">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/simulateur">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/simulateur">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/simulateur">
     <title>Simulateur TrustiScore - Calculez votre note</title>
     <link rel="stylesheet" href="assets/trusti.css">
     <style>
@@ -135,6 +139,7 @@
             <h1>Simulateur TrustiScore</h1>
             <p>Évaluez le niveau de confiance d'une application</p>
             <a href="index.html" class="nav-link">← Retour à l'accueil</a>
+            <nav class="lang-switch" aria-label="Langue"><a href="simulateur.html" hreflang="fr" lang="fr" title="Français" aria-current="true">FR</a><a href="en/simulateur.html" hreflang="en" lang="en" title="English">EN</a><a href="de/simulateur.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
         </div>
     </header>
 
@@ -187,6 +192,7 @@
             <a href="presentation.html">Mode présentation</a>
             <a href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">Code source</a>
         </nav>
+        <nav class="lang-switch" aria-label="Langue"><a href="simulateur.html" hreflang="fr" lang="fr" title="Français" aria-current="true">FR</a><a href="en/simulateur.html" hreflang="en" lang="en" title="English">EN</a><a href="de/simulateur.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
         <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
         <p>Vos réponses ne quittent pas votre navigateur.</p>
     </footer>
@@ -401,7 +407,11 @@
             requestAnimationFrame(tick);
         }
 
+        // Libellés courts du graphique radar (le nom complet du critère est trop long)
+        const RADAR_LABELS = { gouvernance: 'Gouvernance', localisation: 'Localisation', controle: 'Contrôle', conformite: 'Conformité', transparence: 'Transparence' };
+
         function generateRadarSVG(details, color) {
+            const keys = Object.keys(details);
             const entries = Object.values(details);
             const n = entries.length;
             const cx = 180, cy = 180, R = 115, LR = 150;
@@ -432,7 +442,7 @@
 
             const labels = entries.map(function(d, i) {
                 const p = pt(i, LR);
-                const name = d.criterion.name.split(' ')[0];
+                const name = RADAR_LABELS[keys[i]] || d.criterion.name.split(' ')[0];
                 const pct = d.criterion.weight;
                 const x = p[0].toFixed(1), y = p[1].toFixed(1);
                 return '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="middle" font-family="\'Segoe UI\',sans-serif">' +
@@ -510,6 +520,7 @@
             if (h) io.observe(h);
         })();
     </script>
+    <script src="assets/i18n.js" defer></script>
     <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
     <script src="/assets/hosting.js" defer></script>
 </body>

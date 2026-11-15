@@ -19,6 +19,9 @@ COPY backend/package.json backend/server.js ./backend/
 COPY backend/seed-config.json* ./backend/
 # Pages publiques uniquement (pas les .md, scripts ni exemples de config)
 COPY *.html robots.txt ./public/
+# Versions traduites (voir docs/guides/traduction.md)
+COPY en ./public/en
+COPY de ./public/de
 COPY assets ./public/assets
 # Mention « Hébergé en France par Hyperfluid » (script + logo récupéré par le workflow)
 COPY deploy/hyperfluid/hosting.js ./public/assets/hosting.js
