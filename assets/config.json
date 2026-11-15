@@ -309,7 +309,7 @@
             "type": "list",
             "ordered": true,
             "items": [
-              "<strong>Recherchez une app ou service</strong> (ex: ProtonMail, ChatGPT, Vinted…).",
+              "<strong>Recherchez une app ou service</strong> (ex: Tuta Mail, ChatGPT, Vinted…).",
               "<strong>Découvrez son score TrustiScore</strong> : Une note globale de <strong>A à E</strong>, avec badges colorés (🟢 A = excellent, 🔴 E = risque).",
               "<strong>Accédez aux détails</strong> : Explications complètes, Justification de la note.",
               "<strong>Pensez à une alternative</strong> : Des propositions d'applis plus respectueuses de la souveraineté numérique avec leur Trustiscore.",
@@ -328,7 +328,7 @@
             "type": "list",
             "ordered": false,
             "items": [
-              "<strong>ProtonMail (A)</strong> : Données en UE, transparence maximum",
+              "<strong>Tuta Mail (A)</strong> : Hébergé en Allemagne, chiffré, open source",
               "<strong>TikTok (E)</strong> : Pratiques de transferts de données hors UE, opacité sur la gestion des données"
             ]
           }

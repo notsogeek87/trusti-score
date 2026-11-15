@@ -24,7 +24,7 @@ Donc pour l'Europe et la France, cela nécessite le respect du Règlement géné
 
 Pas de complication :
 
-1. **Recherchez une app ou service** (ex: ProtonMail, ChatGPT, Vinted…).
+1. **Recherchez une app ou service** (ex: Tuta Mail, ChatGPT, Vinted…).
 2. **Découvrez son score TrustiScore** : Une note globale de **A à E**, avec badges colorés (🟢 A = excellent, 🔴 E = risque).
 3. **Accédez aux détails** : Explications complètes, Justification de la note.
 4. **Pensez à une alternative** : Des propositions d'applis plus respectueuses de la souveraineté numérique avec leur Trustiscore.
@@ -46,7 +46,7 @@ Nous évaluons **chaque appli sur 5 critères clés**, notés de **0 à 4 points
 
 ### Exemples concrets :
 
-- **ProtonMail (A)** : Données en UE, transparence maximum
+- **Tuta Mail (A)** : Hébergé en Allemagne, chiffré, open source
 - **TikTok (E)** : Pratiques de transferts de données hors UE, opacité sur la gestion des données
 
 ## 🧮 Et dans l'autre sens….Testez votre application avec le Simulateur !
