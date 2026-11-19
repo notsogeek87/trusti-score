@@ -10,6 +10,7 @@ Index de la documentation. Voir aussi le [README racine](../README.md).
 ## 📡 API
 
 - [Référence API et base de données](api/README.md)
+- Page publique `developpeurs.html` (FR/EN/DE) : présente l'API ouverte des notes, servie par l'app Trusti (`https://api.trusti-score.eu/api/v1`). La référence technique est dans le dépôt `trusti` (`docs/api/v1-partenaires.md`).
 
 ## 📘 Guides
 

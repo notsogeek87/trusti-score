@@ -49,6 +49,10 @@ Nous évaluons **chaque appli sur 5 critères clés**, notés de **0 à 4 points
 - **Tuta Mail (A)** : Hébergé en Allemagne, chiffré, open source
 - **TikTok (E)** : Pratiques de transferts de données hors UE, opacité sur la gestion des données
 
+## 🔌 API ouverte
+
+Toutes les notes et leur détail (critères, justifications, sources) sont réutilisables via une **API ouverte**, en JSON, sans clé ni inscription, sous licence CC BY 4.0 : voir la [page développeurs](https://trusti-score.eu/developpeurs).
+
 ## 🧮 Et dans l'autre sens….Testez votre application avec le Simulateur !
 
 **Développeurs, c'est pour vous !** Utilisez notre **simulateur gratuit** pour évaluer votre propre projet pendant le développement. Répondez à quelques questions simples (5 min max) sur vos choix tech/juridiques :

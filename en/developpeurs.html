@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="TrustiScore open API: digital sovereignty grades and their full details, as JSON, no key needed, under CC BY 4.0.">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/developpeurs">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/developpeurs">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/developpeurs">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/developpeurs">
+    <title>Open API - TrustiScore</title>
+    <link rel="stylesheet" href="../assets/trusti.css">
+</head>
+<body>
+    <a href="#contenu" class="skip-link">Skip to content</a>
+    <header>
+        <img src="../assets/logo.png" alt="TrustiScore logo">
+        <h1>Open API</h1>
+        <p>TrustiScore grades and their full details, free to reuse in your own services.</p>
+        <a href="index.html" class="nav-link">&larr; Back to home</a>
+        <nav class="lang-switch" aria-label="Language"><a href="../developpeurs.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="developpeurs.html" hreflang="en" lang="en" title="English" aria-current="true">EN</a><a href="../de/developpeurs.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
+    </header>
+
+    <main id="contenu">
+
+        <section>
+            <h2>At a glance</h2>
+            <p>Every digital sovereignty grade (A to E) with its full justification: score out of 100, criteria, levels, sources consulted and grade history.</p>
+            <ul>
+                <li><strong>No key, no sign-up</strong>: a plain HTTP call is enough.</li>
+                <li><strong>JSON</strong> responses, texts in French, English or German.</li>
+                <li>Data under the <strong>CC BY 4.0</strong> licence: free reuse, including commercial, with attribution.</li>
+                <li>Callable from a server or from a web page.</li>
+            </ul>
+            <p>Base URL: <code>https://api.trusti-score.eu/api/v1</code></p>
+        </section>
+
+        <section>
+            <h2>First call</h2>
+            <p>Apps graded A or B, 20 per page:</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps?grade=A,B&amp;per_page=20"</code></pre>
+            <p>The detailed assessment of an app:</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps/signal/assessment?lang=en"</code></pre>
+        </section>
+
+        <section>
+            <h2>What you can read</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th scope="col">Route</th><th scope="col">Content</th></tr></thead>
+                    <tbody>
+                    <tr><td><code>/apps</code></td><td>Paginated list. Filters: <code>grade=A,B</code>, <code>category</code>, <code>q</code> (name), <code>updated_since=YYYY-MM-DD</code>, <code>page</code>, <code>per_page</code> (100 max).</td></tr>
+                    <tr><td><code>/apps/{id}</code></td><td>An app's record: grade, publisher, jurisdiction, licence, links.</td></tr>
+                    <tr><td><code>/apps/{id}/assessment</code></td><td>Grade details: score, criteria, rationale, sources, history.</td></tr>
+                    <tr><td><code>/apps/{id}/alternatives</code></td><td>Better-graded alternatives.</td></tr>
+                    <tr><td><code>/grade-changes?since=</code></td><td>Recent grade changes.</td></tr>
+                    <tr><td><code>/categories</code></td><td>Categories and number of apps.</td></tr>
+                    <tr><td><code>/export</code></td><td>The whole catalogue with details, in a single file.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Add <code>lang=en</code> or <code>lang=de</code> for translated texts.</p>
+        </section>
+
+        <section>
+            <h2>Sample response</h2>
+            <p>Every response holds the data (<code>data</code>) and the licence to respect (<code>meta</code>):</p>
+            <pre class="code"><code>{
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;signal&quot;,
+      &quot;name&quot;: &quot;Signal&quot;,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;category&quot;: &quot;Messagerie&quot;,
+      &quot;isOpenSource&quot;: true,
+      &quot;assessment&quot;: { &quot;score&quot;: 82, &quot;assessedAt&quot;: &quot;2026-11-01&quot; },
+      &quot;trustiUrl&quot;: &quot;https://app.trusti-score.eu/?app=signal&quot;
+    }
+  ],
+  &quot;meta&quot;: {
+    &quot;license&quot;: &quot;CC-BY-4.0&quot;,
+    &quot;attribution&quot;: &quot;Source : TrustiScore (https://trusti-score.eu)&quot;,
+    &quot;pagination&quot;: { &quot;page&quot;: 1, &quot;perPage&quot;: 20, &quot;total&quot;: 205 }
+  }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Usage limits</h2>
+            <ul>
+                <li><strong>60 requests per minute</strong> per IP address.</li>
+                <li><strong>20 full exports per hour</strong>: for a local copy, one export then <code>updated_since</code> once a day is enough.</li>
+                <li>Beyond that, the API returns <code>429</code> with a <code>Retry-After</code> header (seconds to wait).</li>
+            </ul>
+            <p>Need more for a serious project? <a href="mailto:contact@trusti-score.eu?subject=API%20TrustiScore%20%3A%20quota">Write to us</a>: a dedicated key gives a higher quota.</p>
+        </section>
+
+        <section>
+            <h2>Licence and attribution</h2>
+            <p>The data is published under the Creative Commons Attribution 4.0 licence. You may copy it, transform it and use it commercially, on one condition: credit the source, visibly, next to the grades you display.</p>
+            <p>For example:</p>
+            <pre class="code"><code>&lt;p&gt;Source: TrustiScore (&lt;a href=&quot;https://trusti-score.eu&quot;&gt;trusti-score.eu&lt;/a&gt;), CC BY 4.0&lt;/p&gt;</code></pre>
+        </section>
+
+        <section>
+            <h2>Technical documentation</h2>
+            <p>The full specification (OpenAPI 3.1) describes every field and every error: <a href="https://api.trusti-score.eu/api/v1/openapi.json">openapi.json</a>. Import it into Postman, Insomnia or a client generator.</p>
+            <p>Stability commitment: in version 1, no field is removed or renamed. New fields may appear.</p>
+            <p>A question, an idea, a bug? <a href="https://matrix.to/#/%23trusti-score:matrix.org" target="_blank" rel="noopener noreferrer">Let's talk on Matrix</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="footer-links" aria-label="Legal information">
+            <a href="index.html">Home</a>
+            <a href="mentions-legales.html">Legal notice</a>
+            <a href="confidentialite.html">Privacy</a>
+            <a href="https://github.com/notsogeek87/trusti" target="_blank" rel="noopener noreferrer">Source code</a>
+        </nav>
+        <nav class="lang-switch" aria-label="Language"><a href="../developpeurs.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="developpeurs.html" hreflang="en" lang="en" title="English" aria-current="true">EN</a><a href="../de/developpeurs.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
+        <p>&copy; 2026 TrustiScore - For European digital sovereignty</p>
+    </footer>
+    <script src="../assets/i18n.js" defer></script>
+    <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
+    <script src="/assets/hosting.js" defer></script>
+</body>
+</html>

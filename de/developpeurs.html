@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Offene API von TrustiScore: Noten zur digitalen Souveränität und ihre Details, als JSON, ohne Schlüssel, unter CC BY 4.0.">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/developpeurs">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/developpeurs">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/developpeurs">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/developpeurs">
+    <title>Offene API - TrustiScore</title>
+    <link rel="stylesheet" href="../assets/trusti.css">
+</head>
+<body>
+    <a href="#contenu" class="skip-link">Zum Inhalt springen</a>
+    <header>
+        <img src="../assets/logo.png" alt="TrustiScore-Logo">
+        <h1>Offene API</h1>
+        <p>Die TrustiScore-Noten und ihre vollständigen Details, frei wiederverwendbar in Ihren Diensten.</p>
+        <a href="index.html" class="nav-link">&larr; Zurück zur Startseite</a>
+        <nav class="lang-switch" aria-label="Sprache"><a href="../developpeurs.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/developpeurs.html" hreflang="en" lang="en" title="English">EN</a><a href="developpeurs.html" hreflang="de" lang="de" title="Deutsch" aria-current="true">DE</a></nav>
+    </header>
+
+    <main id="contenu">
+
+        <section>
+            <h2>Auf einen Blick</h2>
+            <p>Alle Noten zur digitalen Souveränität (A bis E) mit vollständiger Begründung: Punktzahl von 100, Kriterien, Stufen, geprüfte Quellen und Notenverlauf.</p>
+            <ul>
+                <li><strong>Ohne Schlüssel, ohne Anmeldung</strong>: ein einfacher HTTP-Aufruf genügt.</li>
+                <li>Antworten in <strong>JSON</strong>, Texte auf Französisch, Englisch oder Deutsch.</li>
+                <li>Daten unter der Lizenz <strong>CC BY 4.0</strong>: freie Weiterverwendung, auch kommerziell, mit Quellenangabe.</li>
+                <li>Aufrufbar von einem Server oder einer Webseite.</li>
+            </ul>
+            <p>Basis-URL: <code>https://api.trusti-score.eu/api/v1</code></p>
+        </section>
+
+        <section>
+            <h2>Erster Aufruf</h2>
+            <p>Apps mit Note A oder B, 20 pro Seite:</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps?grade=A,B&amp;per_page=20"</code></pre>
+            <p>Die detaillierte Bewertung einer App:</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps/signal/assessment?lang=de"</code></pre>
+        </section>
+
+        <section>
+            <h2>Was Sie lesen können</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th scope="col">Route</th><th scope="col">Inhalt</th></tr></thead>
+                    <tbody>
+                    <tr><td><code>/apps</code></td><td>Seitenweise Liste. Filter: <code>grade=A,B</code>, <code>category</code>, <code>q</code> (Name), <code>updated_since=JJJJ-MM-TT</code>, <code>page</code>, <code>per_page</code> (höchstens 100).</td></tr>
+                    <tr><td><code>/apps/{id}</code></td><td>Steckbrief einer App: Note, Anbieter, Rechtsraum, Lizenz, Links.</td></tr>
+                    <tr><td><code>/apps/{id}/assessment</code></td><td>Details der Note: Punktzahl, Kriterien, Begründung, Quellen, Verlauf.</td></tr>
+                    <tr><td><code>/apps/{id}/alternatives</code></td><td>Besser bewertete Alternativen.</td></tr>
+                    <tr><td><code>/grade-changes?since=</code></td><td>Neue Notenänderungen.</td></tr>
+                    <tr><td><code>/categories</code></td><td>Kategorien und Anzahl der Apps.</td></tr>
+                    <tr><td><code>/export</code></td><td>Der gesamte Katalog mit Details, in einer einzigen Datei.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Fügen Sie <code>lang=en</code> oder <code>lang=de</code> für übersetzte Texte hinzu.</p>
+        </section>
+
+        <section>
+            <h2>Beispielantwort</h2>
+            <p>Jede Antwort enthält die Daten (<code>data</code>) und die einzuhaltende Lizenz (<code>meta</code>):</p>
+            <pre class="code"><code>{
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;signal&quot;,
+      &quot;name&quot;: &quot;Signal&quot;,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;category&quot;: &quot;Messagerie&quot;,
+      &quot;isOpenSource&quot;: true,
+      &quot;assessment&quot;: { &quot;score&quot;: 82, &quot;assessedAt&quot;: &quot;2026-11-01&quot; },
+      &quot;trustiUrl&quot;: &quot;https://app.trusti-score.eu/?app=signal&quot;
+    }
+  ],
+  &quot;meta&quot;: {
+    &quot;license&quot;: &quot;CC-BY-4.0&quot;,
+    &quot;attribution&quot;: &quot;Source : TrustiScore (https://trusti-score.eu)&quot;,
+    &quot;pagination&quot;: { &quot;page&quot;: 1, &quot;perPage&quot;: 20, &quot;total&quot;: 205 }
+  }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Nutzungsgrenzen</h2>
+            <ul>
+                <li><strong>60 Anfragen pro Minute</strong> und IP-Adresse.</li>
+                <li><strong>20 vollständige Exporte pro Stunde</strong>: für eine lokale Kopie genügen ein Export und danach täglich <code>updated_since</code>.</li>
+                <li>Darüber hinaus antwortet die API mit <code>429</code> und dem Header <code>Retry-After</code> (Wartezeit in Sekunden).</li>
+            </ul>
+            <p>Mehr nötig für ein ernsthaftes Projekt? <a href="mailto:contact@trusti-score.eu?subject=API%20TrustiScore%20%3A%20quota">Schreiben Sie uns</a>: ein eigener Schlüssel gibt ein höheres Kontingent.</p>
+        </section>
+
+        <section>
+            <h2>Lizenz und Quellenangabe</h2>
+            <p>Die Daten stehen unter der Lizenz Creative Commons Namensnennung 4.0. Sie dürfen sie kopieren, verändern und kommerziell nutzen, unter einer Bedingung: die Quelle sichtbar neben den angezeigten Noten nennen.</p>
+            <p>Zum Beispiel:</p>
+            <pre class="code"><code>&lt;p&gt;Quelle: TrustiScore (&lt;a href=&quot;https://trusti-score.eu&quot;&gt;trusti-score.eu&lt;/a&gt;), CC BY 4.0&lt;/p&gt;</code></pre>
+        </section>
+
+        <section>
+            <h2>Technische Dokumentation</h2>
+            <p>Die vollständige Spezifikation (OpenAPI 3.1) beschreibt jedes Feld und jeden Fehler: <a href="https://api.trusti-score.eu/api/v1/openapi.json">openapi.json</a>. Sie lässt sich in Postman, Insomnia oder einen Client-Generator importieren.</p>
+            <p>Stabilitätszusage: In Version 1 wird kein Feld entfernt oder umbenannt. Neue Felder können hinzukommen.</p>
+            <p>Eine Frage, eine Idee, ein Fehler? <a href="https://matrix.to/#/%23trusti-score:matrix.org" target="_blank" rel="noopener noreferrer">Sprechen wir auf Matrix darüber</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="footer-links" aria-label="Rechtliche Hinweise">
+            <a href="index.html">Startseite</a>
+            <a href="mentions-legales.html">Impressum</a>
+            <a href="confidentialite.html">Datenschutz</a>
+            <a href="https://github.com/notsogeek87/trusti" target="_blank" rel="noopener noreferrer">Quellcode</a>
+        </nav>
+        <nav class="lang-switch" aria-label="Sprache"><a href="../developpeurs.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/developpeurs.html" hreflang="en" lang="en" title="English">EN</a><a href="developpeurs.html" hreflang="de" lang="de" title="Deutsch" aria-current="true">DE</a></nav>
+        <p>&copy; 2026 TrustiScore - Für eine europäische digitale Souveränität</p>
+    </footer>
+    <script src="../assets/i18n.js" defer></script>
+    <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
+    <script src="/assets/hosting.js" defer></script>
+</body>
+</html>

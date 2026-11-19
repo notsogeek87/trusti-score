@@ -227,6 +227,32 @@ body:not(.home) main code {
     border-radius: 3px;
 }
 
+/* Blocs de code et tableaux (page Développeurs) : défilement interne, jamais de la page */
+body:not(.home) main pre.code {
+    background: var(--nuit);
+    color: var(--foot-fg);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 0 0 14px;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+body:not(.home) main pre.code code { background: none; padding: 0; color: inherit; font-size: inherit; }
+.table-wrap { overflow-x: auto; margin-bottom: 14px; }
+body:not(.home) main table { border-collapse: collapse; width: 100%; font-size: 0.9375rem; }
+body:not(.home) main th,
+body:not(.home) main td { text-align: left; vertical-align: top; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+body:not(.home) main th { border-bottom-width: 2px; border-bottom-color: var(--line-strong); }
+body:not(.home) main td:first-child { white-space: nowrap; }
+body:not(.home) main td code { background: var(--paper); }
+@media (max-width: 600px) {
+    body:not(.home) main thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+    body:not(.home) main tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    body:not(.home) main td { display: block; padding: 2px 0; border: 0; }
+    body:not(.home) main td:first-child { white-space: normal; }
+}
+
 mark {
     background: var(--warn-bg);
     color: var(--warn-ink);

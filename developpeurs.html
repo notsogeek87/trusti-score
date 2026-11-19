@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="API ouverte de TrustiScore : notes de souveraineté numérique et leur détail, en JSON, sans clé, sous licence CC BY 4.0.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/developpeurs">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/developpeurs">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/developpeurs">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/developpeurs">
+    <title>API ouverte - TrustiScore</title>
+    <link rel="stylesheet" href="assets/trusti.css">
+</head>
+<body>
+    <a href="#contenu" class="skip-link">Aller au contenu</a>
+    <header>
+        <img src="assets/logo.png" alt="Logo TrustiScore">
+        <h1>API ouverte</h1>
+        <p>Les notes TrustiScore et leur détail complet, librement réutilisables dans vos services.</p>
+        <a href="index.html" class="nav-link">&larr; Retour à l'accueil</a>
+        <nav class="lang-switch" aria-label="Langue"><a href="developpeurs.html" hreflang="fr" lang="fr" title="Français" aria-current="true">FR</a><a href="en/developpeurs.html" hreflang="en" lang="en" title="English">EN</a><a href="de/developpeurs.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
+    </header>
+
+    <main id="contenu">
+
+        <section>
+            <h2>En bref</h2>
+            <p>Toutes les notes de souveraineté numérique (A à E) et leur justification complète : score sur 100, critères, niveaux, sources consultées et historique des notes.</p>
+            <ul>
+                <li><strong>Sans clé ni inscription</strong> : un simple appel HTTP suffit.</li>
+                <li>Réponses en <strong>JSON</strong>, textes en français, anglais ou allemand.</li>
+                <li>Données sous licence <strong>CC BY 4.0</strong> : réutilisation libre, même commerciale, avec attribution.</li>
+                <li>Appelable depuis un serveur comme depuis une page web.</li>
+            </ul>
+            <p>Adresse de base : <code>https://api.trusti-score.eu/api/v1</code></p>
+        </section>
+
+        <section>
+            <h2>Premier appel</h2>
+            <p>Les applications notées A ou B, 20 par page :</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps?grade=A,B&amp;per_page=20"</code></pre>
+            <p>Le détail de l'évaluation d'une application :</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps/signal/assessment?lang=fr"</code></pre>
+        </section>
+
+        <section>
+            <h2>Ce que vous pouvez lire</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th scope="col">Route</th><th scope="col">Contenu</th></tr></thead>
+                    <tbody>
+                    <tr><td><code>/apps</code></td><td>Liste paginée. Filtres : <code>grade=A,B</code>, <code>category</code>, <code>q</code> (nom), <code>updated_since=AAAA-MM-JJ</code>, <code>page</code>, <code>per_page</code> (100 au plus).</td></tr>
+                    <tr><td><code>/apps/{id}</code></td><td>Fiche d'une application : note, éditeur, juridiction, licence, liens.</td></tr>
+                    <tr><td><code>/apps/{id}/assessment</code></td><td>Détail de la note : score, critères, justification, sources, historique.</td></tr>
+                    <tr><td><code>/apps/{id}/alternatives</code></td><td>Alternatives mieux notées.</td></tr>
+                    <tr><td><code>/grade-changes?since=</code></td><td>Changements de note récents.</td></tr>
+                    <tr><td><code>/categories</code></td><td>Catégories et nombre d'applications.</td></tr>
+                    <tr><td><code>/export</code></td><td>Tout le catalogue avec les détails, en un seul fichier.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Ajoutez <code>lang=en</code> ou <code>lang=de</code> pour les textes traduits.</p>
+        </section>
+
+        <section>
+            <h2>Exemple de réponse</h2>
+            <p>Chaque réponse contient les données (<code>data</code>) et la licence à respecter (<code>meta</code>) :</p>
+            <pre class="code"><code>{
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;signal&quot;,
+      &quot;name&quot;: &quot;Signal&quot;,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;category&quot;: &quot;Messagerie&quot;,
+      &quot;isOpenSource&quot;: true,
+      &quot;assessment&quot;: { &quot;score&quot;: 82, &quot;assessedAt&quot;: &quot;2026-11-01&quot; },
+      &quot;trustiUrl&quot;: &quot;https://app.trusti-score.eu/?app=signal&quot;
+    }
+  ],
+  &quot;meta&quot;: {
+    &quot;license&quot;: &quot;CC-BY-4.0&quot;,
+    &quot;attribution&quot;: &quot;Source : TrustiScore (https://trusti-score.eu)&quot;,
+    &quot;pagination&quot;: { &quot;page&quot;: 1, &quot;perPage&quot;: 20, &quot;total&quot;: 205 }
+  }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Limites d'usage</h2>
+            <ul>
+                <li><strong>60 requêtes par minute</strong> et par adresse IP.</li>
+                <li><strong>20 exports complets par heure</strong> : pour une copie locale, un export puis <code>updated_since</code> chaque jour suffisent.</li>
+                <li>Au-delà, l'API répond <code>429</code> avec l'en-tête <code>Retry-After</code> (secondes à attendre).</li>
+            </ul>
+            <p>Besoin de plus pour un projet sérieux ? <a href="mailto:contact@trusti-score.eu?subject=API%20TrustiScore%20%3A%20quota">Écrivez-nous</a> : une clé dédiée donne un quota plus élevé.</p>
+        </section>
+
+        <section>
+            <h2>Licence et attribution</h2>
+            <p>Les données sont publiées sous licence Creative Commons Attribution 4.0. Vous pouvez les copier, les transformer et les utiliser commercialement, à une condition : citer la source, de façon visible, près des notes affichées.</p>
+            <p>Par exemple :</p>
+            <pre class="code"><code>&lt;p&gt;Source : TrustiScore (&lt;a href=&quot;https://trusti-score.eu&quot;&gt;trusti-score.eu&lt;/a&gt;), CC BY 4.0&lt;/p&gt;</code></pre>
+        </section>
+
+        <section>
+            <h2>Documentation technique</h2>
+            <p>La spécification complète (OpenAPI 3.1) décrit chaque champ et chaque erreur : <a href="https://api.trusti-score.eu/api/v1/openapi.json">openapi.json</a>. Elle s'importe dans Postman, Insomnia ou un générateur de client.</p>
+            <p>Engagement de stabilité : en version 1, aucun champ n'est retiré ni renommé. De nouveaux champs peuvent apparaître.</p>
+            <p>Une question, une idée, un bug ? <a href="https://matrix.to/#/%23trusti-score:matrix.org" target="_blank" rel="noopener noreferrer">Parlons-en sur Matrix</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="footer-links" aria-label="Informations légales">
+            <a href="index.html">Accueil</a>
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="confidentialite.html">Confidentialité</a>
+            <a href="https://github.com/notsogeek87/trusti" target="_blank" rel="noopener noreferrer">Code source</a>
+        </nav>
+        <nav class="lang-switch" aria-label="Langue"><a href="developpeurs.html" hreflang="fr" lang="fr" title="Français" aria-current="true">FR</a><a href="en/developpeurs.html" hreflang="en" lang="en" title="English">EN</a><a href="de/developpeurs.html" hreflang="de" lang="de" title="Deutsch">DE</a></nav>
+        <p>&copy; 2026 TrustiScore - Pour une souveraineté numérique européenne</p>
+    </footer>
+    <script src="assets/i18n.js" defer></script>
+    <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
+    <script src="/assets/hosting.js" defer></script>
+</body>
+</html>

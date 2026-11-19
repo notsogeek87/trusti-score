@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://trusti-score.eu';
-const PAGES = ['index.html', 'simulateur.html', 'liens.html', 'mentions-legales.html', 'confidentialite.html', 'presentation.html'];
+const PAGES = ['index.html', 'simulateur.html', 'liens.html', 'mentions-legales.html', 'confidentialite.html', 'presentation.html', 'developpeurs.html'];
 const LANGS = ['fr', 'en', 'de'];
 const TRANSLATED = LANGS.filter((l) => l !== 'fr');
 // Valeurs de la configuration qui ne se traduisent pas
