@@ -1,7 +1,7 @@
 {
   "_note": "Empreintes des sources FR au moment de la dernière mise à jour des traductions. Régénérer avec : node scripts/check-i18n.mjs --update",
   "pages": {
-    "index.html": "eec5732fe7e2f681",
+    "index.html": "59d08f8de4f09184",
     "simulateur.html": "fe697772c114ae4a",
     "liens.html": "8e4065846043a402",
     "mentions-legales.html": "15725de0659cabc2",

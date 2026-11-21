@@ -15,7 +15,7 @@ RUN apk upgrade --no-cache \
  && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx \
            /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 COPY --from=deps /app/backend/node_modules ./backend/node_modules
-COPY backend/package.json backend/server.js ./backend/
+COPY backend/package.json backend/server.js backend/app-pages.js ./backend/
 COPY backend/seed-config.json* ./backend/
 # Pages publiques uniquement (pas les .md, scripts ni exemples de config)
 COPY *.html robots.txt sitemap.xml ./public/
