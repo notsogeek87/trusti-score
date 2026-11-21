@@ -36,7 +36,7 @@ simulateur.html       → /simulateur, /en/simulateur, /de/simulateur
   bandeau discret proposant la page équivalente. **Jamais de redirection automatique.**
   `<body data-no-lang-banner>` désactive le bandeau (présentation).
 - Chaque page déclare ses équivalents (`<link rel="alternate" hreflang="…">`, `x-default` = FR).
-  Le site est encore en `noindex` : pas de `sitemap.xml` tant que ce n'est pas levé.
+  Le site est encore en `noindex` ; `sitemap.xml` est prêt (voir `docs/guides/referencement.md`).
 
 ## Modifier une page
 

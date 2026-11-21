@@ -53,6 +53,7 @@ function langSwitches(s) {
 // ex. « seule la version française fait foi ») : exclus de la comparaison de structure.
 function withoutSwitches(s) {
     return s
+        .replace(/<link rel="canonical"[^>]*>/g, '')
         .replace(/<nav class="lang-switch"[^>]*>[\s\S]*?<\/nav>/g, '')
         .replace(/<(\w+) data-i18n-note[^>]*>[\s\S]*?<\/\1>/g, '');
 }
@@ -99,6 +100,9 @@ function checkPage(page) {
             const url = `${SITE}/${l === 'fr' || l === 'x-default' ? '' : `${l}/`}${slug}`;
             if (!s.includes(`<link rel="alternate" hreflang="${l}" href="${url}">`)) err(`${rel} : lien hreflang="${l}" manquant ou faux (${url})`);
         }
+        const self = `${SITE}/${lang === 'fr' ? '' : `${lang}/`}${slug}`;
+        if (!s.includes(`<link rel="canonical" href="${self}">`)) err(`${rel} : <link rel="canonical" href="${self}"> manquant ou faux`);
+        if (!s.includes(`<meta property="og:url" content="${self}">`)) err(`${rel} : og:url manquant ou faux (${self})`);
 
         const switches = langSwitches(s);
         if (!switches.length) err(`${rel} : sélecteur de langue (.lang-switch) manquant`);

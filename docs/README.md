@@ -17,6 +17,7 @@ Index de la documentation. Voir aussi le [README racine](../README.md).
 - [Configuration du contenu du site](guides/configuration.md)
 - [Déploiement sur Hyperfluid](guides/deploiement.md)
 - [Traduction du site (FR, EN, DE)](guides/traduction.md)
+- [Référencement (SEO) : audit et mise en ligne indexable](guides/referencement.md)
 
 ## 🗄️ Legacy
 

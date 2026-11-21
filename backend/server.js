@@ -5,6 +5,7 @@ import pg from 'pg';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import compression from 'compression';
 
 dotenv.config();
 
@@ -53,6 +54,8 @@ app.use((req, res, next) => {
 });
 
 // Middleware
+// Compression gzip/brotli des réponses texte (HTML ~65 Ko -> ~15 Ko) : vitesse de chargement, Core Web Vitals.
+app.use(compression());
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
@@ -204,6 +207,13 @@ async function seedConfigIfEmpty() {
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 if (fs.existsSync(PUBLIC_DIR)) {
     app.use(express.static(PUBLIC_DIR, { extensions: ['html'], maxAge: '1h' }));
+
+    // Vraie page 404 (code HTTP 404, noindex) au lieu de la page brute d'Express.
+    const NOT_FOUND_PAGE = path.join(PUBLIC_DIR, '404.html');
+    app.use((req, res, next) => {
+        if (req.path.startsWith('/api/') || !fs.existsSync(NOT_FOUND_PAGE)) return next();
+        res.status(404).sendFile(NOT_FOUND_PAGE);
+    });
 }
 
 // ========================================

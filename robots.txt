@@ -7,3 +7,5 @@ User-agent: AhrefsBot
 User-agent: SemrushBot
 User-agent: DotBot
 Disallow: /
+
+Sitemap: https://trusti-score.eu/sitemap.xml
