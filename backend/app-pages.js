@@ -329,6 +329,7 @@ ${LANGS.map((l) => `    <link rel="alternate" hreflang="${l}" href="${href(l)}">
     <title>${esc(title)}</title>
     <link rel="stylesheet" href="/assets/trusti.css">
     <style>${STYLE}</style>${extraHead}
+    <script defer src="https://stats.trusti-score.eu/script.js" data-website-id="24fd6658-d4a6-4fd6-9fc6-410264c3a02c" data-domains="trusti-score.eu"></script>
 </head>
 <body>
     <a href="#contenu" class="skip-link">${t.skip}</a>
