@@ -97,6 +97,11 @@ Une page par application notée, dans les 3 langues, générée par le serveur d
   (redémarrage du conteneur, fait par chaque déploiement).
 - Données structurées : `SoftwareApplication` + `Review` (score sur 100) et `BreadcrumbList` ;
   `CollectionPage` pour la liste.
+- **Vers l'app** : bouton « Voir dans l'app Trusti » en haut de chaque fiche et barre fixe en bas
+  de l'écran sur mobile pendant le défilement ; lien « Installer Trusti (Google Play) ».
+  Les liens portent `?src=site` (le serveur de l'app écrit `[visite-site] app=<id>` dans son journal)
+  et le lien Play Store un referrer `utm_source=trusti-score.eu&utm_medium=fiche` (visible dans la
+  console Play, rubrique acquisition). Les liens stores de l'app notée sont dans « En bref ».
 - L'accueil renvoie vers la liste (bouton sous les exemples, pied de page) et vers les fiches
   Tuta Mail et TikTok.
 - `TRUSTI_PUBLIC_API` permet de pointer vers une autre API (par défaut `https://api.trusti-score.eu/api/v1`).
