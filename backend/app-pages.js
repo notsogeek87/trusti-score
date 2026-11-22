@@ -29,7 +29,7 @@ const T = {
         yes: 'Oui', no: 'Non', unknown: 'Non renseigné',
         criteria: 'Le détail des 5 critères', weight: 'poids', points: 'points', sources: 'Sources', toConfirm: 'à confirmer',
         alternatives: (n) => `Alternatives mieux notées à ${n}`, noAlt: 'Aucune alternative mieux notée n\'est encore référencée dans cette catégorie.',
-        openTrusti: 'Voir dans l\'app Trusti', method: 'Comment la note est calculée',
+        openTrusti: 'Voir dans l\'app Trusti', installTrusti: 'Installer Trusti (Google Play)', openShort: 'Voir dans Trusti', download: 'Télécharger', stickyText: (n, g) => `${n} : note ${g}`, method: 'Comment la note est calculée',
         contest: 'Une erreur ? Contester la note', contestSubject: 'Contestation de note',
         attribution: 'Données sous licence CC BY 4.0, réutilisables via l\'API ouverte.', api: 'API ouverte',
         listTitle: 'Applications notées - souveraineté numérique de A à E | TrustiScore',
@@ -51,7 +51,7 @@ const T = {
         yes: 'Yes', no: 'No', unknown: 'Not specified',
         criteria: 'The 5 criteria in detail', weight: 'weight', points: 'points', sources: 'Sources', toConfirm: 'to be confirmed',
         alternatives: (n) => `Better-rated alternatives to ${n}`, noAlt: 'No better-rated alternative is listed in this category yet.',
-        openTrusti: 'Open in the Trusti app', method: 'How the grade is calculated',
+        openTrusti: 'Open in the Trusti app', installTrusti: 'Get Trusti on Google Play', openShort: 'Open in Trusti', download: 'Download', stickyText: (n, g) => `${n}: grade ${g}`, method: 'How the grade is calculated',
         contest: 'Spotted a mistake? Contest the grade', contestSubject: 'Grade dispute',
         attribution: 'Data licensed under CC BY 4.0, reusable through the open API.', api: 'Open API',
         listTitle: 'Rated apps - digital sovereignty from A to E | TrustiScore',
@@ -73,7 +73,7 @@ const T = {
         yes: 'Ja', no: 'Nein', unknown: 'Keine Angabe',
         criteria: 'Die 5 Kriterien im Detail', weight: 'Gewicht', points: 'Punkte', sources: 'Quellen', toConfirm: 'zu bestätigen',
         alternatives: (n) => `Besser bewertete Alternativen zu ${n}`, noAlt: 'In dieser Kategorie ist noch keine besser bewertete Alternative erfasst.',
-        openTrusti: 'In der Trusti-App öffnen', method: 'So wird die Note berechnet',
+        openTrusti: 'In der Trusti-App öffnen', installTrusti: 'Trusti bei Google Play laden', openShort: 'In Trusti öffnen', download: 'Herunterladen', stickyText: (n, g) => `${n}: Note ${g}`, method: 'So wird die Note berechnet',
         contest: 'Fehler entdeckt? Note anfechten', contestSubject: 'Anfechtung einer Note',
         attribution: 'Daten unter CC BY 4.0, wiederverwendbar über die offene API.', api: 'Offene API',
         listTitle: 'Bewertete Apps - digitale Souveränität von A bis E | TrustiScore',
@@ -86,6 +86,13 @@ const T = {
     },
 };
 const GRADES = ['A', 'B', 'C', 'D', 'E'];
+const TRUSTI_PLAY = 'https://play.google.com/store/apps/details?id=eu.trusti.app';
+/** Lien vers l'app web, marqué ?src=site pour compter les visites venues des fiches (journal du serveur de l'app). */
+const trustiLink = (url) => {
+    try { const u = new URL(safeUrl(url) || 'https://app.trusti-score.eu/'); u.searchParams.set('src', 'site'); return u.toString(); } catch { return 'https://app.trusti-score.eu/?src=site'; }
+};
+/** Lien Play Store de Trusti avec un referrer UTM : la console Play montre les installations venues des fiches. */
+const trustiPlayLink = (slug) => `${TRUSTI_PLAY}&referrer=${encodeURIComponent(`utm_source=trusti-score.eu&utm_medium=fiche&utm_campaign=${slug}`)}`;
 const LOCALE = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE' };
 
 // ---------------------------------------------------------------- utilitaires
@@ -281,6 +288,17 @@ const STYLE = `
     .grade-group h2 { display: flex; gap: 12px; align-items: center; }
     .filter { width: 100%; max-width: 420px; padding: 10px 12px; border: 1px solid var(--line-strong); border-radius: 10px; font: inherit; margin: 0 0 16px; }
     .fine { font-size: .875rem; color: var(--ink-2); }
+    .cta-top { justify-content: center; }
+    .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; align-items: center; gap: 10px;
+        padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+        background: var(--paper-2); border-top: 1px solid var(--line); box-shadow: 0 -2px 12px rgba(31, 58, 95, .12);
+        transform: translateY(110%); transition: transform .2s ease; }
+    .sticky-cta.visible { transform: translateY(0); }
+    .sticky-cta .txt { flex: 1; min-width: 0; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sticky-cta .btn { flex: none; padding: 8px 14px; }
+    @media (min-width: 760px) { .sticky-cta { display: none; } }
+    @media (max-width: 759px) { body.has-sticky { padding-bottom: 72px; } }
+    @media (prefers-reduced-motion: reduce) { .sticky-cta { transition: none; } }
 `;
 
 function layout({ lang, title, description, canonicalPath, alternatesPath, robots, ogImage, jsonLd, header, main, extraHead = '' }) {
@@ -353,6 +371,10 @@ function renderApp(s, id, lang, altIds, labels, robots) {
     const pathRel = `applications/${slug}`;
     const L = labels[lang] || {};
 
+    const stores = [['playStore', 'Google Play'], ['appStore', 'App Store'], ['fDroid', 'F-Droid'], ['github', 'GitHub']]
+        .filter(([k]) => safeUrl(a.links?.[k])).map(([k, n]) => `<a href="${esc(a.links[k])}" rel="nofollow noopener noreferrer" target="_blank">${n}</a>`).join(' · ');
+    const openHref = esc(trustiLink(a.trustiUrl));
+    const playHref = esc(trustiPlayLink(slug));
     const yesNo = (v) => (v === true ? t.yes : v === false ? t.no : t.unknown);
     const facts = [
         a.developer && [t.developer, esc(a.developer)],
@@ -360,6 +382,7 @@ function renderApp(s, id, lang, altIds, labels, robots) {
         [t.european, yesNo(a.isEuropean)],
         [t.openSource, yesNo(a.isOpenSource)],
         a.license && [t.license, esc(a.license)],
+        stores && [t.download, `<span class="store-links">${stores}</span>`],
         safeUrl(a.website) && [t.website, `<a href="${esc(a.website)}" rel="nofollow noopener noreferrer" target="_blank">${esc(host(a.website))}</a>`],
     ].filter(Boolean).map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
 
@@ -381,20 +404,24 @@ function renderApp(s, id, lang, altIds, labels, robots) {
         return `<li><a href="${abs(lang, `applications/${esc(bs)}`)}">${badge(b.grade, 'sm')}${icon(b, 36, 'app-icon sm')}<span><span class="nm">${esc(s.apps.fr.get(String(b.id)).name)}</span>${b.developer ? `<small>${esc(b.developer)}</small>` : ''}</span></a></li>`;
     }).join('');
 
-    const stores = [['playStore', 'Google Play'], ['appStore', 'App Store'], ['fDroid', 'F-Droid'], ['github', 'GitHub']]
-        .filter(([k]) => safeUrl(a.links?.[k])).map(([k, n]) => `<a class="btn btn-ghost" href="${esc(a.links[k])}" rel="nofollow noopener noreferrer" target="_blank">${n}</a>`).join('');
     const contestUrl = `https://github.com/notsogeek87/trusti-score/issues/new?title=${encodeURIComponent(`${t.contestSubject} : ${name}`)}`;
 
     const header = `        <p class="crumbs"><a href="${abs(lang)}">${t.home}</a> › <a href="${abs(lang, 'applications')}">${t.list}</a></p>
         <div class="app-head">${icon(a)}<h1>${esc(t.h1App(shortName))}</h1></div>
-        <p>${esc(t.sub(a.grade))}</p>`;
+        <p>${esc(t.sub(a.grade))}</p>
+        <div class="actions cta-top" id="ctaTop"><a class="btn btn-primary" href="${openHref}" target="_blank" rel="noopener">${t.openTrusti}</a><a class="btn btn-ghost" href="${playHref}" target="_blank" rel="noopener">${t.installTrusti}</a></div>`;
 
+    const sticky = `
+        <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+            ${badge(a.grade, 'sm')}<span class="txt">${esc(t.stickyText(shortName, a.grade))}</span>
+            <a class="btn btn-primary" href="${openHref}" target="_blank" rel="noopener" tabindex="-1">${t.openShort}</a>
+        </div>
+        <script>(function(){var b=document.getElementById('stickyCta'),c=document.getElementById('ctaTop');if(!b||!c||!('IntersectionObserver' in window))return;document.body.classList.add('has-sticky');var l=b.querySelector('a');new IntersectionObserver(function(e){var v=!e[0].isIntersecting&&e[0].boundingClientRect.top<0;b.classList.toggle('visible',v);b.setAttribute('aria-hidden',v?'false':'true');l.tabIndex=v?0:-1;}).observe(c);})();</script>`;
     const main = `        <section>
             <div class="sec-inner">
                 <div class="score-line">${badge(a.grade)}<span><strong>${score ?? '?'}</strong> ${t.outOf}</span>${d.assessedAt || a.assessment?.assessedAt ? `<span class="fine">${t.assessed} ${fmtDate(d.assessedAt || a.assessment.assessedAt, lang)}</span>` : ''}</div>
                 ${summary ? `<p>${esc(summary)}</p>` : ''}
                 ${d.provisional || a.assessment?.provisional ? `<p class="note">${t.provisional}${d.scoreRange && !/\d+\s*\(?[A-E]\)?\s*(à|to|bis|und)\s*\d+/.test(summary) ? ' ' + t.range(d.scoreRange.min, d.scoreRange.max) : ''}</p>` : ''}
-                <div class="actions"><a class="btn btn-primary" href="${esc(safeUrl(a.trustiUrl) || 'https://app.trusti-score.eu')}" target="_blank" rel="noopener">${t.openTrusti}</a>${stores}</div>
             </div>
         </section>
         <section>
@@ -416,7 +443,7 @@ ${crits}
                 ${alts ? `<ul class="alts">${alts}</ul>` : `<p>${t.noAlt}</p>`}
                 <p class="fine">${t.attribution} <a href="${abs(lang, 'developpeurs')}">${t.api}</a></p>
             </div>
-        </section>`;
+        </section>${sticky}`;
 
     const jsonLd = {
         '@context': 'https://schema.org',
