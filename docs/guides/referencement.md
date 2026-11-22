@@ -81,6 +81,12 @@ Une page par application notée, dans les 3 langues, générée par le serveur d
 
 - **Données** : export complet de l'API ouverte (`/api/v1/export`, 3 langues), rechargé toutes
   les heures (3 exports/h sur les 20 autorisés). Si l'API tombe, les dernières données restent servies.
+- **Mise à jour rapide** : toutes les 5 min (`APP_PAGES_POLL_SECONDS`), le serveur relit la liste
+  légère (`/api/v1/apps`, 6 appels) et compare note, score, date d'évaluation et nom de chaque app.
+  Jusqu'à 5 apps modifiées : seules leurs fiches sont rechargées. Au-delà, ou si des apps sont
+  ajoutées ou retirées : export complet (au plus toutes les 15 min). Une note changée en base est
+  visible sur le site en **~5 à 10 min** (cache navigateur des fiches : 5 min). Un texte de critère
+  modifié sans changement de note suit au rechargement horaire.
 - **Alternatives** : `/api/v1/apps/<id>/alternatives`, cache 6 h, 30 appels/min au plus ; au-delà ou en
   cas d'échec, repli sur les apps de la même catégorie mieux notées.
 - **Adresses** : l'identifiant s'il est lisible (`tiktok`, `vinted`), sinon le nom (`whatsapp`,

@@ -8,7 +8,11 @@ const SITE = 'https://trusti-score.eu';
 const API = (process.env.TRUSTI_PUBLIC_API || 'https://api.trusti-score.eu/api/v1').replace(/\/$/, '');
 const LANGS = ['fr', 'en', 'de'];
 const DATA_TTL = 60 * 60 * 1000;          // export rechargé toutes les heures (quota API : 20 exports/h)
-const ALT_TTL = 6 * 60 * 60 * 1000;       // alternatives : 6 h
+const ALT_TTL = 6 * 60 * 60 * 1000;       // alternatives : 6 h (vidé dès qu'une note change)
+const POLL_EVERY = Math.max(60, Number(process.env.APP_PAGES_POLL_SECONDS) || 300) * 1000;  // vérification des notes : 5 min
+const POLL_MAX_APPS = 5;                  // au-delà, rechargement complet (6 appels API par app)
+const FULL_RELOAD_MIN_GAP = 15 * 60 * 1000;  // l'API garde l'export 10 min en cache ; quota 20 exports/h
+const PAGE_MAX_AGE = 300;                 // cache navigateur des fiches : 5 min
 const ALT_CALLS_PER_MIN = 30;             // quota API : 60 req/min, on en garde la moitié
 const FETCH_TIMEOUT = 20000;
 
@@ -134,7 +138,9 @@ async function getJson(url) {
 // ---------------------------------------------------------------- données (cache)
 let store = null;           // { at, slugs, apps: { fr: Map(id → app), en, de }, list: [ids] }
 let loading = null;
+let lastFullLoad = 0;
 async function loadData() {
+    lastFullLoad = Date.now();
     const exports = await Promise.all(LANGS.map((l) => getJson(`${API}/export?lang=${l}`)));
     const apps = {};
     LANGS.forEach((l, i) => { apps[l] = new Map(exports[i].data.filter((a) => a && a.id && GRADES.includes(a.grade)).map((a) => [String(a.id), a])); });
@@ -143,6 +149,52 @@ async function loadData() {
     console.log(`📇 Fiches applications : ${fr.length} applications chargées`);
     return store;
 }
+/** Empreinte de ce qui compte pour le visiteur : note, score, évaluation, nom. */
+const fingerprint = (a) => JSON.stringify([a.name, a.grade, a.gradeReason, a.assessment?.score ?? null, a.assessment?.provisional ?? null, a.assessment?.assessedAt ?? null, a.updatedAt ?? null]);
+
+/**
+ * Vérification rapide (toutes les 5 min) : la liste légère des apps est comparée aux données en mémoire.
+ * Peu de changements → seules les fiches concernées sont rechargées ; sinon, export complet.
+ */
+let polling = false;
+async function poll() {
+    if (polling || loading || !store) return;
+    polling = true;
+    try {
+        const list = [];
+        for (let page = 1; page <= 20; page++) {
+            const j = await getJson(`${API}/apps?per_page=100&page=${page}&lang=fr`);
+            list.push(...(j.data || []));
+            if (page >= (j.meta?.pagination?.totalPages || 1)) break;
+        }
+        const remote = new Map(list.filter((a) => a && a.id && GRADES.includes(a.grade)).map((a) => [String(a.id), a]));
+        const changed = [...remote.keys()].filter((id) => store.apps.fr.has(id) && fingerprint(remote.get(id)) !== fingerprint(store.apps.fr.get(id)));
+        const structural = remote.size !== store.apps.fr.size || [...remote.keys()].some((id) => !store.apps.fr.has(id));
+        if (!changed.length && !structural) return;
+
+        if (structural || changed.length > POLL_MAX_APPS) {
+            if (Date.now() - lastFullLoad < FULL_RELOAD_MIN_GAP) return;   // on réessaiera au prochain passage
+            console.log(`🔄 Fiches applications : ${structural ? 'apps ajoutées ou retirées' : `${changed.length} apps modifiées`}, rechargement complet`);
+            loading = loadData().finally(() => { loading = null; });
+            await loading;
+        } else {
+            for (const id of changed) {
+                for (const lang of LANGS) {
+                    const [app, detail] = await Promise.all([
+                        getJson(`${API}/apps/${encodeURIComponent(id)}?lang=${lang}`),
+                        getJson(`${API}/apps/${encodeURIComponent(id)}/assessment?lang=${lang}`).catch(() => ({ data: null })),
+                    ]);
+                    if (app?.data) store.apps[lang].set(id, { ...app.data, assessmentDetail: detail?.data ?? null });
+                }
+            }
+            console.log(`🔄 Fiches applications mises à jour : ${changed.map((id) => store.apps.fr.get(id)?.name || id).join(', ')}`);
+        }
+        altCache.clear();   // une note qui change peut modifier les alternatives des autres apps
+    } catch (e) {
+        console.error('⚠️ Vérification des notes :', e.message);
+    } finally { polling = false; }
+}
+
 async function data() {
     if (store && Date.now() - store.at < DATA_TTL) return store;
     if (!loading) loading = loadData().catch((e) => { console.error('❌ Fiches applications :', e.message); if (store) store.at = Date.now() - DATA_TTL + 5 * 60 * 1000; return store; }).finally(() => { loading = null; });
@@ -458,11 +510,12 @@ export function mountAppPages(app, publicDir) {
         try { return /<meta name="robots" content="[^"]*noindex/.test(fs.readFileSync(path.join(publicDir, 'index.html'), 'utf8')) ? 'noindex, nofollow' : 'index, follow'; } catch { return 'noindex, nofollow'; }
     };
     const ROBOTS = robots();
-    const send = (res, html, maxAge = 3600) => res.set('Cache-Control', `public, max-age=${maxAge}`).type('html').send(html);
+    const send = (res, html, maxAge = PAGE_MAX_AGE) => res.set('Cache-Control', `public, max-age=${maxAge}`).type('html').send(html);
     const unavailable = (res, lang) => res.status(503).set('Retry-After', '300').type('html').send(`<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>TrustiScore</title><link rel="stylesheet" href="/assets/trusti.css"></head><body><main class="container"><p>${T[lang].unavailable}</p><p><a href="/">TrustiScore</a></p></main></body></html>`);
 
     // Chargement initial en arrière-plan, sans bloquer le démarrage.
     data().catch(() => {});
+    setInterval(() => { poll(); }, POLL_EVERY).unref();
 
     for (const lang of LANGS) {
         const prefix = lang === 'fr' ? '' : `/${lang}`;
