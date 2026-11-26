@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trusti – Link</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/liens">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/liens">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/liens">
+    <link rel="alternate" hreflang="es" href="https://trusti-score.eu/es/liens">
+    <link rel="alternate" hreflang="it" href="https://trusti-score.eu/it/liens">
+    <link rel="alternate" hreflang="nl" href="https://trusti-score.eu/nl/liens">
+    <link rel="alternate" hreflang="pl" href="https://trusti-score.eu/pl/liens">
+    <link rel="alternate" hreflang="pt" href="https://trusti-score.eu/pt/liens">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/liens">
+    <meta name="description" content="Tutti i link di Trusti: app Android, sito, simulatore, community e contatti.">
+    <link rel="canonical" href="https://trusti-score.eu/it/liens">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TrustiScore">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:title" content="Trusti – Link">
+    <meta property="og:description" content="Tutti i link di Trusti: app Android, sito, simulatore, community e contatti.">
+    <meta property="og:url" content="https://trusti-score.eu/it/liens">
+    <meta property="og:image" content="https://trusti-score.eu/assets/og-image-it.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TrustiScore: la sovranità digitale delle app, valutata da A a E">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        :root {
+            --bg: #E9F0F6;
+            --surface: #FFFFFF;
+            --line: #DCE8EF;
+            --text: #1B2A3A;
+            --accent: #3B82C4;
+            --accent-deep: #1F3A5F;
+            --shadow: 0 2px 12px rgba(31, 58, 95, 0.10);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Nunito, ui-rounded, 'Segoe UI', system-ui, Roboto, sans-serif;
+        }
+        main { width: 100%; max-width: 360px; text-align: center; }
+        .logo { width: 88px; height: 88px; margin-bottom: 12px; }
+        h1 { margin: 0 0 28px; font-size: 28px; color: var(--accent-deep); }
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 56px;
+            margin-bottom: 14px;
+            padding: 12px 20px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            color: var(--accent-deep);
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .btn { width: 100%; font-family: inherit; cursor: pointer; }
+        .btn:hover, .btn:focus-visible { border-color: var(--accent); outline: none; }
+        .btn svg { width: 24px; height: 24px; flex: none; }
+        dialog {
+            width: calc(100% - 32px);
+            max-width: 380px;
+            padding: 24px 20px 20px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 8px 32px rgba(31, 58, 95, 0.25);
+            font-family: inherit;
+        }
+        dialog::backdrop { background: rgba(27, 42, 58, 0.45); }
+        dialog h2 { margin: 0 0 16px; font-size: 20px; color: var(--accent-deep); text-align: center; }
+        dialog ul { list-style: none; margin: 0 0 16px; padding: 0; }
+        dialog li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        dialog li:last-child { border-bottom: none; }
+        dialog li span { font-size: 15px; overflow-wrap: anywhere; text-align: left; }
+        dialog button { font-family: inherit; font-weight: 700; cursor: pointer; border-radius: 10px; }
+        .copy {
+            flex: none;
+            min-width: 76px;
+            padding: 8px 12px;
+            border: 1px solid var(--accent);
+            background: var(--surface);
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .copy.ok { background: var(--accent); color: #fff; }
+        dialog h3 { margin: 4px 0 6px; font-size: 15px; color: var(--accent-deep); text-align: left; }
+        .social a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .social a:hover, .social a:focus-visible { text-decoration: underline; }
+        .social svg { width: 20px; height: 20px; flex: none; }
+        .close {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: var(--accent-deep);
+            color: #fff;
+            font-size: 16px;
+        }
+        .lang-switch { display: flex; justify-content: center; gap: 4px; margin-top: 4px; }
+        .lang-switch a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 10px; border-radius: 999px; color: var(--accent-deep); font-weight: 700; text-decoration: none; }
+        .lang-switch a:hover { text-decoration: underline; }
+        .lang-switch a[aria-current="true"] { box-shadow: inset 0 0 0 1.5px currentColor; }
+    </style>
+    <script defer src="https://stats.trusti-score.eu/script.js" data-website-id="24fd6658-d4a6-4fd6-9fc6-410264c3a02c" data-domains="trusti-score.eu"></script>
+</head>
+<body>
+    <main>
+        <img class="logo" src="../assets/logo.png" alt="Trusti">
+        <h1>Trusti</h1>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=eu.trusti.app" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>
+            Google Play
+        </a>
+        <a class="btn" href="https://app.trusti-score.eu" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+            App web
+        </a>
+        <a class="btn" href="https://matrix.to/#/%23trusti-score:matrix.org" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Community Matrix
+        </a>
+        <button class="btn" type="button" id="contact-open">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            Contattaci
+        </button>
+        <nav class="lang-switch" aria-label="Lingua"><a href="../liens.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/liens.html" hreflang="en" lang="en" title="English">EN</a><a href="../de/liens.html" hreflang="de" lang="de" title="Deutsch">DE</a><a href="../es/liens.html" hreflang="es" lang="es" title="Español">ES</a><a href="liens.html" hreflang="it" lang="it" title="Italiano" aria-current="true">IT</a><a href="../nl/liens.html" hreflang="nl" lang="nl" title="Nederlands">NL</a><a href="../pl/liens.html" hreflang="pl" lang="pl" title="Polski">PL</a><a href="../pt/liens.html" hreflang="pt" lang="pt" title="Português">PT</a></nav>
+    </main>
+    <dialog id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contattaci</h2>
+        <ul>
+            <li><span>contact@trusti-score.eu</span><button type="button" class="copy" data-email="contact@trusti-score.eu">Copia</button></li>
+            <li><span>davidg.c.d@proton.me</span><button type="button" class="copy" data-email="davidg.c.d@proton.me">Copia</button></li>
+            <li><span>melimel06@proton.me</span><button type="button" class="copy" data-email="melimel06@proton.me">Copia</button></li>
+        </ul>
+        <div style="margin:0 0 12px;font-size:15px;text-align:left">Rispondiamo in francese o in inglese.</div>
+        <h3>LinkedIn</h3>
+        <ul class="social">
+            <li><a href="https://www.linkedin.com/in/david-geslin-58879b28" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>David Geslin</a></li>
+            <li><a href="https://www.linkedin.com/in/m%C3%A9lissa-melesse-30a77059" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0A66C2" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Mélissa Melesse</a></li>
+        </ul>
+        <h3>Matrix</h3>
+        <ul class="social">
+            <li><a href="https://matrix.to/#/%23trusti-score:matrix.org" target="_blank" rel="noopener noreferrer">#trusti-score:matrix.org</a></li>
+        </ul>
+        <button type="button" class="close" id="contact-close">Chiudi</button>
+    </dialog>
+    <script>
+        (function () {
+            var dlg = document.getElementById('contact');
+            document.getElementById('contact-open').addEventListener('click', function () { dlg.showModal(); });
+            document.getElementById('contact-close').addEventListener('click', function () { dlg.close(); });
+            dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+            function fallbackCopy(text) {
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+                dlg.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); } finally { ta.remove(); }
+            }
+            dlg.querySelectorAll('.copy').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var email = btn.dataset.email;
+                    var done = function () {
+                        btn.textContent = 'Copied!'; btn.classList.add('ok');
+                        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 1500);
+                    };
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(email).then(done, function () { fallbackCopy(email); done(); });
+                    } else { fallbackCopy(email); done(); }
+                });
+            });
+        })();
+    </script>
+    <script src="../assets/i18n.js" defer></script>
+    <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
+    <script src="/assets/hosting.js" defer></script>
+</body>
+</html>

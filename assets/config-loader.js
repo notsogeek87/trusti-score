@@ -3,7 +3,7 @@
  * Charge et gère la configuration paramétrable du site
  */
 
-// Dossier de ce script (…/assets/) : les pages traduites vivent dans /en/ et /de/,
+// Dossier de ce script (…/assets/) : les pages traduites vivent dans /en/, /de/, /es/…,
 // un chemin relatif à la page ('assets/…') n'y fonctionnerait pas.
 const TRUSTI_ASSETS_BASE = (function () {
     const script = document.currentScript;
@@ -14,7 +14,12 @@ const TRUSTI_ASSETS_BASE = (function () {
 const TRUSTI_UI = {
     fr: { grade: 'Note', more: 'Voir le détail', percent: ' pour cent du score', rating: 'Évaluation :', finalScore: 'Score final', details: "Détails de l'évaluation", tagline: 'Reprenez votre souveraineté numérique' },
     en: { grade: 'Grade', more: 'See details', percent: ' percent of the score', rating: 'Rating:', finalScore: 'Final score', details: 'Assessment details', tagline: 'Take back your digital sovereignty' },
-    de: { grade: 'Note', more: 'Details anzeigen', percent: ' Prozent der Punktzahl', rating: 'Bewertung:', finalScore: 'Endergebnis', details: 'Details der Bewertung', tagline: 'Holen Sie sich Ihre digitale Souveränität zurück' }
+    de: { grade: 'Note', more: 'Details anzeigen', percent: ' Prozent der Punktzahl', rating: 'Bewertung:', finalScore: 'Endergebnis', details: 'Details der Bewertung', tagline: 'Holen Sie sich Ihre digitale Souveränität zurück' },
+    es: { grade: 'Nota', more: 'Ver detalles', percent: ' por ciento de la puntuación', rating: 'Valoración:', finalScore: 'Puntuación final', details: 'Detalles de la evaluación', tagline: 'Recupera tu soberanía digital' },
+    it: { grade: 'Voto', more: 'Vedi i dettagli', percent: ' per cento del punteggio', rating: 'Valutazione:', finalScore: 'Punteggio finale', details: 'Dettagli della valutazione', tagline: 'Riprendi la tua sovranità digitale' },
+    nl: { grade: 'Score', more: 'Details bekijken', percent: ' procent van de score', rating: 'Beoordeling:', finalScore: 'Eindscore', details: 'Details van de beoordeling', tagline: 'Neem je digitale soevereiniteit terug' },
+    pl: { grade: 'Ocena', more: 'Zobacz szczegóły', percent: ' procent wyniku', rating: 'Ocena:', finalScore: 'Wynik końcowy', details: 'Szczegóły oceny', tagline: 'Odzyskaj swoją suwerenność cyfrową' },
+    pt: { grade: 'Nota', more: 'Ver detalhes', percent: ' por cento da pontuação', rating: 'Avaliação:', finalScore: 'Pontuação final', details: 'Detalhes da avaliação', tagline: 'Recupera a tua soberania digital' }
 };
 
 /**

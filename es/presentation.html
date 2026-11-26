@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Presentación de TrustiScore: diapositivas sobre la soberanía digital y la calificación de las aplicaciones de la A a la E.">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<link rel="alternate" hreflang="fr" href="https://trusti-score.eu/presentation">
+<link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/presentation">
+<link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/presentation">
+<link rel="alternate" hreflang="es" href="https://trusti-score.eu/es/presentation">
+<link rel="alternate" hreflang="it" href="https://trusti-score.eu/it/presentation">
+<link rel="alternate" hreflang="nl" href="https://trusti-score.eu/nl/presentation">
+<link rel="alternate" hreflang="pl" href="https://trusti-score.eu/pl/presentation">
+<link rel="alternate" hreflang="pt" href="https://trusti-score.eu/pt/presentation">
+<link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/presentation">
+<link rel="canonical" href="https://trusti-score.eu/es/presentation">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TrustiScore">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="TrustiScore — Presentación">
+<meta property="og:description" content="Presentación de TrustiScore: diapositivas sobre la soberanía digital y la calificación de las aplicaciones de la A a la E.">
+<meta property="og:url" content="https://trusti-score.eu/es/presentation">
+<meta property="og:image" content="https://trusti-score.eu/assets/og-image-es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TrustiScore: la soberanía digital de las aplicaciones, calificada de la A a la E">
+<meta name="twitter:card" content="summary_large_image">
+<title>TrustiScore — Presentación</title>
+<style>
+    :root {
+        /* Charte « Ciel & encre bleue » (assets/trusti.css) : mode clair uniquement. */
+        --bg: #E9F0F6;
+        --surface: #FFFFFF;
+        --surface-2: #F4F8FB;
+        --line: #DCE8EF;
+        --line-strong: #B8C8D5;
+        --text: #1B2A3A;
+        --text-2: #44546A;
+        --text-3: #566A80;
+        --accent: #3B82C4;
+        --accent-light: #2F6BA5;
+        --accent-deep: #1F3A5F;
+        --shadow: 0 2px 12px rgba(31, 58, 95, 0.10);
+        --a: #006837;
+        --b: #8dc63f;
+        --c: #fbb03b;
+        --d: #f7931e;
+        --e: #c1272d;
+        --stage-w: 1280px;
+        --stage-h: 720px;
+        --font-display: Nunito, ui-rounded, 'Segoe UI', system-ui, Roboto, sans-serif;
+        --font-mono: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Scène : 1280x720 mis à l'échelle du viewport ---------- */
+    .deck {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        /* dvh suit la rétractation des barres du navigateur mobile ;
+           fit() écrase ensuite ces valeurs avec la mesure exacte. */
+        height: 100dvh;
+        overflow: hidden;
+        background:
+            var(--bg);
+    }
+
+    .stage {
+        /* La boîte de mise en page reste 1280x720 quelle que soit l'échelle.
+           On la centre donc sur le point central du deck avec translate(-50%,-50%)
+           plutôt que par un centrage de grille, qui se recale tout seul dès que
+           l'élément dépasse son conteneur. */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--stage-w);
+        height: var(--stage-h);
+        transform: translate(-50%, -50%) scale(var(--scale, 1));
+        transform-origin: center center;
+    }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        padding: 64px 80px 88px;
+        display: none;
+        flex-direction: column;
+        background: var(--bg);
+        overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .slide.active > * { animation: rise 0.42s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+        .slide.active > *:nth-child(2) { animation-delay: 0.05s; }
+        .slide.active > *:nth-child(3) { animation-delay: 0.1s; }
+        .slide.active > *:nth-child(4) { animation-delay: 0.15s; }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: none; }
+        }
+    }
+
+    /* ---------- Typographie de scène ---------- */
+    .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-light);
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .eyebrow::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--line), transparent);
+    }
+
+    .slide h2 {
+        font-family: var(--font-display);
+        font-size: 68px;
+        line-height: 1.04;
+        font-weight: 700;
+        letter-spacing: -1px;
+        text-wrap: balance;
+        margin-bottom: 30px;
+        color: var(--accent-deep);
+    }
+
+    .slide h3 {
+        font-family: var(--font-display);
+        font-size: 30px;
+        line-height: 1.15;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        color: var(--accent-light);
+        margin-bottom: 14px;
+    }
+    .slide p { font-size: 23px; line-height: 1.55; color: var(--text-2); max-width: 62ch; }
+    .slide p + p { margin-top: 16px; }
+    .slide strong { color: var(--text); font-weight: 600; }
+    .lead { font-size: 28px !important; line-height: 1.45 !important; color: var(--text) !important; }
+
+    .body { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+
+    /* ---------- Slide de titre ---------- */
+    .slide-cover {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background:
+            radial-gradient(900px 500px at 50% 30%, rgba(59,130,196,0.18), transparent 65%),
+            linear-gradient(160deg, #F4F8FB 0%, var(--bg) 60%);
+    }
+    .slide-cover img {
+        width: 132px; height: auto; margin-bottom: 28px;
+        background: #fff; padding: 14px; box-sizing: border-box;
+        border-radius: 28px;
+        box-shadow: 0 12px 36px rgba(31, 58, 95, 0.18);
+    }
+    .slide-cover h1 {
+        font-family: var(--font-display);
+        font-size: 108px;
+        font-weight: 900;
+        letter-spacing: -3px;
+        color: var(--accent-deep);
+        line-height: 1;
+    }
+    .slide-cover .tagline {
+        font-size: 32px;
+        color: var(--accent-light);
+        font-weight: 300;
+        margin-top: 18px;
+    }
+    .cover-meta {
+        margin-top: 44px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        color: var(--text-3);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .cover-meta span { padding: 7px 16px; border: 1px solid var(--line); border-radius: 100px; }
+
+    /* ---------- Citation / affirmation forte ---------- */
+    .slide-statement { justify-content: center; }
+    /* Spécificité .slide-statement .statement (0,2,0) : .slide p (0,1,1)
+       gagnait sinon la bataille de cascade sur ce <p>, et la taille
+       n'était jamais réellement appliquée — le bug qui a fait paraître
+       les titres "toujours petits" malgré des valeurs correctes ici. */
+    .slide-statement .statement {
+        font-family: var(--font-display);
+        font-size: 72px;
+        line-height: 1.08;
+        font-weight: 500;
+        letter-spacing: -1.5px;
+        color: var(--accent-deep);
+        max-width: 15ch;
+        text-wrap: balance;
+    }
+    .slide-statement .statement em { font-style: normal; font-size: 0.78em; color: var(--accent-light); font-weight: 600; }
+    .slide-statement .statement-note {
+        margin-top: 32px;
+        padding-left: 22px;
+        border-left: 3px solid var(--accent);
+        font-size: 21px;
+        color: var(--text-3);
+        max-width: 56ch;
+    }
+
+    .slide-statement .statement-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+    .slide-statement .statement-grid .statement { font-size: 52px; max-width: none; }
+    .slide-statement .statement-img { width: 100%; border-radius: 24px; box-shadow: var(--shadow); display: block; }
+
+    /* ---------- Grilles ---------- */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .two-col.narrow-left { grid-template-columns: 0.9fr 1.1fr; }
+
+    .steps { list-style: none; display: grid; gap: 14px; counter-reset: s; }
+    .steps li {
+        counter-increment: s;
+        display: grid;
+        grid-template-columns: 46px 1fr;
+        gap: 20px;
+        align-items: center;
+        font-size: 21px;
+        color: var(--text-2);
+        line-height: 1.45;
+        padding: 12px 16px 12px 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .steps li:last-child { border-bottom: 0; }
+    .steps li::before {
+        content: counter(s);
+        width: 46px; height: 46px;
+        border-radius: 50%;
+        display: grid; place-items: center;
+        background: var(--surface);
+        border: 1.5px solid var(--line-strong);
+        color: var(--accent-light);
+        font-weight: 700; font-size: 18px;
+    }
+
+    /* Deuxième item de grille explicite : sans lui, un navigateur peut former
+       DEUX boîtes anonymes distinctes à partir de <strong> + texte suivant
+       (l'une prenant presque toute la largeur, l'autre retombant sous le
+       cercle numéroté sur une piste de 46px) au lieu d'une seule couvrant la
+       colonne de texte — d'où un texte réduit à un mot par ligne. */
+    .step-text { min-width: 0; }
+
+    /* ---------- Échelle A-E ---------- */
+    .scale-row { display: flex; align-items: flex-end; gap: 12px; margin-bottom: 34px; }
+    .scale-row .scale-step .letter { font-size: 36px; }
+    .slide .grade-intro { font-size: 21px; line-height: 1.45; max-width: none; margin-bottom: 18px; }
+    .slide .scale-legend { display: flex; justify-content: space-between; gap: 32px; font-size: 16px; line-height: 1.4; color: var(--text-3); max-width: none; margin: -14px 0 22px; }
+    .scale-legend b { color: var(--text); }
+    .scale-step {
+        flex: 1;
+        border-radius: 12px 12px 4px 4px;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: flex-end;
+        padding-bottom: 14px;
+        color: oklch(0.2 0.03 255);
+        font-weight: 700;
+    }
+    .scale-step .letter { font-family: var(--font-display); font-size: 46px; font-weight: 900; line-height: 1; }
+    .scale-legend { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    /* Combinateur d'enfant direct (>) et non descendant : sinon la règle
+       s'applique aussi à .range/.title/.unit (des div imbriqués dans la
+       colonne), et chacun hérite d'un border-top — trois traits empilés
+       par colonne au lieu d'un seul en haut. */
+    .scale-legend > div { border-top: 2px solid; padding-top: 12px; }
+    .scale-legend .range { font-size: 22px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+    /* Libellé de la note (ex. "Critique, très risqué…") : sa longueur dépend
+       de la configuration stockée en base, donc jamais de hauteur fixe
+       ici — seule la barre colorée ci-dessus a une hauteur imposée, et elle
+       ne porte plus que la lettre. */
+    /* min-height réserve la place de 2 lignes même quand le libellé n'en
+       prend qu'une, pour que "points sur 100" reste aligné d'une colonne
+       à l'autre quelle que soit la longueur du texte de chacune. */
+    .scale-legend .title { font-size: 15px; font-weight: 600; line-height: 1.35; margin-top: 6px; min-height: 62px; color: var(--text-2); }
+    .scale-legend .unit { font-size: 13px; color: var(--text-3); margin-top: 6px; }
+
+    /* ---------- Barres de pondération ---------- */
+    .weights { display: grid; gap: 18px; }
+    .weight-row { display: grid; grid-template-columns: 300px 1fr 64px; gap: 20px; align-items: center; }
+    .weight-name { font-size: 20px; color: var(--text); font-weight: 600; text-align: right; }
+    .weight-track { height: 26px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); border-radius: 6px; overflow: hidden; }
+    .weight-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-deep), var(--accent-light));
+        border-radius: 6px;
+        width: 0;
+        transition: width 0.7s cubic-bezier(0.2,0.7,0.3,1);
+    }
+    .weight-pct { font-size: 22px; font-weight: 700; color: var(--accent-light); font-variant-numeric: tabular-nums; }
+
+    /* ---------- Fiche critère ---------- */
+    .criterion-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 10px; }
+    .criterion-weight {
+        font-size: 20px; font-weight: 700; color: var(--accent-light);
+        border: 1.5px solid var(--line-strong); background: var(--surface); border-radius: 100px; padding: 5px 16px;
+        white-space: nowrap;
+    }
+    .verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 34px; }
+    .verdict { padding: 26px 28px; border-radius: 14px; background: var(--surface); border-top: 4px solid; box-shadow: var(--shadow); }
+    .verdict.good { border-top-color: var(--a); }
+    .verdict.bad { border-top-color: var(--e); }
+    .verdict .badge { font-family: var(--font-display); font-size: 36px; font-weight: 800; line-height: 1; }
+    .verdict.good .badge { color: var(--a); }
+    .verdict.bad .badge { color: var(--e); }
+    .verdict .badge small { font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; display: block; color: var(--text-3); margin-bottom: 6px; }
+    .verdict p { font-size: 20px !important; margin-top: 14px; color: var(--text-2) !important; }
+
+    /* ---------- Comparatif d'exemples ---------- */
+    .examples { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .app-card { background: var(--surface); box-shadow: var(--shadow); border-radius: 16px; padding: 32px; display: flex; gap: 26px; align-items: center; }
+    .app-grade {
+        width: 104px; height: 104px; flex: none; border-radius: 18px;
+        display: grid; place-items: center;
+        font-family: var(--font-display); font-size: 56px; font-weight: 900; color: oklch(0.2 0.03 255);
+    }
+    .app-logo { flex: none; width: 64px; height: 64px; border-radius: 14px; }
+    .app-card h4 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--accent-deep); margin-bottom: 8px; }
+    .app-card p { font-size: 19px !important; color: var(--text-2) !important; }
+
+    /* ---------- Chiffres clés ---------- */
+    /* ---------- Slide « besoins » ---------- */
+    .slide-needs h2 { margin-bottom: 36px; }
+    .needs { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 56px; align-items: start; }
+    .needs .steps { gap: 4px; }
+    .needs .steps .sub { display: block; font-size: 19px; line-height: 1.35; color: var(--text-3); margin-top: 4px; }
+    .needs .steps li { grid-template-columns: 44px 1fr; gap: 18px; font-size: 26px; line-height: 1.25; padding: 12px 12px 12px 0; align-items: center; }
+    .needs .steps li::before { width: 44px; height: 44px; font-size: 19px; }
+    .needs-budget { display: flex; flex-direction: column; gap: 16px; }
+    .needs-budget h3 { font-size: 28px; margin-bottom: 2px; }
+    .needs-budget .stat { padding: 24px 26px; }
+    .needs-budget .stat .n { font-size: 44px; }
+    .needs-budget .stat .l { font-size: 18px; margin-top: 10px; }
+    .needs-budget .stat-ios { display: flex; align-items: center; gap: 18px; padding: 20px 26px; }
+    .needs-budget .stat-ios .n { font-size: 38px; }
+    .needs-budget .stat-ios .ios-icon { width: 38px; height: 38px; flex: none; color: var(--accent-light); }
+    .needs-budget .now { font-size: 18px !important; color: var(--text-3) !important; line-height: 1.4 !important; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+    .stat { background: var(--surface); box-shadow: var(--shadow); border-radius: 14px; padding: 30px; border-left: 4px solid var(--accent); }
+    .stat .n { font-family: var(--font-display); font-size: 54px; font-weight: 800; color: var(--accent-deep); line-height: 1; font-variant-numeric: tabular-nums; }
+    .stat .l { font-size: 18px; color: var(--text-3); margin-top: 12px; line-height: 1.4; }
+
+    /* ---------- Slide de clôture ---------- */
+    .slide-outro {
+        align-items: center; justify-content: center; text-align: center;
+        background: radial-gradient(900px 500px at 50% 40%, rgba(59,130,196,0.18), transparent 65%), var(--bg);
+    }
+    .slide-outro h2 { font-size: 78px; }
+    .qr-card { margin-top: 30px; padding: 18px; background: #fff; border-radius: 18px; box-shadow: var(--shadow); line-height: 0; }
+    .qr-card img { width: 320px; height: 320px; image-rendering: pixelated; }
+    .qr-url { margin-top: 18px; font-family: var(--font-mono); font-size: 20px; color: var(--accent-light); font-weight: 600; }
+    .urls { display: flex; gap: 18px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
+    .url-chip {
+        border: 1px solid var(--line); border-radius: 12px; padding: 18px 26px;
+        background: var(--surface); box-shadow: var(--shadow); text-align: left;
+        display: flex; align-items: center; gap: 14px;
+        text-decoration: none; transition: border-color .15s, background .15s;
+    }
+    a.url-chip:hover, a.url-chip:focus-visible { border-color: var(--accent-light); background: var(--surface-2); }
+    .url-chip .k { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3); }
+    .url-chip .v { font-size: 21px; color: var(--accent-light); font-weight: 600; margin-top: 5px; }
+    .url-chip .play-icon { flex: none; width: 30px; height: 30px; }
+
+    /* ---------- Pied de slide ---------- */
+    .slide-foot {
+        position: absolute;
+        left: 80px; right: 80px; bottom: 32px;
+        display: flex; align-items: center; justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 12px; color: var(--text-3); letter-spacing: 0.06em;
+    }
+    .slide-cover .slide-foot, .slide-outro .slide-foot { display: none; }
+
+    /* ---------- Chrome de navigation ---------- */
+    .progress {
+        position: fixed; top: 0; left: 0; height: 3px;
+        background: linear-gradient(90deg, var(--accent-deep), var(--accent-light));
+        transition: width 0.3s ease; z-index: 40;
+    }
+
+    .controls {
+        position: fixed; bottom: 16px; right: 20px; z-index: 50;
+        display: flex; align-items: center; gap: 8px;
+        background: rgba(255,255,255,0.92);
+        border: 1px solid var(--line-strong);
+        border-radius: 100px; padding: 7px 10px;
+        backdrop-filter: blur(10px);
+        opacity: 0.35; transition: opacity 0.25s ease;
+    }
+    .controls:hover, .controls:focus-within { opacity: 1; }
+    .controls button,
+    .controls a.control-link {
+        width: 34px; height: 34px; border-radius: 50%;
+        background: transparent; border: 0; color: var(--text-2);
+        font-size: 16px; cursor: pointer; display: grid; place-items: center;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+    .controls button:hover,
+    .controls a.control-link:hover { background: rgba(59,130,196,0.18); color: var(--accent-deep); }
+
+    .controls .sep {
+        width: 1px; height: 20px; background: var(--line); flex: none; margin: 0 2px;
+    }
+    .counter { font-family: var(--font-mono); font-size: 13px; color: var(--text-3); padding: 0 8px; font-variant-numeric: tabular-nums; min-width: 56px; text-align: center; }
+
+    /* ---------- Notes orateur ---------- */
+    .notes {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+        background: rgba(255,255,255,0.97);
+        border-top: 1px solid var(--line-strong);
+        box-shadow: 0 -4px 20px rgba(31, 58, 95, 0.12);
+        padding: 20px 28px 24px;
+        font-size: 17px; line-height: 1.55; color: var(--text-2);
+        max-height: 34vh; overflow-y: auto;
+        transform: translateY(101%); transition: transform 0.3s ease;
+    }
+    .notes.open { transform: none; }
+    .notes-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .notes h5 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light); margin: 0; }
+    .notes-close {
+        flex: none;
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text-2);
+        font-size: 15px; line-height: 1;
+        cursor: pointer;
+        display: grid; place-items: center;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+    .notes-close:hover { background: rgba(59,130,196,0.18); color: var(--accent-deep); }
+
+    /* ---------- Sommaire (touche S) ---------- */
+    .overview {
+        position: fixed; inset: 0; z-index: 50;
+        background: rgba(233,240,246,0.98);
+        padding: 40px; overflow-y: auto;
+        display: none;
+    }
+    .overview.open { display: block; }
+    .overview h4 { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 20px; }
+    .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .ov-item {
+        text-align: left; background: var(--surface); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 18px; cursor: pointer; color: var(--text-2);
+        font-size: 16px; line-height: 1.35; font-family: inherit;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .ov-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .ov-item.current { border-color: var(--accent-light); background: #fff; box-shadow: 0 0 0 2px var(--accent-light); color: var(--accent-deep); }
+    .overview .lang-switch { display: flex; gap: 6px; margin: -8px 0 20px; }
+    .overview .lang-switch a { display: inline-grid; place-items: center; min-width: 44px; min-height: 36px; padding: 0 10px; border-radius: 100px; border: 1px solid var(--line); background: var(--surface); color: var(--accent-deep); font-size: 14px; font-weight: 700; text-decoration: none; }
+    .overview .lang-switch a[aria-current="true"] { border-color: var(--accent-light); box-shadow: 0 0 0 1px var(--accent-light); }
+    .ov-item .num { display: block; font-size: 12px; color: var(--text-3); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+
+    /* ---------- Aide (touche ?) ---------- */
+    .help {
+        position: fixed; inset: 0; z-index: 60; display: none;
+        place-items: center; background: rgba(27,42,58,0.55);
+    }
+    .help.open { display: grid; }
+    .help-panel {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+        padding: 32px 36px; max-width: 520px; width: calc(100% - 48px);
+    }
+    .help-panel h4 { font-size: 20px; color: var(--accent-deep); margin-bottom: 20px; }
+    .help-panel dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; align-items: baseline; }
+    .help-panel dt { text-align: right; }
+    .help-panel dd { font-size: 16px; color: var(--text-2); }
+    kbd {
+        background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px;
+        border-radius: 6px; padding: 3px 9px; font-family: inherit; font-size: 14px; color: var(--text);
+        white-space: nowrap;
+    }
+
+    .loading, .fatal {
+        position: fixed; inset: 0; display: grid; place-items: center;
+        font-size: 19px; color: var(--text-3); text-align: center; padding: 32px; z-index: 70;
+        background: var(--bg);
+    }
+    .fatal { display: none; color: #B3261E; }
+    .fatal.open { display: grid; }
+
+    :focus-visible { outline: 2px solid var(--accent-light); outline-offset: 3px; border-radius: 4px; }
+
+    /* ---------- Écrans étroits : la scène reste lisible ---------- */
+    @media (max-width: 720px) {
+        .controls { bottom: 10px; right: 10px; }
+    }
+
+    /* ---------- Export PDF : 1 slide = 1 page paysage ---------- */
+    @media print {
+        @page { size: 1280px 720px; margin: 0; }
+        html, body { overflow: visible; height: auto; background: #fff; }
+        .deck { position: static; display: block; background: none; width: auto; height: auto; overflow: visible; }
+        .stage {
+            position: static;
+            top: auto; left: auto;
+            transform: none !important;
+            width: 1280px; height: auto;
+        }
+        .slide {
+            display: flex !important;
+            position: relative;
+            width: 1280px; height: 720px;
+            page-break-after: always; break-after: page;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+        /* Marges internes réduites à l'export : le contenu occupe mieux la page. */
+        html, body { margin: 0; padding: 0; }
+        .slide { padding: 40px 52px 68px; }
+        .slide-foot { left: 52px; right: 52px; bottom: 24px; }
+        .progress, .controls, .notes, .overview, .help, .loading { display: none !important; }
+    }
+</style>
+    <script defer src="https://stats.trusti-score.eu/script.js" data-website-id="24fd6658-d4a6-4fd6-9fc6-410264c3a02c" data-domains="trusti-score.eu"></script>
+</head>
+<body data-no-lang-banner>
+
+<div id="loading" class="loading">Cargando la presentación…</div>
+<div id="fatal" class="fatal"></div>
+
+<div class="progress" id="progress" style="width:0"></div>
+
+<div class="deck" id="deck">
+    <div class="stage" id="stage"><!-- slides injectées --></div>
+</div>
+
+<div class="controls" role="group" aria-label="Navegación de la presentación">
+    <button type="button" id="btnPrev" title="Diapositiva anterior (←)" aria-label="Diapositiva anterior">‹</button>
+    <span class="counter" id="counter" aria-live="polite">– / –</span>
+    <button type="button" id="btnNext" title="Diapositiva siguiente (→)" aria-label="Diapositiva siguiente">›</button>
+    <button type="button" id="btnOverview" title="Vista general (S)" aria-label="Vista general">☰</button>
+    <button type="button" id="btnNotes" title="Notas del ponente (N)" aria-label="Notas del ponente">✎</button>
+    <button type="button" id="btnFull" title="Pantalla completa (F)" aria-label="Pantalla completa">⛶</button>
+    <button type="button" id="btnPdf" title="Exportar a PDF (Ctrl+P): 1 diapositiva por página, utilizable sin conexión" aria-label="Exportar a PDF">⎙</button>
+    <button type="button" id="btnHelp" title="Atajos de teclado (?)" aria-label="Atajos de teclado">?</button>
+    <span class="sep" aria-hidden="true"></span>
+    <a href="index.html" class="control-link" id="btnExit" title="Volver al sitio (Q)" aria-label="Volver al sitio">⤺</a>
+</div>
+
+<aside class="notes" id="notes" aria-label="Notas del ponente">
+    <div class="notes-head">
+        <h5>Notas del ponente</h5>
+        <button type="button" class="notes-close" id="btnNotesClose" title="Cerrar las notas" aria-label="Cerrar las notas">✕</button>
+    </div>
+    <div id="notesBody"></div>
+</aside>
+
+<div class="overview" id="overview" role="dialog" aria-modal="true" aria-label="Vista general">
+    <h4>Vista general: haz clic para ir a una diapositiva</h4>
+    <nav class="lang-switch" aria-label="Idioma"><a href="../presentation.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/presentation.html" hreflang="en" lang="en" title="English">EN</a><a href="../de/presentation.html" hreflang="de" lang="de" title="Deutsch">DE</a><a href="presentation.html" hreflang="es" lang="es" title="Español" aria-current="true">ES</a><a href="../it/presentation.html" hreflang="it" lang="it" title="Italiano">IT</a><a href="../nl/presentation.html" hreflang="nl" lang="nl" title="Nederlands">NL</a><a href="../pl/presentation.html" hreflang="pl" lang="pl" title="Polski">PL</a><a href="../pt/presentation.html" hreflang="pt" lang="pt" title="Português">PT</a></nav>
+    <div class="overview-grid" id="overviewGrid"></div>
+</div>
+
+<div class="help" id="help" role="dialog" aria-modal="true" aria-label="Atajos de teclado">
+    <div class="help-panel">
+        <h4>Atajos de teclado</h4>
+        <dl>
+            <dt><kbd>→</kbd> <kbd>Espacio</kbd></dt><dd>Diapositiva siguiente</dd>
+            <dt><kbd>←</kbd></dt><dd>Diapositiva anterior</dd>
+            <dt><kbd>Inicio</kbd> <kbd>Fin</kbd></dt><dd>Primera / última diapositiva</dd>
+            <dt><kbd>1</kbd>…<kbd>9</kbd></dt><dd>Ir a la diapositiva N</dd>
+            <dt><kbd>S</kbd></dt><dd>Vista general</dd>
+            <dt><kbd>N</kbd></dt><dd>Notas del ponente</dd>
+            <dt><kbd>F</kbd></dt><dd>Pantalla completa</dd>
+            <dt><kbd>Ctrl</kbd>+<kbd>P</kbd></dt><dd>Exportar a PDF (1 diapositiva por página)</dd>
+            <dt><kbd>Esc</kbd></dt><dd>Cerrar el panel abierto</dd>
+            <dt><kbd>Q</kbd></dt><dd>Volver al sitio</dd>
+        </dl>
+    </div>
+</div>
+
+<script src="../assets/config-loader.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    var APP_URL = 'https://app.trusti-score.eu';
+    var GRADE_COLORS = { A: '#006837', B: '#8dc63f', C: '#fbb03b', D: '#f7931e', E: '#c1272d' };
+    var GRADE_INK = { A: '#fff', B: '#1B2A3A', C: '#1B2A3A', D: '#1B2A3A', E: '#fff' };
+    var GRADE_HEIGHTS = { A: 200, B: 172, C: 144, D: 116, E: 88 };
+
+    var stage = document.getElementById('stage');
+    var slides = [];
+    var notesList = [];
+    var titles = [];
+    var current = 0;
+
+    function esc(s) {
+        return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /* La config autorise <strong> dans certains champs : on la considère comme
+       contenu de confiance (elle vient de la configuration en base), donc innerHTML direct. */
+    function foot(chapter) {
+        return '<div class="slide-foot"><span>TrustiScore — Soberanía digital</span><span>' + esc(chapter) + '</span></div>';
+    }
+
+    function slide(cls, html, chapter, title, note) {
+        titles.push(title);
+        notesList.push(note || '');
+        return '<section class="slide ' + cls + '" role="group" aria-roledescription="slide" aria-label="' +
+            esc(title) + '">' + html + (chapter ? foot(chapter) : '') + '</section>';
+    }
+
+    function build(cfg) {
+        var criteria = cfg.criteria || {};
+        // Même ordre que la page d'accueil : du critère le plus lourd au plus léger.
+        var keys = Object.keys(criteria).sort(function (a, b) {
+            return (criteria[b].weight || 0) - (criteria[a].weight || 0);
+        });
+        var out = [];
+
+        /* 1 — Couverture : la demande est annoncée dès l'ouverture */
+        out.push(slide('slide-cover',
+            '<img src="../assets/logo.png" alt="">' +
+            '<h1>' + esc(cfg.siteName || 'TrustiScore') + '</h1>' +
+            '<p class="tagline">El Nutri-Score de la soberanía digital</p>' +
+            '<div class="cover-meta"><span>Buscamos: tus opiniones</span><span>tus herramientas</span><span>pilotos</span></div>',
+            '', 'TrustiScore',
+            'Una frase: «Calificamos las aplicaciones de la A a la E según adónde van tus datos. Estamos aquí para encontrar pilotos».'));
+
+        /* 2 — Le problème */
+        out.push(slide('slide-statement',
+            '<div class="eyebrow">El problema</div>' +
+            '<div class="statement-grid"><div>' +
+            '<p class="statement">Las aplicaciones forman parte de nuestro día a día. <em>¿Sabemos dónde acaban nuestros datos?</em></p>' +
+            '<p class="statement-note">Detrás de cada aplicación hay un editor, un país y unas leyes. ' +
+            'Our data can be stored, analysed or passed on without us really knowing.</p>' +
+            '</div><img class="statement-img" src="../assets/applications.jpg" alt="Un teléfono rodeado de aplicaciones cotidianas"></div>',
+            'The problem', 'The problem',
+            'Pregunta a la sala: «¿Quién sabe dónde se guardan sus correos?». 30 segundos como máximo.'));
+
+        /* 3 — La réponse : la note + deux exemples */
+        var bars = '';
+        ['A', 'B', 'C', 'D', 'E'].forEach(function (g) {
+            bars += '<div class="scale-step" style="height:' + Math.max(52, Math.round(GRADE_HEIGHTS[g] * 0.42)) + 'px;background:' +
+                GRADE_COLORS[g] + ';color:' + GRADE_INK[g] + '"><span class="letter">' + g + '</span></div>';
+        });
+        out.push(slide('',
+            '<div class="eyebrow">La respuesta</div>' +
+            '<h2>Una nota de la A a la E</h2>' +
+            '<div class="body">' +
+            '<p class="grade-intro">Cada aplicación recibe una nota, como el Nutri-Score para los alimentos. ' +
+            'At a glance, it sums up where your data goes, who can access it and how much control you keep.</p>' +
+            '<div class="scale-row">' + bars + '</div>' +
+            '<p class="scale-legend"><span><b>A</b>: muy respetuosa con tus datos y tu soberanía</span>' +
+            '<span><b>E</b>: evitar, o usar conociendo los riesgos</span></p>' +
+            '<div class="examples">' +
+            '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.A + ';color:#fff">A</div>' +
+            '<img class="app-logo" src="../assets/tuta.png" alt="" width="64" height="64">' +
+            '<div><h4>Tuta Mail</h4><p>Alojado en Alemania, cifrado, código abierto.</p></div></div>' +
+            '<div class="app-card"><div class="app-grade" style="background:' + GRADE_COLORS.E + ';color:#fff">E</div>' +
+            '<img class="app-logo" src="../assets/tiktok.png" alt="" width="64" height="64">' +
+            '<div><h4>TikTok</h4><p>Datos enviados fuera de la UE, gestión opaca.</p></div></div>' +
+            '</div></div>',
+            'The answer', 'Una nota de la A a la E',
+            'Explica: una letra, cinco criterios ponderados, una justificación pública. Haz que el público adivine la nota de TikTok antes de mostrarla. Demostración en directo de la aplicación si la red aguanta.'));
+
+        /* 4 — La méthode : tous les critères sur une seule slide */
+        var rows = '';
+        var maxWeight = keys.reduce(function (m, k) { return Math.max(m, criteria[k].weight); }, 1);
+        keys.forEach(function (k) {
+            var c = criteria[k];
+            rows += '<div class="weight-row">' +
+                '<div class="weight-name">' + esc(c.name) + '</div>' +
+                '<div class="weight-track"><div class="weight-fill" data-w="' +
+                    (c.weight / maxWeight * 100).toFixed(1) + '"></div></div>' +
+                '<div class="weight-pct">' + c.weight + '%</div>' +
+            '</div>';
+        });
+        out.push(slide('',
+            '<div class="eyebrow">El método</div>' +
+            '<h2>' + keys.length + ' criteria, one public grid</h2>' +
+            '<div class="body"><div class="weights">' + rows + '</div>' +
+            '<p style="margin-top:34px;font-size:20px;color:var(--text-2)">Cada nota tiene sus fuentes. ' +
+            'Providers can rate their own app with the simulator, for free.</p>' +
+            '</div>',
+            'The method', 'The criteria',
+            'No repases todos los criterios. Si preguntan: la ubicación de los datos es lo que más pesa porque es lo más difícil de esquivar.'));
+
+        /* 5 — Ce qu'on vient chercher (slide principale) */
+        out.push(slide('slide-needs',
+            '<div class="eyebrow">Por qué estamos aquí</div>' +
+            '<h2>Lo que buscamos</h2>' +
+            '<div class="needs">' +
+            '<ol class="steps">' +
+            '<li><span class="step-text"><strong>Usas aplicaciones</strong><span class="sub">Dinos cuáles: las calificaremos primero, con alternativas.</span></span></li>' +
+            '<li><span class="step-text"><strong>Eres responsable de sistemas, DPO o responsable de seguridad</strong><span class="sub">Pon a prueba la tabla: dinos lo que no se sostiene.</span></span></li>' +
+            '<li><span class="step-text"><strong>Diriges una organización</strong><span class="sub">Hazte piloto: una auditoría de tus programas, sensibilización para tus equipos.</span></span></li>' +
+            '<li><span class="step-text"><strong>Tienes una red o un público</strong><span class="sub">Corre la voz: administraciones locales, medios, asociaciones, colaboradores.</span></span></li>' +
+            '</ol>' +
+            '<div class="needs-budget">' +
+            '<h3>Y una ayuda</h3>' +
+            '<div class="stat"><div class="n">100 a 250 €/año</div><div class="l">para alojar TrustiScore en Europa</div></div>' +
+            '<p class="now">Hoy: ofertas gratuitas estadounidenses. Objetivo: alojamiento europeo.</p>' +
+            '<div class="stat stat-ios"><svg class="ios-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/></svg>' +
+            '<div><div class="n">99 $/año</div><div class="l">Cuenta de desarrollador de Apple para la aplicación de iPhone</div></div></div>' +
+            '<p class="now">No tenemos un Mac para compilarla. ¿Tienes uno?</p>' +
+            '</div>' +
+            '</div>',
+            'Por qué estamos aquí', 'Lo que buscamos',
+            'Dilo antes de que alguien pregunte: nuestro alojamiento sacaría mala nota con nuestra propia tabla.' +
+            'Dirígete a cada público por turno y termina con una petición concreta: 3 herramientas que calificar, una reunión.'));
+
+        /* 6 — Contact */
+        out.push(slide('slide-outro',
+            '<h2>¿Hablamos?</h2>' +
+            '<p class="lead" style="max-width:56ch;text-align:center">¿Opiniones, una herramienta para calificar, ganas de probar con nosotros? Escríbenos (en francés o en inglés).</p>' +
+            '<p class="lead" style="max-width:56ch;text-align:center;margin-top:14px;color:var(--accent-light) !important;font-weight:600">contact@trusti-score.eu</p>' +
+            '<div class="urls">' +
+            '<a class="url-chip" href="https://youtube.com/shorts/45mTjVWKRe8?is=mIsF9wE4JEMu18Il" target="_blank" rel="noopener noreferrer">' +
+            '<svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff0000" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8z"/><path fill="#fff" d="m9.6 15.6 6.2-3.6-6.2-3.6z"/></svg>' +
+            '<div><div class="k">YouTube</div><div class="v" style="font-size:16px;margin-top:4px">Ver el vídeo (en francés)</div></div>' +
+            '</a>' +
+            '<a class="url-chip" href="simulateur.html" target="_blank" rel="noopener noreferrer">' +
+            '<div><div class="k">El simulador</div><div class="v" style="font-size:16px;margin-top:4px">Califica tu propia aplicación</div></div>' +
+            '</a>' +
+            '<a class="url-chip" href="' + APP_URL + '" target="_blank" rel="noopener noreferrer">' +
+            '<div><div class="k">Aplicación web</div><div class="v" style="font-size:16px;margin-top:4px">Consulta las notas</div></div>' +
+            '</a>' +
+            '<a class="url-chip" href="https://play.google.com/store/apps/details?id=eu.trusti.app" target="_blank" rel="noopener noreferrer">' +
+            '<svg class="play-icon" viewBox="0 0 512 512" aria-hidden="true"><path fill="#00d2ff" d="M48 59.49v393a4.33 4.33 0 0 0 7.37 3.07L260 256 55.37 56.42A4.33 4.33 0 0 0 48 59.49z"/><path fill="#00f076" d="M345.8 174 89.22 32.64l-.16-.09c-4.42-2.4-8.62 3.58-5 7.06l201.13 192.32z"/><path fill="#ff3c47" d="M84.08 472.39c-3.6 3.48.6 9.46 5 7.06l.16-.09L345.8 338l-60.61-57.95z"/><path fill="#ffcf00" d="M449.38 231l-71.65-39.46L310.36 256l67.37 64.43L449.38 281c19.49-11.41 19.49-38.74 0-50z"/></svg>' +
+            '<div><div class="k">Google Play</div><div class="v" style="font-size:16px;margin-top:4px">Instalar en Android</div></div>' +
+            '</a>' +
+            '</div>',
+            '', 'Contact',
+            'Dejar en pantalla durante las preguntas.'));
+
+        /* 7 — QR code vers la page des liens */
+        out.push(slide('slide-outro slide-qr',
+            '<h2>Todos nuestros enlaces</h2>' +
+            '<p class="lead" style="text-align:center">Escanea para encontrar la aplicación, Google Play y nuestros contactos.</p>' +
+            '<div class="qr-card"><img src="../assets/qr-liens.png" alt="Código QR hacia trusti-score.eu/liens" width="320" height="320"></div>' +
+            '<p class="qr-url">trusti-score.eu/liens</p>' +
+            '<p style="margin-top:26px;font-size:17px;color:var(--text-3)">Pulsa <b style="color:var(--text)">Q</b> para volver al sitio.</p>',
+            '', 'QR code',
+            'Deja tiempo para escanear.'));
+
+        stage.innerHTML = out.join('');
+        slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+        buildOverview();
+    }
+
+    /* ---------- Sommaire ---------- */
+    function buildOverview() {
+        var grid = document.getElementById('overviewGrid');
+        grid.innerHTML = titles.map(function (t, i) {
+            return '<button type="button" class="ov-item" data-i="' + i + '">' +
+                '<span class="num">' + (i + 1) + ' / ' + titles.length + '</span>' + esc(t) + '</button>';
+        }).join('');
+        grid.addEventListener('click', function (e) {
+            var b = e.target.closest('.ov-item');
+            if (!b) return;
+            go(parseInt(b.dataset.i, 10));
+            toggleOverview(false);
+        });
+    }
+
+    /* ---------- Navigation ---------- */
+    function go(i) {
+        if (i < 0 || i >= slides.length) return;
+        slides[current].classList.remove('active');
+        current = i;
+        var s = slides[current];
+        s.classList.add('active');
+
+        document.getElementById('counter').textContent = (i + 1) + ' / ' + slides.length;
+        document.getElementById('progress').style.width = ((i + 1) / slides.length * 100) + '%';
+        document.getElementById('notesBody').textContent = notesList[i] || 'Sin notas para esta diapositiva.';
+
+        Array.prototype.forEach.call(document.querySelectorAll('.ov-item'), function (b, n) {
+            b.classList.toggle('current', n === i);
+        });
+
+        // Animation des barres de pondération à l'entrée sur la slide
+        Array.prototype.forEach.call(s.querySelectorAll('.weight-fill'), function (el) {
+            el.style.width = '0';
+            requestAnimationFrame(function () { el.style.width = el.dataset.w + '%'; });
+        });
+
+        try { history.replaceState(null, '', '#' + (i + 1)); } catch (err) { /* file:// */ }
+    }
+
+    var next = function () { go(current + 1); };
+    var prev = function () { go(current - 1); };
+
+    function toggleOverview(force) {
+        var el = document.getElementById('overview');
+        var open = force === undefined ? !el.classList.contains('open') : force;
+        el.classList.toggle('open', open);
+    }
+    function toggleNotes(force) {
+        var el = document.getElementById('notes');
+        el.classList.toggle('open', force === undefined ? !el.classList.contains('open') : force);
+    }
+    function toggleHelp(force) {
+        var el = document.getElementById('help');
+        el.classList.toggle('open', force === undefined ? !el.classList.contains('open') : force);
+    }
+    function toggleFullscreen() {
+        if (document.fullscreenElement) { document.exitFullscreen(); }
+        else if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        var k = e.key;
+        if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter') { e.preventDefault(); next(); }
+        else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); prev(); }
+        else if (k === 'Home') { e.preventDefault(); go(0); }
+        else if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+        else if (k === 'Escape') { toggleOverview(false); toggleHelp(false); toggleNotes(false); }
+        else if (k === 's' || k === 'S') { toggleOverview(); }
+        else if (k === 'n' || k === 'N') { toggleNotes(); }
+        else if (k === 'f' || k === 'F') { toggleFullscreen(); }
+        else if (k === '?') { toggleHelp(); }
+        else if (k === 'q' || k === 'Q') { window.location.href = 'index.html'; }
+        else if (/^[1-9]$/.test(k)) { go(parseInt(k, 10) - 1); }
+    });
+
+    document.getElementById('btnNext').addEventListener('click', next);
+    document.getElementById('btnPrev').addEventListener('click', prev);
+    document.getElementById('btnOverview').addEventListener('click', function () { toggleOverview(); });
+    document.getElementById('btnNotes').addEventListener('click', function () { toggleNotes(); });
+    document.getElementById('btnNotesClose').addEventListener('click', function () { toggleNotes(false); });
+    document.getElementById('btnFull').addEventListener('click', toggleFullscreen);
+    document.getElementById('btnPdf').addEventListener('click', function () { window.print(); });
+    // Barres de pondération : à l'export PDF, toutes les slides sont imprimées d'un coup,
+    // il faut donc les remplir toutes (sans animation) avant l'impression.
+    window.addEventListener('beforeprint', function () {
+        Array.prototype.forEach.call(document.querySelectorAll('.weight-fill'), function (el) {
+            el.style.transition = 'none';
+            el.style.width = el.dataset.w + '%';
+        });
+    });
+    window.addEventListener('afterprint', function () {
+        Array.prototype.forEach.call(document.querySelectorAll('.weight-fill'), function (el) { el.style.transition = ''; });
+    });
+    document.getElementById('btnHelp').addEventListener('click', function () { toggleHelp(); });
+    document.getElementById('help').addEventListener('click', function (e) {
+        if (e.target === this) toggleHelp(false);
+    });
+
+    // Balayage tactile
+    var tx = 0, ty = 0;
+    document.addEventListener('touchstart', function (e) {
+        tx = e.changedTouches[0].clientX; ty = e.changedTouches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - tx;
+        var dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
+    }, { passive: true });
+
+    /* ---------- Mise à l'échelle de la scène ---------- */
+    var deck = document.getElementById('deck');
+
+    function fit() {
+        // visualViewport décrit la surface réellement visible ; innerHeight,
+        // lui, inclut ce que masquent les barres d'outils mobiles.
+        var vv = window.visualViewport;
+        var w = Math.round(vv ? vv.width : window.innerWidth);
+        var h = Math.round(vv ? vv.height : window.innerHeight);
+        if (!w || !h) return;
+
+        deck.style.width = w + 'px';
+        deck.style.height = h + 'px';
+
+        var pad = w < 720 ? 8 : 24;
+        var s = Math.min((w - pad * 2) / 1280, (h - pad * 2) / 720);
+        stage.style.setProperty('--scale', Math.max(s, 0.05));
+    }
+
+    window.addEventListener('resize', fit);
+    window.addEventListener('orientationchange', fit);
+    if (window.visualViewport) {
+        // Pliage/dépliage, rotation, rétractation de la barre d'adresse.
+        window.visualViewport.addEventListener('resize', fit);
+        window.visualViewport.addEventListener('scroll', fit);
+    }
+
+    /* ---------- Démarrage ---------- */
+    // go() met à jour l'URL via history.replaceState (silencieux, ne redéclenche
+    // pas hashchange) ; ce lecteur ne réagit donc qu'à un hash changé de
+    // l'extérieur — barre d'adresse, lien externe, bouton précédent/suivant du
+    // navigateur — pas à la navigation normale entre slides.
+    function goToHash() {
+        var hash = parseInt((location.hash || '').replace('#', ''), 10);
+        if (hash > 0 && hash <= slides.length) go(hash - 1);
+    }
+    window.addEventListener('hashchange', goToHash);
+
+    trustiConfig.load().then(function (cfg) {
+        build(cfg);
+        document.getElementById('loading').style.display = 'none';
+        fit();
+        var hash = parseInt((location.hash || '').replace('#', ''), 10);
+        go(hash > 0 && hash <= slides.length ? hash - 1 : 0);
+    }).catch(function (err) {
+        console.error(err);
+        document.getElementById('loading').style.display = 'none';
+        var f = document.getElementById('fatal');
+        f.textContent = 'No se ha podido cargar el contenido de la presentación (' +
+            (err && err.message ? err.message : 'error desconocido') +
+            '). Comprueba que assets/config.json es accesible y vuelve a cargar la página.';
+        f.classList.add('open');
+    });
+})();
+</script>
+<script src="../assets/i18n.js" defer></script>
+</body>
+</html>

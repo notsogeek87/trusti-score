@@ -1,0 +1,245 @@
+{
+    "footer": {
+        "copyright": "© 2026 TrustiScore - Voor Europese digitale soevereiniteit",
+        "additionalInfo": "Gegevens gehost in Europa | AVG-conform | Open source"
+    },
+    "criteria": {
+        "controle": {
+            "name": "Technische controle",
+            "options": [
+                { "label": "4 ptn - Volledig open", "description": "100% opensourcecode, volledige omkeerbaarheid, onafhankelijke stack" },
+                { "label": "3 ptn - Deels open", "description": "Belangrijkste componenten open source, standaard export van gegevens" },
+                { "label": "2 ptn - Kleine afh.", "description": "Kleine afhankelijkheden van Big Tech, export mogelijk met wat moeite" },
+                { "label": "1 pt - Sterke afh.", "description": "Sterke afhankelijkheden van buitenlandse infrastructuur" },
+                { "label": "0 pt - Gesloten", "description": "Volledig propriëtair ecosysteem, geen omkeerbaarheid" }
+            ],
+            "description": "Open source, omkeerbaarheid en onafhankelijkheid van Big Tech",
+            "gradeAExample": "Open source, omkeerbaar, geen afhankelijkheid van Big Tech (Google, Apple, Facebook, Amazon, Microsoft)",
+            "gradeEExample": "Kritieke diensten in de VS, China…",
+            "detailedDescription": "🔧 Technische controle (20%)"
+        },
+        "conformite": {
+            "name": "Naleving en certificeringen",
+            "options": [
+                { "label": "4 ptn - AVG+certif.", "description": "Volledige AVG (FG, DPIA), certificeringen SecNumCloud, ISO 27001, HDS" },
+                { "label": "3 ptn - AVG basis", "description": "AVG nageleefd, FG aangesteld, basiscertificeringen (ISO 27001)" },
+                { "label": "2 ptn - Minimaal", "description": "Minimale naleving van de AVG, onvolledige documentatie" },
+                { "label": "1 pt - Onvolledig", "description": "Gedeeltelijke naleving, onvoldoende informatie" },
+                { "label": "0 pt - Niet conform", "description": "Geen zichtbare naleving van de AVG, geen FG" }
+            ],
+            "description": "Naleving van de AVG, een functionaris voor gegevensbescherming (FG), certificeringen (SecNumCloud, ISO 27001...)",
+            "gradeAExample": "Volledige AVG (FG, DPIA), normen zoals SecNumCloud/ISO",
+            "gradeEExample": "Minimale of ontbrekende informatie",
+            "detailedDescription": "✅ Naleving en certificeringen (20%)"
+        },
+        "gouvernance": {
+            "name": "Governance en jurisdictie",
+            "options": [
+                { "label": "4 ptn - FR/EU", "description": "Frans bedrijf of bedrijf uit de Europese Unie, meerderheid Europees kapitaal, geen extraterritoriale risico's" },
+                { "label": "3 ptn - EU gemengd", "description": "Europees dochterbedrijf van een gemengde groep, gedeeltelijke bescherming tegen extraterritoriale wetten" },
+                { "label": "2 ptn - Dochter", "description": "Europees dochterbedrijf van een buitenlandse groep, matige blootstelling aan extraterritoriale wetten" },
+                { "label": "1 pt - Garanties", "description": "Buitenlands bedrijf met enkele minimale contractuele garanties" },
+                { "label": "0 pt - CLOUD Act", "description": "Bedrijf dat onder de CLOUD Act of andere extraterritoriale wetten valt, zonder bescherming" }
+            ],
+            "description": "Locatie van het hoofdkantoor, aandeelhouderschap en blootstelling aan extraterritoriale wetten",
+            "gradeAExample": "Hoofdkantoor/aandeelhouders in Frankrijk of de Europese Unie, geen indringende wetten",
+            "gradeEExample": "Hoofdkantoor in de VS of China, extraterritoriale risico's",
+            "detailedDescription": "🗺️ Governance en jurisdictie (20%)"
+        },
+        "localisation": {
+            "name": "Locatie van de gegevens",
+            "options": [
+                { "label": "4 ptn - 100% EU", "description": "Alle gegevens uitsluitend opgeslagen in de Europese Unie" },
+                { "label": "3 ptn - ≥90% EU", "description": "Minstens 90% van de gegevens in de EU, kritieke gegevens alleen in de EU" },
+                { "label": "2 ptn - ≥70% EU", "description": "Minstens 70% van de gegevens in de EU, sommige gegevens buiten de EU met garanties" },
+                { "label": "1 pt - <50% EU", "description": "Minder dan 50% van de gegevens in de EU, opslag in meerdere regio's" },
+                { "label": "0 pt - Wereldwijd", "description": "Gegevens vooral buiten de EU opgeslagen, zonder garanties" }
+            ],
+            "description": "Fysieke plaats waar de gegevens worden opgeslagen en naleving van de Europese normen",
+            "gradeAExample": "100% in de Europese Unie (gekwalificeerde soevereine cloud)",
+            "gradeEExample": "Wereldwijde opslag zonder AVG-garanties",
+            "detailedDescription": "💾 Locatie van de gegevens (25%)"
+        },
+        "transparence": {
+            "name": "Transparantie",
+            "options": [
+                { "label": "4 ptn - Gedetailleerde rapporten", "description": "Regelmatige transparantierapporten, duidelijke gebruiksvoorwaarden, gedocumenteerde procedures" },
+                { "label": "3 ptn - Heldere voorwaarden", "description": "Begrijpelijke gebruiksvoorwaarden en privacybeleid, toegankelijke informatie, recht op vergetelheid nageleefd" },
+                { "label": "2 ptn - Standaard", "description": "Standaarddocumentatie, minimale conforme informatie" },
+                { "label": "1 pt - Ondoorzichtig", "description": "Ingewikkelde gebruiksvoorwaarden en privacybeleid, onduidelijke procedures" },
+                { "label": "0 pt - Geen info", "description": "Geen enkele transparantie, geen toegankelijke gebruiksvoorwaarden of privacybeleid" }
+            ],
+            "description": "Duidelijkheid van de gebruiksvoorwaarden, jaarverslagen, procedures voor het recht op vergetelheid",
+            "gradeAExample": "Gedetailleerde rapporten, bekende procedures voor het recht op vergetelheid",
+            "gradeEExample": "Ondoorzichtige gebruiksvoorwaarden en privacybeleid, geen verbintenissen",
+            "detailedDescription": "📜 Transparantie (15%)"
+        }
+    },
+    "homepage": {
+        "sections": [
+            {
+                "title": "🎯 Waarom bestaat TrustiScore?",
+                "content": [
+                    {
+                        "text": "In het digitale tijdperk zijn we voor alles afhankelijk van apps en onlinediensten: communiceren, werken, ontspannen. Maar <strong>weten we echt waar onze persoonsgegevens terechtkomen?</strong>"
+                    },
+                    {
+                        "text": "<strong>Er staat veel op het spel:</strong> de meeste niet-Europese aanbieders (met Big Tech voorop) bewaren onze informatie buiten de EU, onder extraterritoriale wetten zoals de <strong>Amerikaanse CLOUD Act</strong> (gedwongen toegang tot gegevens door de Amerikaanse autoriteiten, ook als ze in Europa gehost worden). Het resultaat? We verliezen de controle over onze foto's, berichten, geschiedenis..."
+                    },
+                    {
+                        "text": "Hoe is het begonnen?"
+                    },
+                    {
+                        "text": "Het begon met een persoonlijke uitdaging: een smartphone maken die zo veel mogelijk \"gezuiverd\" is van Big Tech-apps. Na veel testen ontstond het idee om de ervaring verder te brengen door haar te delen: waarom niet <strong>een app maken die de \"digitale soevereiniteit\" van andere apps objectief beoordeelt?</strong>"
+                    },
+                    {
+                        "text": "Na heel wat werk is hier <strong>TrustiScore</strong>: een open-source-app, bedoeld om te groeien <strong>met de community</strong> (bijdragen op GitHub zijn welkom!). Onze missie? Je helpen tools te kiezen die je privacy en de Europese soevereiniteit respecteren."
+                    },
+                    {
+                        "text": "Maar eerst: wat is digitale soevereiniteit?"
+                    },
+                    {
+                        "text": "<strong>Digitale soevereiniteit</strong> is het vermogen van een staat, een dienst, een persoon, een app enzovoort om juridische, technische en economische controle te houden over de eigen gegevens, zonder overmatige afhankelijkheid van buitenlandse machten."
+                    },
+                    {
+                        "text": "Voor Europa betekent dit: de Algemene Verordening Gegevensbescherming (AVG) naleven, gegevens in de EU houden en het risico beperken dat buitenlandse regelgeving zoals de CLOUD Act van toepassing is…"
+                    },
+                    {
+                        "text": "Klinkt ingewikkeld? <strong>TrustiScore maakt het eenvoudig voor je!</strong>"
+                    }
+                ]
+            },
+            {
+                "title": "🔍 Hoe werkt het? (Eenvoudig en doeltreffend)",
+                "content": [
+                    {
+                        "text": "Zonder gedoe:"
+                    },
+                    {
+                        "items": [
+                            "<strong>Zoek een app of dienst</strong> (bv. Tuta Mail, ChatGPT, Vinted…).",
+                            "<strong>Bekijk de TrustiScore</strong>: een totaalscore van <strong>A tot E</strong>, met gekleurde badges (🟢 A = uitstekend, 🔴 E = riskant).",
+                            "<strong>Duik in de details</strong>: volledige uitleg en de motivering van de score.",
+                            "<strong>Overweeg een alternatief</strong>: voorstellen van apps die de digitale soevereiniteit beter respecteren, met hun TrustiScore.",
+                            "<strong>Deel je ervaring</strong>: stel zelf apps voor, met een TrustiScore op basis van het beoordelingsrooster."
+                        ]
+                    },
+                    {
+                        "text": "<strong>Na de Nutri-Score… de TrustiScore</strong>: net als bij het Europese voedingslabel volstaat één blik om te kiezen. Je hoeft geen expert te zijn: TrustiScore maakt informatie over hoe apps de digitale soevereiniteit respecteren voor iedereen toegankelijk."
+                    },
+                    {
+                        "text": "Concrete voorbeelden"
+                    },
+                    {
+                        "items": [
+                            "<strong>Tuta Mail (A)</strong>: gehost in Duitsland, versleuteld, open source",
+                            "<strong>TikTok (E)</strong>: stuurt gegevens naar buiten de EU, ondoorzichtige verwerking van gegevens"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Het beoordelingssysteem (transparant en evenwichtig)",
+                "content": [
+                    {
+                        "text": "We beoordelen <strong>elke app op 5 hoofdcriteria</strong>, gescoord van <strong>0 tot 4 punten</strong> (gewogen tot een score op 100 en omgezet naar A-E). Deze strenge methode is rechtstreeks geïnspireerd op Europese normen (SecNumCloud, ISO 27001)."
+                    },
+                    {
+                        "text": "<strong>Strenge methode:</strong> elk criterium wordt objectief beoordeeld op basis van openbare documenten, technische analyses en onafhankelijke audits. De scores worden regelmatig bijgewerkt om de evolutie van de praktijken van bedrijven te volgen."
+                    }
+                ]
+            },
+            {
+                "title": "🧮 En andersom… Test je eigen app met de simulator!",
+                "content": [
+                    {
+                        "text": "<strong>Ontwikkelaars, dit is voor jullie!</strong> Gebruik onze <strong>gratis simulator</strong> om je eigen project tijdens de ontwikkeling te beoordelen. Beantwoord een paar eenvoudige vragen (maximaal 5 min) over je technische en juridische keuzes:"
+                    },
+                    {
+                        "text": "Waarom is het handig?"
+                    },
+                    {
+                        "items": [
+                            "<strong>Zelftest soevereiniteit:</strong> een directe A-E-score om na te gaan of je app de EU-principes zo goed mogelijk volgt (AVG, gegevens in de EU).",
+                            "<strong>Meteen goede praktijken:</strong> advies op maat (bv. \"Stap over naar een SecNumCloud-gekwalificeerde cloud voor +15 ptn!\").",
+                            "<strong>Continue verbetering:</strong> spoor zwakke punten vroeg op en verhoog je score vóór de lancering."
+                        ]
+                    },
+                    {
+                        "text": "<strong>🚀 Ga in één sprint van C naar A!</strong> Voorbeelden:<ul style=\"margin-top: 0.5rem; margin-bottom: 0;\"><li>Hosting bij OVHcloud (FR) = +Governance.</li><li>Een zichtbare FG toevoegen = +Naleving.</li></ul>"
+                    }
+                ]
+            },
+            {
+                "title": "🤝 Word lid van de community!",
+                "content": [
+                    {
+                        "text": "TrustiScore is <strong>open source</strong>: meld apps, stel updates voor, stem over de criteria. Laten we samen dé tool bouwen voor <strong>soevereine privacy in Europa</strong>."
+                    },
+                    {
+                        "text": "Onze belofte"
+                    },
+                    {
+                        "text": "TrustiScore belooft <strong>onafhankelijke, objectieve en transparante</strong> beoordelingen. We zijn met geen enkel bedrijf verbonden en ontvangen geen betaling van de diensten die we beoordelen."
+                    },
+                    {
+                        "text": "Onze principes"
+                    },
+                    {
+                        "items": [
+                            "<strong>Volledige onafhankelijkheid:</strong> geen belangenconflict met de beoordeelde bedrijven",
+                            "<strong>Objectiviteit:</strong> beoordelingen die alleen op controleerbare feiten steunen",
+                            "<strong>Transparantie:</strong> een openbare methode en gedetailleerde uitleg bij elke score",
+                            "<strong>Continue updates:</strong> regelmatige herbeoordeling om de evolutie van de diensten te volgen",
+                            "<strong>Respect voor privacy:</strong> we doen wat we zeggen"
+                        ]
+                    },
+                    {
+                        "text": "<strong>Sluit je aan bij de beweging voor Europese digitale soevereiniteit.</strong> Door TrustiScore te gebruiken help je actief een internet te bouwen dat je rechten en je privacy beter respecteert."
+                    }
+                ]
+            }
+        ]
+    },
+    "simulator": {
+        "title": "TrustiScore-simulator",
+        "subtitle": "Bereken je score",
+        "introTitle": "🧮 Test je app!",
+        "resultTitle": "Je TrustiScore",
+        "submitButton": "🧮 De TrustiScore berekenen",
+        "introDescription": [
+            "<strong>Ontwikkelaars, dit is voor jullie!</strong> Gebruik deze gratis simulator om je eigen project tijdens de ontwikkeling te beoordelen.",
+            "Beantwoord een paar eenvoudige vragen (maximaal 5 min) over je technische en juridische keuzes en krijg een directe A-E-score om na te gaan of je app de EU-principes zo goed mogelijk volgt (AVG, gegevens in de EU).",
+            "<strong>🚀 Ga in één sprint van C naar A!</strong> Ontdek waar je kunt verbeteren en verhoog je score vóór de lancering."
+        ],
+        "resultDetailsTitle": "Details van de beoordeling"
+    },
+    "siteTagline": "Neem je Europese digitale soevereiniteit terug",
+    "gradeDescriptions": {
+        "A": {
+            "title": "Voorbeeldige soevereiniteit",
+            "description": "Deze app biedt optimale bescherming van je privacy. Europese en/of lokale hosting, volledige transparantie en volledig respect voor je gegevens. Zonder voorbehoud aanbevolen.",
+            "shortDescription": "Bv.: meerderheid Europees kapitaal zonder dochter- of moederbedrijf in een land met juridisch risico (China, VS...), gegevens uitsluitend gehost in een gecertificeerd datacenter in de EU, grotendeels opensourcecode, eenvoudige omkeerbaarheid om je gegevens te exporteren, geen afhankelijkheid van Big Tech, geen risico op de CLOUD Act, volledige naleving van de AVG, gedetailleerde rapporten..."
+        },
+        "B": {
+            "title": "Zeer goed, met enkele beperkingen",
+            "description": "Goede algemene praktijken. Wat ruimte voor verbetering, maar over het geheel betrouwbaar voor dagelijks gebruik.",
+            "shortDescription": "Bv.: gegevens vooral in de EU gehost, hoofdkantoor in de EU maar partners en/of investeerders deels onder extraterritoriale wetten, over het algemeen goede naleving van de AVG, behoorlijke transparantie met een toegankelijk privacybeleid, redelijke omkeerbaarheid maar in een beperkend formaat..."
+        },
+        "C": {
+            "title": "Gemiddeld, aanvaardbaar maar in de gaten te houden",
+            "description": "Een aanvaardbare dienst, maar met matige risico's. Op sommige aspecten van digitale soevereiniteit is verbetering nodig.",
+            "shortDescription": "Bv.: gegevens verdeeld over de EU en regio's buiten de EU (bijvoorbeeld een Amerikaanse cloud) met beperkte AVG-garanties, Europees hoofdkantoor maar holding of technische diensten buiten de EU, minimale naleving van de AVG (cookies, colofon) maar gebrek aan transparantie, ingewikkelde omkeerbaarheid..."
+        },
+        "D": {
+            "title": "Zwakke soevereiniteit, riskant gebruik",
+            "description": "Grote problemen met soevereiniteit en gegevensbescherming. Respectvollere alternatieven worden aangeraden.",
+            "shortDescription": "Bv.: gegevens grotendeels buiten de EU opgeslagen zonder duidelijke rechtsgrond, geen garantie op omkeerbaarheid, AVG tot het strikte minimum beperkt, gebrek aan transparantie (met name over doorverkoop van gegevens), vrij sterke afhankelijkheid van Big Tech..."
+        },
+        "E": {
+            "title": "Kritiek, zeer riskant voor de soevereiniteit",
+            "description": "Grote risico's voor de digitale soevereiniteit. Geen naleving van de AVG, blootstelling aan de CLOUD Act of totale ondoorzichtigheid. Absoluut vermijden.",
+            "shortDescription": "Bv.: gegevens opgeslagen in landen met een hoog juridisch en/of politiek risico (China, VS), ondoorzichtige governance met eigenaar en aandeelhouders die moeilijk te achterhalen zijn, sterke afhankelijkheid van Big Tech, geen zichtbare inspanning voor de AVG, vage en bewust onduidelijke gebruiksvoorwaarden, massale doorverkoop van gegevens..."
+        }
+    }
+}

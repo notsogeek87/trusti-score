@@ -1,13 +1,13 @@
 {
   "_note": "Empreintes des sources FR au moment de la dernière mise à jour des traductions. Régénérer avec : node scripts/check-i18n.mjs --update",
   "pages": {
-    "index.html": "6c3bbdc9e317ea4b",
-    "simulateur.html": "53768e27c861c840",
-    "liens.html": "3e7ff86ffe5e6c83",
-    "mentions-legales.html": "2206899ac4d3973f",
-    "confidentialite.html": "257b0d972d373877",
-    "presentation.html": "43033a663222e29d",
-    "developpeurs.html": "b59ae2fecfd4cb1f"
+    "index.html": "fe2d52bd99f6c52c",
+    "simulateur.html": "bfc9f0e51d2d485b",
+    "liens.html": "45f87bfb49fcbc55",
+    "mentions-legales.html": "86d5dbfd028684f8",
+    "confidentialite.html": "08d98779c495d07e",
+    "presentation.html": "afa75a4ed23607f9",
+    "developpeurs.html": "29540b27310d9d37"
   },
   "config": "a5c2e1e371ea22d8"
 }

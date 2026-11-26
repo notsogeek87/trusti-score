@@ -154,6 +154,11 @@ footer p { font-size: 0.9375rem; opacity: 0.9; margin: 0.4rem 0 0; max-width: 70
 header .lang-switch { margin-left: 16px; vertical-align: middle; }
 .topbar .lang-switch { margin-left: 0; }
 footer .lang-switch { margin: 0 0 8px -10px; color: var(--foot-fg); }
+/* 8 langues : sur petit écran, liens plus étroits (toujours 44 px de haut) pour tenir sur une ligne */
+@media (max-width: 480px) {
+    .lang-switch, .topbar .lang-switch { gap: 0; }
+    .lang-switch a { min-width: 36px; padding: 0 6px; }
+}
 
 /* ---------- Pages d'information (confidentialité, mentions légales) ---------- */
 

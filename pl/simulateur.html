@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Symulator TrustiScore: oceń suwerenność cyfrową swojej aplikacji w 5 minut i otrzymaj ocenę od A do E.">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/simulateur">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/simulateur">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/simulateur">
+    <link rel="alternate" hreflang="es" href="https://trusti-score.eu/es/simulateur">
+    <link rel="alternate" hreflang="it" href="https://trusti-score.eu/it/simulateur">
+    <link rel="alternate" hreflang="nl" href="https://trusti-score.eu/nl/simulateur">
+    <link rel="alternate" hreflang="pl" href="https://trusti-score.eu/pl/simulateur">
+    <link rel="alternate" hreflang="pt" href="https://trusti-score.eu/pt/simulateur">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/simulateur">
+    <link rel="canonical" href="https://trusti-score.eu/pl/simulateur">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TrustiScore">
+    <meta property="og:locale" content="pl_PL">
+    <meta property="og:title" content="Symulator TrustiScore - Oblicz swoją ocenę">
+    <meta property="og:description" content="Symulator TrustiScore: oceń suwerenność cyfrową swojej aplikacji w 5 minut i otrzymaj ocenę od A do E.">
+    <meta property="og:url" content="https://trusti-score.eu/pl/simulateur">
+    <meta property="og:image" content="https://trusti-score.eu/assets/og-image-pl.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TrustiScore: suwerenność cyfrowa aplikacji, oceniana od A do E">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Symulator TrustiScore - Oblicz swoją ocenę","url":"https://trusti-score.eu/pl/simulateur","description":"Symulator TrustiScore: oceń suwerenność cyfrową swojej aplikacji w 5 minut i otrzymaj ocenę od A do E.","inLanguage":"pl","applicationCategory":"DeveloperApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"TrustiScore","url":"https://trusti-score.eu/"}}</script>
+    <title>Symulator TrustiScore - Oblicz swoją ocenę</title>
+    <link rel="stylesheet" href="../assets/trusti.css">
+    <style>
+        .sticky-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--line);
+            padding: calc(8px + env(safe-area-inset-top, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px)) 8px max(var(--gutter), env(safe-area-inset-left, 0px));
+            display: flex; align-items: center; gap: 12px; transform: translateY(-100%); transition: transform .25s ease; }
+        .sticky-bar.visible { transform: translateY(0); }
+        .sticky-logo { height: 32px; width: auto; border-radius: 8px; }
+        .sticky-title { flex: 1; font-family: var(--serif); font-weight: 700; font-size: 1.0625rem; }
+        .sticky-cta { color: var(--accent); font-weight: 600; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
+
+        header { max-width: 860px; margin: 0 auto; padding: 24px var(--gutter) 8px; }
+        .logo-container img { height: 56px; width: auto; border-radius: 10px; display: block; margin-bottom: 28px; }
+        header h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(2.25rem, 1.2rem + 5vw, 4rem); line-height: 1.02; letter-spacing: -0.015em; text-wrap: balance; }
+        header p { margin-top: 12px; color: var(--ink-2); max-width: 52ch; }
+        .nav-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; color: var(--accent); font-weight: 600; text-decoration: none; }
+        .nav-link:hover { text-decoration: underline; }
+
+        .container { max-width: 860px; margin: 0 auto; padding: 16px var(--gutter) 72px; }
+        .intro-section { padding: 24px 0; border-top: 1px solid var(--line); }
+        .intro-section h2 { font-family: var(--serif); font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem); line-height: 1.15; margin-bottom: 12px; }
+        .intro-section p { max-width: 62ch; margin-bottom: 12px; }
+
+        .progress-indicator { position: sticky; top: 0; z-index: 20; background: var(--paper); padding: 12px 0; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+        .progress-indicator[hidden], .criteria-form[hidden] { display: none; }
+        .progress-text { display: block; font-weight: 600; font-size: .9375rem; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+        .progress-bar-track { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0; background: var(--accent); transition: width .3s ease; }
+        .progress-indicator.complete .progress-text { color: var(--ga); }
+        .progress-indicator.complete .progress-bar-fill { background: var(--ga); }
+
+        .loading-state { padding: 32px 0; color: var(--ink-2); display: flex; align-items: center; gap: 14px; }
+        .loading-state[hidden] { display: none; }
+        .spinner { width: 24px; height: 24px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error-message { display: none; background: var(--warn-bg); color: var(--warn-ink); border: 1.5px dashed var(--warn-line); padding: 14px 16px; margin-bottom: 16px; }
+        .error-message.show { display: block; }
+
+        .criterion-item { padding: 24px 0; border-top: 1px solid var(--line); border-left: 0; }
+        .criterion-header { display: block; }
+        .criterion-title h3 { font-family: var(--serif); font-size: 1.25rem; line-height: 1.25; margin-bottom: 6px; }
+        .criterion-title p { color: var(--ink-2); font-size: .9375rem; max-width: 62ch; }
+        .criterion-select { margin-top: 16px; }
+        .criterion-select label:not(.star-option) { display: block; font-weight: 600; font-size: .875rem; color: var(--ink-2); margin-bottom: 8px; }
+
+        .star-rating { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 8px; }
+        .star-option { position: relative; display: flex; align-items: center; min-height: 52px; padding: 10px 14px; border: 1.5px solid var(--line); border-radius: 4px; background: var(--paper); cursor: pointer; transition: border-color .15s, background .15s; }
+        .star-option:hover { border-color: var(--ink); }
+        .star-option.selected { border-color: var(--accent); background: var(--paper-2); box-shadow: inset 4px 0 0 var(--accent); }
+        .star-option:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+        .star-icon { display: none; }
+        .star-label { font-size: .9375rem; font-weight: 600; line-height: 1.3; }
+        input[type="radio"] { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+
+        .score-excellent { border-left: 0; box-shadow: inset 4px 0 0 var(--ga); padding-left: 16px; }
+        .score-good { box-shadow: inset 4px 0 0 var(--gb); padding-left: 16px; }
+        .score-average { box-shadow: inset 4px 0 0 var(--gc); padding-left: 16px; }
+        .score-poor { box-shadow: inset 4px 0 0 var(--gd); padding-left: 16px; }
+        .score-critical { box-shadow: inset 4px 0 0 var(--ge); padding-left: 16px; }
+
+        .form-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line); }
+        .calculate-button, .reset-button { min-height: 48px; padding: 0 24px; border-radius: 4px; font: inherit; font-weight: 600; cursor: pointer; }
+        .calculate-button { background: var(--accent); color: var(--on-accent); border: 1.5px solid transparent; }
+        .calculate-button:hover { filter: brightness(1.12); }
+        .reset-button { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+        .reset-button:hover { background: var(--paper-2); }
+
+        .result-container { display: none; margin-top: 40px; padding: 32px 0 0; border-top: 3px solid var(--ink); }
+        .result-container.show { display: block; }
+        .result-title { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 16px; }
+        .result-score { display: inline-flex; align-items: center; justify-content: center; width: 120px; height: 120px; font-family: var(--serif); font-weight: 700; font-size: 4.5rem; background: var(--line); color: var(--ink); }
+        .result-grade-a { background: var(--ga); color: var(--ga-ink); }
+        .result-grade-b { background: var(--gb); color: var(--gb-ink); }
+        .result-grade-c { background: var(--gc); color: var(--gc-ink); }
+        .result-grade-d { background: var(--gd); color: var(--gd-ink); }
+        .result-grade-e { background: var(--ge); color: var(--ge-ink); }
+        .result-description { margin-top: 16px; max-width: 62ch; }
+        .result-description small { display: block; margin-top: 12px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+        .radar-container { max-width: 360px; margin: 24px 0 0; }
+        .radar-chart { width: 100%; height: auto; display: block; }
+        .radar-chart .r-grid { stroke: var(--line); }
+        .radar-chart .r-name { fill: var(--ink-2); }
+        .radar-chart .r-pct { fill: var(--ink-2); opacity: .8; }
+        .radar-chart .r-dot { stroke: var(--paper); }
+        .result-details h3 { font-family: var(--serif); font-size: 1.25rem; margin: 32px 0 8px; }
+        .breakdown-item { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+        .breakdown-item span { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+        .breakdown-item .pts { flex-basis: 100%; color: var(--ink-2); font-size: .875rem; }
+
+        .present-toggle { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 90; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--paper); border: 1.5px solid var(--ink); color: var(--ink); font-weight: 600; font-size: .9375rem; text-decoration: none; }
+        .present-toggle:hover { background: var(--paper-2); }
+        @media print { .present-toggle, .sticky-bar { display: none; } }
+        @media (max-width: 700px), (pointer: coarse) { .present-toggle, .footer-links a[href="presentation.html"] { display: none; } }
+
+        /* ---------- Cohérence avec l'application Trusti ---------- */
+        header h1 { color: var(--nuit); font-weight: 800; }
+        .criterion-item { background: var(--paper-2); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 20px; margin-bottom: 16px; }
+        .intro-section { border-top: 0; }
+        .star-option { border-radius: var(--radius); border-color: var(--line-strong); }
+        .star-option.selected { border-color: var(--azur); background: #EEF3F9; box-shadow: none; }
+        .star-label { font-weight: 700; }
+        .progress-indicator { background: var(--paper); }
+        .progress-bar-fill { background: var(--azur); }
+        .progress-bar-track { background: var(--line-strong); height: 8px; border-radius: 4px; }
+        .calculate-button { background: var(--nuit); border-radius: var(--radius); font-weight: 700; }
+        .reset-button { border-color: var(--nuit); color: var(--nuit); background: var(--paper-2); border-radius: var(--radius); }
+        .form-actions { border-top: 0; }
+        .result-container { background: var(--paper-2); border: 0; border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 28px 20px; }
+        .result-score { border-radius: 2rem; border: 4px solid #fff; box-shadow: var(--shadow); font-weight: 900; }
+        .present-toggle { border-color: var(--nuit); color: var(--nuit); box-shadow: var(--shadow); }
+        .score-excellent, .score-good, .score-average, .score-poor, .score-critical { padding-left: 20px; }
+    </style>
+    <script defer src="https://stats.trusti-score.eu/script.js" data-website-id="24fd6658-d4a6-4fd6-9fc6-410264c3a02c" data-domains="trusti-score.eu"></script>
+</head>
+<body class="simulateur">
+    <a href="#trustiScoreForm" class="skip-link">Przejdź do formularza</a>
+    <div id="stickyBar" class="sticky-bar" aria-hidden="true">
+        <img src="../assets/logo.png" alt="" class="sticky-logo" aria-hidden="true">
+        <span class="sticky-title">Symulator TrustiScore</span>
+        <a href="index.html" class="sticky-cta">← Strona główna</a>
+    </div>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="../assets/logo.png" alt="Logo TrustiScore">
+            </div>
+            <h1>Symulator TrustiScore</h1>
+            <p>Oceń wiarygodność aplikacji</p>
+            <a href="index.html" class="nav-link">← Wróć na stronę główną</a>
+            <nav class="lang-switch" aria-label="Język"><a href="../simulateur.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/simulateur.html" hreflang="en" lang="en" title="English">EN</a><a href="../de/simulateur.html" hreflang="de" lang="de" title="Deutsch">DE</a><a href="../es/simulateur.html" hreflang="es" lang="es" title="Español">ES</a><a href="../it/simulateur.html" hreflang="it" lang="it" title="Italiano">IT</a><a href="../nl/simulateur.html" hreflang="nl" lang="nl" title="Nederlands">NL</a><a href="simulateur.html" hreflang="pl" lang="pl" title="Polski" aria-current="true">PL</a><a href="../pt/simulateur.html" hreflang="pt" lang="pt" title="Português">PT</a></nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro-section">
+            <h2>Przetestuj swoją aplikację!</h2>
+            <!-- Les paragraphes seront générés dynamiquement -->
+        </div>
+
+        <div class="simulator-container">
+            <div id="errorMessage" class="error-message" role="alert" aria-live="assertive"></div>
+            <div id="loadingState" class="loading-state">
+                <div class="spinner" aria-label="Ładowanie"></div>
+                <p>Ładowanie symulatora…</p>
+            </div>
+            <div id="progressIndicator" class="progress-indicator" role="status" aria-live="polite" hidden>
+                <span id="progressText" class="progress-text">Wypełnione kryteria: 0 / 5</span>
+                <div class="progress-bar-track" aria-hidden="true">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+            <form id="trustiScoreForm" class="criteria-form" hidden>
+                <!-- Les critères seront générés dynamiquement par JavaScript -->
+            </form>
+        </div>
+
+        <div id="resultContainer" class="result-container" aria-live="polite">
+            <h2 class="result-title">Twój TrustiScore</h2>
+            <div id="resultScore" class="result-score">-</div>
+            <div id="resultDescription" class="result-description"></div>
+            <div id="radarChart" class="radar-container"></div>
+
+            <div class="result-details">
+                <h3>Szczegóły oceny</h3>
+                <div id="resultBreakdown" class="result-breakdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <a href="presentation.html" class="present-toggle" title="Otwórz prezentację na pełnym ekranie">
+        <span class="pt-icon" aria-hidden="true">▶</span>
+        <span>Tryb prezentacji</span>
+    </a>
+
+    <footer>
+        <nav class="footer-links" aria-label="Informacje prawne">
+            <a href="index.html">Strona główna</a>
+            <a href="mentions-legales.html">Nota prawna</a>
+            <a href="confidentialite.html">Prywatność</a>
+            <a href="presentation.html">Tryb prezentacji</a>
+            <a href="https://github.com/notsogeek87/trusti-score" target="_blank" rel="noopener noreferrer">Kod źródłowy</a>
+        </nav>
+        <nav class="lang-switch" aria-label="Język"><a href="../simulateur.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/simulateur.html" hreflang="en" lang="en" title="English">EN</a><a href="../de/simulateur.html" hreflang="de" lang="de" title="Deutsch">DE</a><a href="../es/simulateur.html" hreflang="es" lang="es" title="Español">ES</a><a href="../it/simulateur.html" hreflang="it" lang="it" title="Italiano">IT</a><a href="../nl/simulateur.html" hreflang="nl" lang="nl" title="Nederlands">NL</a><a href="simulateur.html" hreflang="pl" lang="pl" title="Polski" aria-current="true">PL</a><a href="../pt/simulateur.html" hreflang="pt" lang="pt" title="Português">PT</a></nav>
+        <p>&copy; 2026 TrustiScore - Na rzecz europejskiej suwerenności cyfrowej</p>
+        <p>Twoje odpowiedzi nigdy nie opuszczają przeglądarki.</p>
+    </footer>
+
+    <script src="../assets/config-loader.js"></script>
+    <script>
+        const form = document.getElementById('trustiScoreForm');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultScore = document.getElementById('resultScore');
+        const resultDescription = document.getElementById('resultDescription');
+        const resultBreakdown = document.getElementById('resultBreakdown');
+
+        // Chargement de la configuration et initialisation
+        async function initSimulator() {
+            const loadingState = document.getElementById('loadingState');
+            const progressIndicator = document.getElementById('progressIndicator');
+
+            try {
+                await trustiConfig.load();
+
+                trustiConfig.applyToHeader();
+                trustiConfig.applyToFooter();
+
+                generateCriteriaForm();
+                updateSimulatorTexts();
+
+                if (loadingState) loadingState.hidden = true;
+                form.hidden = false;
+                if (progressIndicator) progressIndicator.hidden = false;
+                updateProgress();
+
+            } catch (error) {
+                console.error('Erreur lors de l\'initialisation:', error);
+                if (loadingState) loadingState.hidden = true;
+                const errorDiv = document.getElementById('errorMessage');
+                if (errorDiv) {
+                    errorDiv.textContent = 'Błąd ładowania konfiguracji. Odśwież stronę.';
+                    errorDiv.classList.add('show');
+                }
+            }
+        }
+
+        function stripEmoji(t) {
+            return String(t).replace(/^[^\p{L}\p{N}]+/u, '');
+        }
+
+        function updateSimulatorTexts() {
+            const simConfig = trustiConfig.getSimulatorConfig();
+            
+            // Mettre à jour le titre et sous-titre dans le header
+            const headerTitle = document.querySelector('header h1');
+            const headerSubtitle = document.querySelector('header p');
+            if (headerTitle && simConfig.title) {
+                headerTitle.textContent = simConfig.title;
+            }
+            
+            // Mettre à jour l'intro
+            const introTitle = document.querySelector('.intro-section h2');
+            const introParagraphs = document.querySelector('.intro-section');
+            
+            if (introTitle && simConfig.introTitle) {
+                introTitle.textContent = stripEmoji(simConfig.introTitle);
+            }
+            
+            if (introParagraphs && simConfig.introDescription) {
+                // Supprimer les anciens paragraphes (garder le titre)
+                const existingP = introParagraphs.querySelectorAll('p');
+                existingP.forEach(p => p.remove());
+                
+                // Ajouter les nouveaux paragraphes
+                simConfig.introDescription.forEach(text => {
+                    const p = document.createElement('p');
+                    p.innerHTML = text;
+                    introParagraphs.appendChild(p);
+                });
+            }
+            
+            // Mettre à jour le bouton
+            const submitBtn = document.querySelector('.calculate-button');
+            if (submitBtn && simConfig.submitButton) {
+                submitBtn.textContent = stripEmoji(simConfig.submitButton);
+            }
+            
+            // Mettre à jour le titre des résultats
+            const resultTitle = document.querySelector('.result-title');
+            if (resultTitle && simConfig.resultTitle) {
+                resultTitle.textContent = simConfig.resultTitle;
+            }
+        }
+
+        function generateCriteriaForm() {
+            const criteria = trustiConfig.getCriteria();
+            const criteriaKeys = Object.keys(criteria);
+            
+            let html = '';
+            criteriaKeys.forEach((key, index) => {
+                html += trustiConfig.generateSimulatorCriterion(key, index + 1);
+            });
+            
+            form.innerHTML = html + `
+                <div class="form-actions">
+                    <button type="submit" class="calculate-button">${stripEmoji(trustiConfig.getSimulatorConfig().submitButton || 'Oblicz TrustiScore')}</button>
+                    <button type="button" id="resetBtn" class="reset-button">Wyczyść</button>
+                </div>
+            `;
+            
+            // Réattacher les événements
+            attachEventListeners();
+        }
+
+        function updateProgress() {
+            const criteria = trustiConfig.getCriteria();
+            const total = Object.keys(criteria).length;
+            const filled = form.querySelectorAll('input[type="radio"]:checked').length;
+
+            const progressText = document.getElementById('progressText');
+            const progressFill = document.getElementById('progressBarFill');
+            const progressIndicator = document.getElementById('progressIndicator');
+
+            if (progressText) progressText.textContent = `Wypełnione kryteria: ${filled} / ${total}`;
+            if (progressFill) progressFill.style.width = `${(filled / total) * 100}%`;
+            if (progressIndicator) progressIndicator.classList.toggle('complete', filled === total);
+        }
+
+        // Parcours guidé : après un choix, on défile jusqu'au critère suivant (ou au bouton de calcul)
+        function scrollToNextCriterion(current) {
+            const next = current.nextElementSibling;
+            const target = next && next.classList.contains('criterion-item')
+                ? next
+                : form.querySelector('.calculate-button');
+            if (!target) return;
+            const header = document.getElementById('progressIndicator');
+            const offset = (header ? header.offsetHeight : 0) + 72;
+            const y = target.getBoundingClientRect().top + window.scrollY - offset;
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            setTimeout(() => window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' }), 250);
+        }
+
+        function attachEventListeners() {
+            form.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const criterionItem = this.closest('.criterion-item');
+                    const score = parseInt(this.value);
+                    const starRating = this.closest('.star-rating');
+
+                    starRating.querySelectorAll('.star-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    this.closest('.star-option').classList.add('selected');
+                    updateCriterionVisual(criterionItem, score);
+                    updateProgress();
+                    scrollToNextCriterion(criterionItem);
+                });
+            });
+
+            const resetBtn = document.getElementById('resetBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    form.querySelectorAll('input[type="radio"]').forEach(r => { r.checked = false; });
+                    form.querySelectorAll('.criterion-item').forEach(item => {
+                        item.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+                    });
+                    form.querySelectorAll('.star-option').forEach(opt => opt.classList.remove('selected'));
+                    resultContainer.classList.remove('show');
+                    updateProgress();
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+        }
+
+        function updateCriterionVisual(criterionItem, score) {
+            criterionItem.classList.remove('score-excellent', 'score-good', 'score-average', 'score-poor', 'score-critical');
+            
+            if (score === 4) {
+                criterionItem.classList.add('score-excellent');
+            } else if (score === 3) {
+                criterionItem.classList.add('score-good');
+            } else if (score === 2) {
+                criterionItem.classList.add('score-average');
+            } else if (score === 1) {
+                criterionItem.classList.add('score-poor');
+            } else {
+                criterionItem.classList.add('score-critical');
+            }
+        }
+
+        // Gestion de la soumission du formulaire
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const results = trustiConfig.calculateScore(formData);
+            
+            displayResults(results);
+            updateCriteriaVisuals(results.details);
+            
+            // Scroll vers les résultats
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        const GRADE_COLORS = { A: 'var(--ga)', B: 'var(--gb)', C: 'var(--gc)', D: 'var(--gd)', E: 'var(--ge)' };
+
+        function animateCounter(el, target, duration) {
+            duration = duration || 1100;
+            const start = performance.now();
+            function tick(now) {
+                const t = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - t, 3);
+                el.textContent = Math.round(ease * target);
+                if (t < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        // Libellés courts du graphique radar (le nom complet du critère est trop long)
+        const RADAR_LABELS = { gouvernance: 'Governance', localisation: 'Location', controle: 'Control', conformite: 'Compliance', transparence: 'Transparency' };
+
+        function generateRadarSVG(details, color) {
+            const keys = Object.keys(details);
+            const entries = Object.values(details);
+            const n = entries.length;
+            const cx = 180, cy = 180, R = 115, LR = 150;
+
+            function pt(i, r) {
+                const a = -Math.PI / 2 + i * 2 * Math.PI / n;
+                return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+            }
+
+            const grids = [1,2,3,4,5].map(function(l) {
+                const pts = entries.map(function(_, i) { return pt(i, l/5*R).map(function(v){return v.toFixed(1);}).join(','); }).join(' ');
+                return '<polygon points="' + pts + '" fill="none" class="r-grid" stroke-width="' + (l===5?'1.5':'0.8') + '"/>';
+            }).join('');
+
+            const axes = entries.map(function(_, i) {
+                const p = pt(i, R);
+                return '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" class="r-grid" stroke-width="0.8"/>';
+            }).join('');
+
+            const scorePts = entries.map(function(d, i) {
+                return pt(i, d.raw / 4 * R).map(function(v){return v.toFixed(1);}).join(',');
+            }).join(' ');
+
+            const dots = entries.map(function(d, i) {
+                const p = pt(i, d.raw / 4 * R);
+                return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="5" fill="' + color + '" class="r-dot" stroke-width="2"/>';
+            }).join('');
+
+            const labels = entries.map(function(d, i) {
+                const p = pt(i, LR);
+                const name = RADAR_LABELS[keys[i]] || d.criterion.name.split(' ')[0];
+                const pct = d.criterion.weight;
+                const x = p[0].toFixed(1), y = p[1].toFixed(1);
+                return '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="middle" font-family="\'Segoe UI\',sans-serif">' +
+                    '<tspan x="' + x + '" dy="-7" font-size="11" class="r-name" font-weight="600">' + name + '</tspan>' +
+                    '<tspan x="' + x + '" dy="15" font-size="10" class="r-pct">' + pct + '%</tspan>' +
+                '</text>';
+            }).join('');
+
+            return '<svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" class="radar-chart" role="img" aria-label="Wykres radarowy wyników według kryteriów">' +
+                grids + axes +
+                '<polygon points="' + scorePts + '" fill="' + color + '" fill-opacity="0.22" stroke="' + color + '" stroke-width="2.5" class="radar-polygon"/>' +
+                dots + labels +
+            '</svg>';
+        }
+
+        function displayResults(results) {
+            const { score, grade, gradeData, details } = results;
+            const color = GRADE_COLORS[grade] || 'var(--accent)';
+
+            // Grade letter avec animation bounce
+            resultScore.textContent = grade;
+            resultScore.className = 'result-score result-grade-' + grade.toLowerCase();
+            
+            // Description avec compteur animé
+            resultDescription.innerHTML =
+                '<strong>' + gradeData.title + '</strong><br>' +
+                gradeData.description + '<br>' +
+                '<small>Wynik końcowy: <span id="animatedScore">0</span> / 100</small>';
+
+            setTimeout(function() {
+                const el = document.getElementById('animatedScore');
+                if (el) animateCounter(el, score);
+            }, 300);
+
+            // Radar chart
+            const radarEl = document.getElementById('radarChart');
+            if (radarEl) radarEl.innerHTML = generateRadarSVG(details, color);
+
+            // Breakdown
+            let breakdownHTML = '';
+            for (let [key, scoreData] of Object.entries(details)) {
+                const stars = '★'.repeat(scoreData.raw) + '☆'.repeat(4 - scoreData.raw);
+                breakdownHTML += '<div class="breakdown-item">' +
+                    '<strong>' + scoreData.criterion.name + ' (' + scoreData.criterion.weight + '%)</strong>' +
+                    '<span>' + stars + ' (' + scoreData.raw + '/4)</span>' +
+                    '<div class="pts">' + scoreData.weighted.toFixed(1) + ' pts</div>' +
+                '</div>';
+            }
+            resultBreakdown.innerHTML = breakdownHTML;
+
+            resultContainer.classList.add('show');
+        }
+
+        function updateCriteriaVisuals(details) {
+            for (let [key, scoreData] of Object.entries(details)) {
+                const criterionItem = document.querySelector(`[data-criterion="${key}"]`);
+                if (criterionItem) {
+                    updateCriterionVisual(criterionItem, scoreData.raw);
+                }
+            }
+        }
+
+        // Initialiser au chargement de la page
+        initSimulator();
+
+        // Sticky bar
+        (function() {
+            const bar = document.getElementById('stickyBar');
+            if (!bar) return;
+            const io = new IntersectionObserver(function(entries) {
+                bar.classList.toggle('visible', !entries[0].isIntersecting);
+                bar.setAttribute('aria-hidden', String(entries[0].isIntersecting));
+            }, { threshold: 0 });
+            const h = document.querySelector('header');
+            if (h) io.observe(h);
+        })();
+    </script>
+    <script src="../assets/i18n.js" defer></script>
+    <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
+    <script src="/assets/hosting.js" defer></script>
+</body>
+</html>
+

@@ -15,7 +15,11 @@
   a.target = '_blank';
   a.rel = 'noopener noreferrer';
   a.style.cssText = 'color:inherit;text-decoration:underline;text-underline-offset:2px;display:inline-flex;align-items:center;gap:4px;';
-  var LABELS = { fr: 'Hébergé en France par Hyperfluid', en: 'Hosted in France by Hyperfluid', de: 'In Frankreich gehostet von Hyperfluid' };
+  var LABELS = {
+    fr: 'Hébergé en France par Hyperfluid', en: 'Hosted in France by Hyperfluid', de: 'In Frankreich gehostet von Hyperfluid',
+    es: 'Alojado en Francia por Hyperfluid', it: 'Ospitato in Francia da Hyperfluid', nl: 'Gehost in Frankrijk door Hyperfluid',
+    pl: 'Hostowane we Francji przez Hyperfluid', pt: 'Alojado em França pela Hyperfluid'
+  };
   var lang = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
   a.appendChild(document.createTextNode(LABELS[lang] || LABELS.fr));
 

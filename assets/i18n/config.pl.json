@@ -1,0 +1,245 @@
+{
+    "footer": {
+        "copyright": "© 2026 TrustiScore - Na rzecz europejskiej suwerenności cyfrowej",
+        "additionalInfo": "Dane hostowane w Europie | Zgodność z RODO | Open source"
+    },
+    "criteria": {
+        "controle": {
+            "name": "Kontrola techniczna",
+            "options": [
+                { "label": "4 pkt - W pełni otwarte", "description": "Kod w 100% open source, pełna odwracalność, niezależny stos technologiczny" },
+                { "label": "3 pkt - Częściowo otwarte", "description": "Główne komponenty open source, standardowy eksport danych" },
+                { "label": "2 pkt - Drobne zależn.", "description": "Drobne zależności od Big Tech, eksport możliwy przy pewnym wysiłku" },
+                { "label": "1 pkt - Silne zależn.", "description": "Silne zależności od zagranicznej infrastruktury" },
+                { "label": "0 pkt - Zamknięte", "description": "W pełni zamknięty ekosystem, brak odwracalności" }
+            ],
+            "description": "Open source, odwracalność i niezależność od Big Tech",
+            "gradeAExample": "Open source, odwracalność, brak zależności od Big Tech (Google, Apple, Facebook, Amazon, Microsoft)",
+            "gradeEExample": "Kluczowe usługi w USA, Chinach…",
+            "detailedDescription": "🔧 Kontrola techniczna (20%)"
+        },
+        "conformite": {
+            "name": "Zgodność i certyfikaty",
+            "options": [
+                { "label": "4 pkt - RODO+certyf.", "description": "Pełne RODO (IOD, DPIA), certyfikaty SecNumCloud, ISO 27001, HDS" },
+                { "label": "3 pkt - Podstawy RODO", "description": "RODO przestrzegane, wyznaczony IOD, podstawowe certyfikaty (ISO 27001)" },
+                { "label": "2 pkt - Minimum", "description": "Minimalna zgodność z RODO, niepełna dokumentacja" },
+                { "label": "1 pkt - Niepełne", "description": "Częściowa zgodność, niewystarczające informacje" },
+                { "label": "0 pkt - Niezgodne", "description": "Brak widocznej zgodności z RODO, brak IOD" }
+            ],
+            "description": "Zgodność z RODO, inspektor ochrony danych (IOD), certyfikaty (SecNumCloud, ISO 27001...)",
+            "gradeAExample": "Pełne RODO (IOD, DPIA), normy takie jak SecNumCloud/ISO",
+            "gradeEExample": "Minimalne informacje lub ich brak",
+            "detailedDescription": "✅ Zgodność i certyfikaty (20%)"
+        },
+        "gouvernance": {
+            "name": "Zarządzanie i jurysdykcja",
+            "options": [
+                { "label": "4 pkt - FR/UE", "description": "Spółka francuska lub z Unii Europejskiej, większościowy kapitał europejski, brak ryzyk eksterytorialnych" },
+                { "label": "3 pkt - UE mieszane", "description": "Europejska spółka zależna grupy mieszanej, częściowa ochrona przed przepisami eksterytorialnymi" },
+                { "label": "2 pkt - Spółka zależna", "description": "Europejska spółka zależna zagranicznej grupy, umiarkowana ekspozycja na przepisy eksterytorialne" },
+                { "label": "1 pkt - Gwarancje", "description": "Zagraniczna spółka z kilkoma minimalnymi gwarancjami umownymi" },
+                { "label": "0 pkt - CLOUD Act", "description": "Spółka podlegająca CLOUD Act lub innym przepisom eksterytorialnym, bez zabezpieczeń" }
+            ],
+            "description": "Lokalizacja siedziby, struktura właścicielska i ekspozycja na przepisy eksterytorialne",
+            "gradeAExample": "Siedziba/udziałowcy we Francji lub w Unii Europejskiej, brak inwazyjnych przepisów",
+            "gradeEExample": "Siedziba w USA lub Chinach, ryzyka eksterytorialne",
+            "detailedDescription": "🗺️ Zarządzanie i jurysdykcja (20%)"
+        },
+        "localisation": {
+            "name": "Lokalizacja danych",
+            "options": [
+                { "label": "4 pkt - 100% UE", "description": "Wszystkie dane przechowywane wyłącznie w Unii Europejskiej" },
+                { "label": "3 pkt - ≥90% UE", "description": "Co najmniej 90% danych w UE, dane krytyczne tylko w UE" },
+                { "label": "2 pkt - ≥70% UE", "description": "Co najmniej 70% danych w UE, część danych poza UE z gwarancjami" },
+                { "label": "1 pkt - <50% UE", "description": "Mniej niż 50% danych w UE, przechowywanie w wielu regionach" },
+                { "label": "0 pkt - Globalnie", "description": "Dane przechowywane głównie poza UE, bez gwarancji" }
+            ],
+            "description": "Fizyczne miejsce przechowywania danych i przestrzeganie norm europejskich",
+            "gradeAExample": "100% w Unii Europejskiej (kwalifikowana suwerenna chmura)",
+            "gradeEExample": "Przechowywanie na całym świecie bez gwarancji RODO",
+            "detailedDescription": "💾 Lokalizacja danych (25%)"
+        },
+        "transparence": {
+            "name": "Przejrzystość",
+            "options": [
+                { "label": "4 pkt - Szczegółowe raporty", "description": "Regularne raporty przejrzystości, jasny regulamin, udokumentowane procedury" },
+                { "label": "3 pkt - Jasny regulamin", "description": "Zrozumiały regulamin i polityka prywatności, dostępne informacje, prawo do bycia zapomnianym przestrzegane" },
+                { "label": "2 pkt - Standard", "description": "Standardowa dokumentacja, minimalne zgodne informacje" },
+                { "label": "1 pkt - Nieprzejrzyste", "description": "Skomplikowany regulamin i polityka prywatności, niejasne procedury" },
+                { "label": "0 pkt - Brak informacji", "description": "Brak jakiejkolwiek przejrzystości, brak dostępnego regulaminu i polityki prywatności" }
+            ],
+            "description": "Jasność regulaminu, raporty roczne, procedury prawa do bycia zapomnianym",
+            "gradeAExample": "Szczegółowe raporty, znane procedury prawa do bycia zapomnianym",
+            "gradeEExample": "Nieprzejrzysty regulamin i polityka prywatności, brak zobowiązań",
+            "detailedDescription": "📜 Przejrzystość (15%)"
+        }
+    },
+    "homepage": {
+        "sections": [
+            {
+                "title": "🎯 Dlaczego powstał TrustiScore?",
+                "content": [
+                    {
+                        "text": "W erze cyfrowej do wszystkiego używamy aplikacji i usług online: do komunikacji, pracy, rozrywki. Ale <strong>czy naprawdę wiemy, gdzie trafiają nasze dane osobowe?</strong>"
+                    },
+                    {
+                        "text": "<strong>Stawka jest wysoka:</strong> większość pozaeuropejskich dostawców (z Big Tech na czele) przechowuje nasze informacje poza UE, w zasięgu przepisów eksterytorialnych takich jak <strong>amerykański CLOUD Act</strong> (przymusowy dostęp władz USA do danych, nawet gdy są hostowane w Europie). Efekt? Tracimy kontrolę nad naszymi zdjęciami, wiadomościami, historią..."
+                    },
+                    {
+                        "text": "Jak to się zaczęło?"
+                    },
+                    {
+                        "text": "Wszystko zaczęło się od osobistego wyzwania: stworzyć smartfon jak najbardziej „oczyszczony” z aplikacji Big Tech. Po wielu testach pojawił się pomysł, by pójść dalej i podzielić się tym doświadczeniem: dlaczego nie stworzyć <strong>aplikacji, która obiektywnie ocenia „suwerenność cyfrową” innych aplikacji?</strong>"
+                    },
+                    {
+                        "text": "Po wielu godzinach pracy oto <strong>TrustiScore</strong>: aplikacja open source, która ma rosnąć <strong>razem ze społecznością</strong> (wkład na GitHubie mile widziany!). Nasza misja? Pomóc ci wybierać narzędzia, które szanują twoją prywatność i europejską suwerenność."
+                    },
+                    {
+                        "text": "Ale najpierw: czym jest suwerenność cyfrowa?"
+                    },
+                    {
+                        "text": "<strong>Suwerenność cyfrowa</strong> to zdolność państwa, usługi, osoby, aplikacji itd. do zachowania prawnej, technicznej i ekonomicznej kontroli nad własnymi danymi, bez nadmiernej zależności od obcych mocarstw."
+                    },
+                    {
+                        "text": "Dla Europy oznacza to przestrzeganie ogólnego rozporządzenia o ochronie danych (RODO), trzymanie danych w UE i ograniczanie ryzyka stosowania zagranicznych przepisów, takich jak CLOUD Act…"
+                    },
+                    {
+                        "text": "Brzmi skomplikowanie? <strong>TrustiScore wszystko ci upraszcza!</strong>"
+                    }
+                ]
+            },
+            {
+                "title": "🔍 Jak to działa? (Prosto i skutecznie)",
+                "content": [
+                    {
+                        "text": "Bez komplikacji:"
+                    },
+                    {
+                        "items": [
+                            "<strong>Wyszukaj aplikację lub usługę</strong> (np. Tuta Mail, ChatGPT, Vinted…).",
+                            "<strong>Sprawdź jej TrustiScore</strong>: ogólna ocena od <strong>A do E</strong>, z kolorowymi oznaczeniami (🟢 A = doskonała, 🔴 E = ryzykowna).",
+                            "<strong>Zagłęb się w szczegóły</strong>: pełne wyjaśnienia i uzasadnienie oceny.",
+                            "<strong>Rozważ alternatywę</strong>: propozycje aplikacji, które lepiej szanują suwerenność cyfrową, wraz z ich TrustiScore.",
+                            "<strong>Podziel się doświadczeniem</strong>: sam proponuj aplikacje, z TrustiScore opartym na skali ocen."
+                        ]
+                    },
+                    {
+                        "text": "<strong>Po Nutri-Score… TrustiScore</strong>: jak przy europejskim oznakowaniu żywności, wystarczy jedno spojrzenie, by zdecydować. Nie trzeba być ekspertem – TrustiScore udostępnia wszystkim informacje o tym, jak aplikacje szanują suwerenność cyfrową."
+                    },
+                    {
+                        "text": "Konkretne przykłady"
+                    },
+                    {
+                        "items": [
+                            "<strong>Tuta Mail (A)</strong>: hostowana w Niemczech, szyfrowana, open source",
+                            "<strong>TikTok (E)</strong>: przesyła dane poza UE, nieprzejrzyste przetwarzanie danych"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "System ocen (przejrzysty i wyważony)",
+                "content": [
+                    {
+                        "text": "Oceniamy <strong>każdą aplikację według 5 kluczowych kryteriów</strong>, punktowanych od <strong>0 do 4 punktów</strong> (ważonych w wynik na 100 i przeliczanych na A-E). Ta rygorystyczna metoda jest wprost inspirowana normami europejskimi (SecNumCloud, ISO 27001)."
+                    },
+                    {
+                        "text": "<strong>Rygorystyczna metodologia:</strong> każde kryterium jest oceniane obiektywnie na podstawie publicznych dokumentów, analiz technicznych i niezależnych audytów. Oceny są regularnie aktualizowane, aby odzwierciedlać zmiany w praktykach firm."
+                    }
+                ]
+            },
+            {
+                "title": "🧮 A w drugą stronę… Przetestuj własną aplikację w symulatorze!",
+                "content": [
+                    {
+                        "text": "<strong>Programiści, to dla was!</strong> Skorzystaj z naszego <strong>darmowego symulatora</strong>, aby ocenić własny projekt w trakcie tworzenia. Odpowiedz na kilka prostych pytań (maks. 5 min) o swoje wybory techniczne i prawne:"
+                    },
+                    {
+                        "text": "Dlaczego warto?"
+                    },
+                    {
+                        "items": [
+                            "<strong>Autodiagnoza suwerenności:</strong> natychmiastowy wynik A-E, który pokazuje, czy twoja aplikacja jak najlepiej przestrzega zasad UE (RODO, dane w UE).",
+                            "<strong>Dobre praktyki od razu:</strong> porady na miarę (np. „Przejdź na chmurę z kwalifikacją SecNumCloud i zyskaj +15 pkt!”).",
+                            "<strong>Ciągłe doskonalenie:</strong> wcześnie wykryj słabe punkty i podnieś ocenę przed premierą."
+                        ]
+                    },
+                    {
+                        "text": "<strong>🚀 Przejdź z C na A w jeden sprint!</strong> Przykłady:<ul style=\"margin-top: 0.5rem; margin-bottom: 0;\"><li>Hosting w OVHcloud (FR) = +Zarządzanie.</li><li>Dodanie widocznego IOD = +Zgodność.</li></ul>"
+                    }
+                ]
+            },
+            {
+                "title": "🤝 Dołącz do społeczności!",
+                "content": [
+                    {
+                        "text": "TrustiScore jest <strong>open source</strong>: zgłaszaj aplikacje, proponuj aktualizacje, głosuj nad kryteriami. Zbudujmy razem najważniejsze narzędzie dla <strong>suwerennej prywatności w Europie</strong>."
+                    },
+                    {
+                        "text": "Nasze zobowiązanie"
+                    },
+                    {
+                        "text": "TrustiScore zobowiązuje się do <strong>niezależnych, obiektywnych i przejrzystych</strong> ocen. Nie jesteśmy powiązani z żadną firmą i nie otrzymujemy żadnych płatności od ocenianych usług."
+                    },
+                    {
+                        "text": "Nasze zasady"
+                    },
+                    {
+                        "items": [
+                            "<strong>Pełna niezależność:</strong> brak konfliktu interesów z ocenianymi firmami",
+                            "<strong>Obiektywność:</strong> oceny oparte wyłącznie na sprawdzalnych faktach",
+                            "<strong>Przejrzystość:</strong> jawna metodologia i szczegółowe wyjaśnienia każdej oceny",
+                            "<strong>Ciągła aktualizacja:</strong> regularne ponowne oceny, by nadążać za zmianami usług",
+                            "<strong>Poszanowanie prywatności:</strong> sami stosujemy to, co głosimy"
+                        ]
+                    },
+                    {
+                        "text": "<strong>Dołącz do ruchu na rzecz europejskiej suwerenności cyfrowej.</strong> Korzystając z TrustiScore, aktywnie pomagasz budować internet, który lepiej szanuje twoje prawa i prywatność."
+                    }
+                ]
+            }
+        ]
+    },
+    "simulator": {
+        "title": "Symulator TrustiScore",
+        "subtitle": "Oblicz swoją ocenę",
+        "introTitle": "🧮 Przetestuj swoją aplikację!",
+        "resultTitle": "Twój TrustiScore",
+        "submitButton": "🧮 Oblicz TrustiScore",
+        "introDescription": [
+            "<strong>Programiści, to dla was!</strong> Użyj tego darmowego symulatora, aby ocenić własny projekt w trakcie tworzenia.",
+            "Odpowiedz na kilka prostych pytań (maks. 5 min) o swoje wybory techniczne i prawne i otrzymaj natychmiastowy wynik A-E, który pokazuje, czy twoja aplikacja jak najlepiej przestrzega zasad UE (RODO, dane w UE).",
+            "<strong>🚀 Przejdź z C na A w jeden sprint!</strong> Sprawdź, co możesz poprawić, i podnieś ocenę przed premierą."
+        ],
+        "resultDetailsTitle": "Szczegóły oceny"
+    },
+    "siteTagline": "Odzyskaj swoją europejską suwerenność cyfrową",
+    "gradeDescriptions": {
+        "A": {
+            "title": "Wzorowa suwerenność",
+            "description": "Ta aplikacja zapewnia optymalną ochronę twojej prywatności. Hosting europejski i/lub lokalny, pełna przejrzystość i pełne poszanowanie twoich danych. Polecana bez zastrzeżeń.",
+            "shortDescription": "Np.: kapitał w większości europejski, bez spółki zależnej ani dominującej w kraju o ryzyku prawnym (Chiny, USA...), dane hostowane wyłącznie w certyfikowanym centrum danych w UE, kod w większości open source, łatwa odwracalność przy eksporcie danych, brak zależności od Big Tech, brak ryzyka CLOUD Act, pełna zgodność z RODO, szczegółowe raporty..."
+        },
+        "B": {
+            "title": "Bardzo dobra, z pewnymi ograniczeniami",
+            "description": "Dobre ogólne praktyki. Jest pole do poprawy, ale ogólnie niezawodna w codziennym użyciu.",
+            "shortDescription": "Np.: dane hostowane głównie w UE, siedziba w UE, ale partnerzy i/lub inwestorzy częściowo podlegają przepisom eksterytorialnym, ogólnie dobra zgodność z RODO, zadowalająca przejrzystość z dostępną polityką prywatności, poprawna odwracalność, ale w ograniczającym formacie..."
+        },
+        "C": {
+            "title": "Średnia, akceptowalna, ale do obserwacji",
+            "description": "Akceptowalna usługa, ale z umiarkowanym ryzykiem. Niektóre aspekty suwerenności cyfrowej wymagają poprawy.",
+            "shortDescription": "Np.: dane rozproszone między UE a regionami spoza UE (na przykład amerykańska chmura) z ograniczonymi gwarancjami RODO, europejska siedziba, ale holding lub usługi techniczne poza UE, minimalna zgodność z RODO (cookies, nota prawna), ale brak przejrzystości, skomplikowana odwracalność..."
+        },
+        "D": {
+            "title": "Słaba suwerenność, ryzykowne użycie",
+            "description": "Poważne problemy z suwerennością i ochroną danych. Zalecane są alternatywy bardziej szanujące użytkowników.",
+            "shortDescription": "Np.: dane przechowywane głównie poza UE bez jasnej podstawy prawnej, brak gwarancji odwracalności, RODO w minimalnym zakresie, brak przejrzystości (zwłaszcza co do odsprzedaży danych), dość silna zależność od Big Tech..."
+        },
+        "E": {
+            "title": "Krytyczna, bardzo ryzykowna dla suwerenności",
+            "description": "Poważne zagrożenia dla suwerenności cyfrowej. Niezgodność z RODO, podleganie CLOUD Act lub całkowita nieprzejrzystość. Należy bezwzględnie unikać.",
+            "shortDescription": "Np.: dane przechowywane w krajach o wysokim ryzyku prawnym i/lub politycznym (Chiny, USA), nieprzejrzyste zarządzanie z trudnym do ustalenia właścicielem i udziałowcami, silna zależność od Big Tech, brak widocznych działań w zakresie RODO, niejasny i celowo mętny regulamin, masowa odsprzedaż danych..."
+        }
+    }
+}

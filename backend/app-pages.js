@@ -1,4 +1,4 @@
-// Fiches publiques des applications notées : /applications/<slug> (FR), /en/…, /de/…
+// Fiches publiques des applications notées : /applications/<slug> (FR), /en/…, /de/…, /es/…, /it/…, /nl/…, /pl/…, /pt/…
 // Générées à la demande depuis l'export de l'API ouverte (api.trusti-score.eu), mis en cache.
 // Voir docs/guides/referencement.md.
 import fs from 'fs';
@@ -6,12 +6,12 @@ import path from 'path';
 
 const SITE = 'https://trusti-score.eu';
 const API = (process.env.TRUSTI_PUBLIC_API || 'https://api.trusti-score.eu/api/v1').replace(/\/$/, '');
-const LANGS = ['fr', 'en', 'de'];
+const LANGS = ['fr', 'en', 'de', 'es', 'it', 'nl', 'pl', 'pt'];
 const DATA_TTL = 60 * 60 * 1000;          // export rechargé toutes les heures (quota API : 20 exports/h)
 const ALT_TTL = 6 * 60 * 60 * 1000;       // alternatives : 6 h (vidé dès qu'une note change)
 const POLL_EVERY = Math.max(60, Number(process.env.APP_PAGES_POLL_SECONDS) || 300) * 1000;  // vérification des notes : 5 min
-const POLL_MAX_APPS = 5;                  // au-delà, rechargement complet (6 appels API par app)
-const FULL_RELOAD_MIN_GAP = 15 * 60 * 1000;  // l'API garde l'export 10 min en cache ; quota 20 exports/h
+const POLL_MAX_APPS = 2;                  // au-delà, rechargement complet (16 appels API par app : 8 langues × 2)
+const FULL_RELOAD_MIN_GAP = 30 * 60 * 1000;  // 8 exports (un par langue) par rechargement ; quota API 20 exports/h : 2 rechargements/h au plus
 const PAGE_MAX_AGE = 300;                 // cache navigateur des fiches : 5 min
 const ALT_CALLS_PER_MIN = 30;             // quota API : 60 req/min, on en garde la moitié
 const FETCH_TIMEOUT = 20000;
@@ -84,6 +84,116 @@ const T = {
         legal: 'Impressum', privacy: 'Datenschutz', simulator: 'Simulator', skip: 'Zum Inhalt springen', langNav: 'Sprache',
         unavailable: 'Die App-Seiten sind vorübergehend nicht verfügbar. Bitte versuchen Sie es in einigen Minuten erneut.',
     },
+    es: {
+        home: 'Inicio', list: 'Aplicaciones evaluadas', prefix: 'es/',
+        titleApp: (n, g) => `${n}: nota TrustiScore ${g} - datos, RGPD, alternativas`,
+        h1App: (n) => `${n}`, sub: (g) => `Soberanía digital con nota ${g}`,
+        descFallback: (n, g, s) => `${n} obtiene la nota ${g} (${s}/100) en el TrustiScore: dónde están los datos, quién puede acceder a ellos y qué alternativas europeas elegir.`,
+        score: 'Puntuación', outOf: 'sobre 100', assessed: 'Evaluada el', provisional: 'Evaluación provisional: algunos puntos están por confirmar.',
+        range: (a, b) => `Según estos puntos, la puntuación podría ir de ${a} a ${b}.`,
+        facts: 'De un vistazo', developer: 'Editor', category: 'Categoría', european: 'Editor europeo', openSource: 'Código abierto', license: 'Licencia', website: 'Sitio oficial',
+        yes: 'Sí', no: 'No', unknown: 'Sin datos',
+        criteria: 'Los 5 criterios en detalle', weight: 'peso', points: 'puntos', sources: 'Fuentes', toConfirm: 'por confirmar',
+        alternatives: (n) => `Alternativas mejor valoradas a ${n}`, noAlt: 'Todavía no hay ninguna alternativa mejor valorada en esta categoría.',
+        openTrusti: 'Ver en la app Trusti', installTrusti: 'Instalar Trusti (Google Play)', openShort: 'Ver en Trusti', download: 'Descargar', stickyText: (n, g) => `${n}: nota ${g}`, method: 'Cómo se calcula la nota',
+        contest: '¿Un error? Impugnar la nota', contestSubject: 'Impugnación de una nota',
+        attribution: 'Datos bajo licencia CC BY 4.0, reutilizables a través de la API abierta.', api: 'API abierta',
+        listTitle: 'Aplicaciones evaluadas - soberanía digital de la A a la E | TrustiScore',
+        listH1: 'Todas las aplicaciones evaluadas', listIntro: (n) => `${n} aplicaciones y servicios evaluados según 5 criterios: jurisdicción, ubicación de los datos, control técnico, cumplimiento, transparencia. Haz clic en una aplicación para ver el detalle de su nota y sus alternativas.`,
+        listDesc: (n) => `La nota de soberanía digital (de la A a la E) de ${n} aplicaciones: mensajería, correo, IA, nube, redes sociales… y sus alternativas europeas.`,
+        gradeHead: { A: 'Nota A - Soberana y privada', B: 'Nota B - Buena', C: 'Nota C - Media', D: 'Nota D - Arriesgada', E: 'Nota E - Crítica' },
+        filter: 'Filtrar por nombre', apps: 'aplicaciones', footer: 'Por la soberanía digital europea',
+        legal: 'Aviso legal', privacy: 'Privacidad', simulator: 'Simulador', skip: 'Ir al contenido', langNav: 'Idioma',
+        unavailable: 'Las fichas no están disponibles por el momento. Inténtalo de nuevo en unos minutos.',
+    },
+    it: {
+        home: 'Home', list: 'App valutate', prefix: 'it/',
+        titleApp: (n, g) => `${n}: voto TrustiScore ${g} - dati, GDPR, alternative`,
+        h1App: (n) => `${n}`, sub: (g) => `Sovranità digitale: voto ${g}`,
+        descFallback: (n, g, s) => `${n} ottiene il voto ${g} (${s}/100) nel TrustiScore: dove sono i dati, chi può accedervi e quali alternative europee scegliere.`,
+        score: 'Punteggio', outOf: 'su 100', assessed: 'Valutata il', provisional: 'Valutazione provvisoria: alcuni punti restano da confermare.',
+        range: (a, b) => `A seconda di questi punti, il punteggio potrebbe andare da ${a} a ${b}.`,
+        facts: 'In breve', developer: 'Editore', category: 'Categoria', european: 'Editore europeo', openSource: 'Open source', license: 'Licenza', website: 'Sito ufficiale',
+        yes: 'Sì', no: 'No', unknown: 'Non indicato',
+        criteria: 'I 5 criteri nel dettaglio', weight: 'peso', points: 'punti', sources: 'Fonti', toConfirm: 'da confermare',
+        alternatives: (n) => `Alternative con voto migliore a ${n}`, noAlt: 'In questa categoria non è ancora presente un\'alternativa con un voto migliore.',
+        openTrusti: 'Vedi nell\'app Trusti', installTrusti: 'Installa Trusti (Google Play)', openShort: 'Vedi in Trusti', download: 'Scarica', stickyText: (n, g) => `${n}: voto ${g}`, method: 'Come si calcola il voto',
+        contest: 'Un errore? Contesta il voto', contestSubject: 'Contestazione di un voto',
+        attribution: 'Dati con licenza CC BY 4.0, riutilizzabili tramite l\'API aperta.', api: 'API aperta',
+        listTitle: 'App valutate - sovranità digitale da A a E | TrustiScore',
+        listH1: 'Tutte le app valutate', listIntro: (n) => `${n} app e servizi valutati su 5 criteri: giurisdizione, localizzazione dei dati, controllo tecnico, conformità, trasparenza. Clicca su un'app per vedere il dettaglio del voto e le alternative.`,
+        listDesc: (n) => `Il voto di sovranità digitale (da A a E) di ${n} app: messaggistica, e-mail, IA, cloud, social network… e le loro alternative europee.`,
+        gradeHead: { A: 'Voto A - Sovrana e privata', B: 'Voto B - Buona', C: 'Voto C - Media', D: 'Voto D - Rischiosa', E: 'Voto E - Critica' },
+        filter: 'Filtra per nome', apps: 'app', footer: 'Per la sovranità digitale europea',
+        legal: 'Note legali', privacy: 'Privacy', simulator: 'Simulatore', skip: 'Vai al contenuto', langNav: 'Lingua',
+        unavailable: 'Le schede non sono momentaneamente disponibili. Riprova tra qualche minuto.',
+    },
+    nl: {
+        home: 'Home', list: 'Beoordeelde apps', prefix: 'nl/',
+        titleApp: (n, g) => `${n}: TrustiScore ${g} - gegevens, AVG, alternatieven`,
+        h1App: (n) => `${n}`, sub: (g) => `Digitale soevereiniteit: score ${g}`,
+        descFallback: (n, g, s) => `${n} krijgt score ${g} (${s}/100) in de TrustiScore: waar de gegevens staan, wie erbij kan en welke Europese alternatieven er zijn.`,
+        score: 'Score', outOf: 'op 100', assessed: 'Beoordeeld op', provisional: 'Voorlopige beoordeling: sommige punten moeten nog bevestigd worden.',
+        range: (a, b) => `Afhankelijk van deze punten kan de score tussen ${a} en ${b} liggen.`,
+        facts: 'In het kort', developer: 'Uitgever', category: 'Categorie', european: 'Europese uitgever', openSource: 'Open source', license: 'Licentie', website: 'Officiële website',
+        yes: 'Ja', no: 'Nee', unknown: 'Niet ingevuld',
+        criteria: 'De 5 criteria in detail', weight: 'gewicht', points: 'punten', sources: 'Bronnen', toConfirm: 'te bevestigen',
+        alternatives: (n) => `Beter beoordeelde alternatieven voor ${n}`, noAlt: 'Er staat in deze categorie nog geen beter beoordeeld alternatief.',
+        openTrusti: 'Bekijken in de Trusti-app', installTrusti: 'Trusti installeren (Google Play)', openShort: 'Bekijken in Trusti', download: 'Downloaden', stickyText: (n, g) => `${n}: score ${g}`, method: 'Hoe de score wordt berekend',
+        contest: 'Een fout gezien? Betwist de score', contestSubject: 'Betwisting van een score',
+        attribution: 'Gegevens onder licentie CC BY 4.0, herbruikbaar via de open API.', api: 'Open API',
+        listTitle: 'Beoordeelde apps - digitale soevereiniteit van A tot E | TrustiScore',
+        listH1: 'Alle beoordeelde apps', listIntro: (n) => `${n} apps en diensten beoordeeld op 5 criteria: jurisdictie, locatie van de gegevens, technische controle, naleving, transparantie. Klik op een app om de details van de score en de alternatieven te zien.`,
+        listDesc: (n) => `De score voor digitale soevereiniteit (A tot E) van ${n} apps: berichten, e-mail, AI, cloud, sociale media… en hun Europese alternatieven.`,
+        gradeHead: { A: 'Score A - Soeverein en privé', B: 'Score B - Goed', C: 'Score C - Gemiddeld', D: 'Score D - Riskant', E: 'Score E - Kritiek' },
+        filter: 'Filteren op naam', apps: 'apps', footer: 'Voor Europese digitale soevereiniteit',
+        legal: 'Colofon', privacy: 'Privacy', simulator: 'Simulator', skip: 'Naar de inhoud', langNav: 'Taal',
+        unavailable: 'De app-pagina\'s zijn tijdelijk niet beschikbaar. Probeer het over een paar minuten opnieuw.',
+    },
+    pl: {
+        home: 'Strona główna', list: 'Ocenione aplikacje', prefix: 'pl/',
+        titleApp: (n, g) => `${n}: ocena TrustiScore ${g} - dane, RODO, alternatywy`,
+        h1App: (n) => `${n}`, sub: (g) => `Suwerenność cyfrowa: ocena ${g}`,
+        descFallback: (n, g, s) => `${n} otrzymuje ocenę ${g} (${s}/100) w TrustiScore: gdzie są dane, kto ma do nich dostęp i jakie europejskie alternatywy wybrać.`,
+        score: 'Wynik', outOf: 'na 100', assessed: 'Oceniono', provisional: 'Ocena tymczasowa: niektóre punkty wymagają jeszcze potwierdzenia.',
+        range: (a, b) => `Zależnie od tych punktów wynik mógłby wynieść od ${a} do ${b}.`,
+        facts: 'W skrócie', developer: 'Wydawca', category: 'Kategoria', european: 'Europejski wydawca', openSource: 'Open source', license: 'Licencja', website: 'Oficjalna strona',
+        yes: 'Tak', no: 'Nie', unknown: 'Brak danych',
+        criteria: '5 kryteriów w szczegółach', weight: 'waga', points: 'pkt', sources: 'Źródła', toConfirm: 'do potwierdzenia',
+        alternatives: (n) => `Lepiej ocenione alternatywy dla ${n}`, noAlt: 'W tej kategorii nie ma jeszcze lepiej ocenionej alternatywy.',
+        openTrusti: 'Zobacz w aplikacji Trusti', installTrusti: 'Zainstaluj Trusti (Google Play)', openShort: 'Zobacz w Trusti', download: 'Pobierz', stickyText: (n, g) => `${n}: ocena ${g}`, method: 'Jak obliczana jest ocena',
+        contest: 'Błąd? Zakwestionuj ocenę', contestSubject: 'Zakwestionowanie oceny',
+        attribution: 'Dane na licencji CC BY 4.0, do ponownego wykorzystania przez otwarte API.', api: 'Otwarte API',
+        listTitle: 'Ocenione aplikacje - suwerenność cyfrowa od A do E | TrustiScore',
+        listH1: 'Wszystkie ocenione aplikacje', listIntro: (n) => `Aplikacje i usługi ocenione według 5 kryteriów (${n}): jurysdykcja, lokalizacja danych, kontrola techniczna, zgodność, przejrzystość. Kliknij aplikację, aby zobaczyć szczegóły oceny i alternatywy.`,
+        listDesc: (n) => `Ocena suwerenności cyfrowej (od A do E) aplikacji (${n}): komunikatory, e-mail, AI, chmura, media społecznościowe… i ich europejskie alternatywy.`,
+        gradeHead: { A: 'Ocena A - Suwerenna i prywatna', B: 'Ocena B - Dobra', C: 'Ocena C - Średnia', D: 'Ocena D - Ryzykowna', E: 'Ocena E - Krytyczna' },
+        filter: 'Filtruj po nazwie', apps: 'aplikacji', footer: 'Na rzecz europejskiej suwerenności cyfrowej',
+        legal: 'Nota prawna', privacy: 'Prywatność', simulator: 'Symulator', skip: 'Przejdź do treści', langNav: 'Język',
+        unavailable: 'Karty aplikacji są chwilowo niedostępne. Spróbuj ponownie za kilka minut.',
+    },
+    pt: {
+        home: 'Início', list: 'Aplicações avaliadas', prefix: 'pt/',
+        titleApp: (n, g) => `${n}: nota TrustiScore ${g} - dados, RGPD, alternativas`,
+        h1App: (n) => `${n}`, sub: (g) => `Soberania digital com nota ${g}`,
+        descFallback: (n, g, s) => `${n} obtém a nota ${g} (${s}/100) no TrustiScore: onde estão os dados, quem lhes pode aceder e que alternativas europeias escolher.`,
+        score: 'Pontuação', outOf: 'em 100', assessed: 'Avaliada a', provisional: 'Avaliação provisória: alguns pontos ainda estão por confirmar.',
+        range: (a, b) => `Consoante estes pontos, a pontuação poderia ir de ${a} a ${b}.`,
+        facts: 'Em resumo', developer: 'Editor', category: 'Categoria', european: 'Editor europeu', openSource: 'Código aberto', license: 'Licença', website: 'Site oficial',
+        yes: 'Sim', no: 'Não', unknown: 'Não indicado',
+        criteria: 'Os 5 critérios em detalhe', weight: 'peso', points: 'pontos', sources: 'Fontes', toConfirm: 'a confirmar',
+        alternatives: (n) => `Alternativas mais bem avaliadas a ${n}`, noAlt: 'Ainda não há nenhuma alternativa mais bem avaliada nesta categoria.',
+        openTrusti: 'Ver na app Trusti', installTrusti: 'Instalar o Trusti (Google Play)', openShort: 'Ver no Trusti', download: 'Transferir', stickyText: (n, g) => `${n}: nota ${g}`, method: 'Como se calcula a nota',
+        contest: 'Um erro? Contestar a nota', contestSubject: 'Contestação de uma nota',
+        attribution: 'Dados com licença CC BY 4.0, reutilizáveis através da API aberta.', api: 'API aberta',
+        listTitle: 'Aplicações avaliadas - soberania digital de A a E | TrustiScore',
+        listH1: 'Todas as aplicações avaliadas', listIntro: (n) => `${n} aplicações e serviços avaliados segundo 5 critérios: jurisdição, localização dos dados, controlo técnico, conformidade, transparência. Clica numa aplicação para ver o detalhe da nota e as alternativas.`,
+        listDesc: (n) => `A nota de soberania digital (de A a E) de ${n} aplicações: mensagens, e-mail, IA, cloud, redes sociais… e as suas alternativas europeias.`,
+        gradeHead: { A: 'Nota A - Soberana e privada', B: 'Nota B - Boa', C: 'Nota C - Média', D: 'Nota D - Arriscada', E: 'Nota E - Crítica' },
+        filter: 'Filtrar por nome', apps: 'aplicações', footer: 'Pela soberania digital europeia',
+        legal: 'Aviso legal', privacy: 'Privacidade', simulator: 'Simulador', skip: 'Ir para o conteúdo', langNav: 'Idioma',
+        unavailable: 'As fichas estão temporariamente indisponíveis. Tenta de novo dentro de alguns minutos.',
+    },
 };
 const GRADES = ['A', 'B', 'C', 'D', 'E'];
 const TRUSTI_PLAY = 'https://play.google.com/store/apps/details?id=eu.trusti.app';
@@ -93,7 +203,7 @@ const trustiLink = (url) => {
 };
 /** Lien Play Store de Trusti avec un referrer UTM : la console Play montre les installations venues des fiches. */
 const trustiPlayLink = (slug) => `${TRUSTI_PLAY}&referrer=${encodeURIComponent(`utm_source=trusti-score.eu&utm_medium=fiche&utm_campaign=${slug}`)}`;
-const LOCALE = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE' };
+const LOCALE = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE', es: 'es-ES', it: 'it-IT', nl: 'nl-NL', pl: 'pl-PL', pt: 'pt-PT' };
 
 // ---------------------------------------------------------------- utilitaires
 const decode = (s) => String(s ?? '')

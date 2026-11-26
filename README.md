@@ -107,7 +107,7 @@ python3 -m http.server 8000
 - **[Configuration du contenu du site](docs/guides/configuration.md)**
 - **[Référence API](docs/api/README.md)**
 - **[Déploiement sur Hyperfluid](docs/guides/deploiement.md)**
-- **[Traduction du site (FR, EN, DE)](docs/guides/traduction.md)**
+- **[Traduction du site (FR, EN, DE, ES, IT, NL, PL, PT)](docs/guides/traduction.md)**
 
 ---
 

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="API aberta do TrustiScore: notas de soberania digital com todos os detalhes, em JSON, sem chave, com licença CC BY 4.0.">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="alternate" hreflang="fr" href="https://trusti-score.eu/developpeurs">
+    <link rel="alternate" hreflang="en" href="https://trusti-score.eu/en/developpeurs">
+    <link rel="alternate" hreflang="de" href="https://trusti-score.eu/de/developpeurs">
+    <link rel="alternate" hreflang="es" href="https://trusti-score.eu/es/developpeurs">
+    <link rel="alternate" hreflang="it" href="https://trusti-score.eu/it/developpeurs">
+    <link rel="alternate" hreflang="nl" href="https://trusti-score.eu/nl/developpeurs">
+    <link rel="alternate" hreflang="pl" href="https://trusti-score.eu/pl/developpeurs">
+    <link rel="alternate" hreflang="pt" href="https://trusti-score.eu/pt/developpeurs">
+    <link rel="alternate" hreflang="x-default" href="https://trusti-score.eu/developpeurs">
+    <link rel="canonical" href="https://trusti-score.eu/pt/developpeurs">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TrustiScore">
+    <meta property="og:locale" content="pt_PT">
+    <meta property="og:title" content="API aberta - TrustiScore">
+    <meta property="og:description" content="API aberta do TrustiScore: notas de soberania digital com todos os detalhes, em JSON, sem chave, com licença CC BY 4.0.">
+    <meta property="og:url" content="https://trusti-score.eu/pt/developpeurs">
+    <meta property="og:image" content="https://trusti-score.eu/assets/og-image-pt.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TrustiScore: a soberania digital das aplicações, avaliada de A a E">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"API aberta - TrustiScore","url":"https://trusti-score.eu/pt/developpeurs","description":"API aberta do TrustiScore: notas de soberania digital com todos os detalhes, em JSON, sem chave, com licença CC BY 4.0.","inLanguage":"pt","license":"https://creativecommons.org/licenses/by/4.0/","isAccessibleForFree":true,"creator":{"@type":"Organization","name":"TrustiScore","url":"https://trusti-score.eu/"},"keywords":["digital sovereignty","GDPR","apps","privacy"],"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://api.trusti-score.eu/api/v1/apps"}]}</script>
+    <title>API aberta - TrustiScore</title>
+    <link rel="stylesheet" href="../assets/trusti.css">
+    <script defer src="https://stats.trusti-score.eu/script.js" data-website-id="24fd6658-d4a6-4fd6-9fc6-410264c3a02c" data-domains="trusti-score.eu"></script>
+</head>
+<body>
+    <a href="#contenu" class="skip-link">Ir para o conteúdo</a>
+    <header>
+        <img src="../assets/logo.png" alt="Logótipo do TrustiScore">
+        <h1>API aberta</h1>
+        <p>As notas TrustiScore com todos os detalhes, livres para reutilizar nos teus próprios serviços.</p>
+        <a href="index.html" class="nav-link">&larr; Voltar ao início</a>
+        <nav class="lang-switch" aria-label="Idioma"><a href="../developpeurs.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/developpeurs.html" hreflang="en" lang="en" title="English">EN</a><a href="../de/developpeurs.html" hreflang="de" lang="de" title="Deutsch">DE</a><a href="../es/developpeurs.html" hreflang="es" lang="es" title="Español">ES</a><a href="../it/developpeurs.html" hreflang="it" lang="it" title="Italiano">IT</a><a href="../nl/developpeurs.html" hreflang="nl" lang="nl" title="Nederlands">NL</a><a href="../pl/developpeurs.html" hreflang="pl" lang="pl" title="Polski">PL</a><a href="developpeurs.html" hreflang="pt" lang="pt" title="Português" aria-current="true">PT</a></nav>
+    </header>
+
+    <main id="contenu">
+
+        <section>
+            <h2>Em resumo</h2>
+            <p>Cada nota de soberania digital (de A a E) com a justificação completa: pontuação em 100, critérios, níveis, fontes consultadas e histórico da nota.</p>
+            <ul>
+                <li><strong>Sem chave, sem registo</strong>: basta um simples pedido HTTP.</li>
+                <li><strong>Respostas</strong> em JSON, textos em francês, inglês, alemão, espanhol, italiano, neerlandês, polaco ou português.</li>
+                <li>Dados com licença <strong>CC BY 4.0</strong> : reutilização livre, incluindo comercial, com atribuição.</li>
+                <li>Pode ser chamada a partir de um servidor ou de uma página web.</li>
+            </ul>
+            <p>URL base: <code>https://api.trusti-score.eu/api/v1</code></p>
+        </section>
+
+        <section>
+            <h2>Primeiro pedido</h2>
+            <p>Aplicações com nota A ou B, 20 por página:</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps?grade=A,B&amp;per_page=20"</code></pre>
+            <p>A avaliação detalhada de uma aplicação:</p>
+            <pre class="code"><code>curl "https://api.trusti-score.eu/api/v1/apps/signal/assessment?lang=en"</code></pre>
+        </section>
+
+        <section>
+            <h2>O que podes consultar</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th scope="col">Rota</th><th scope="col">Conteúdo</th></tr></thead>
+                    <tbody>
+                    <tr><td><code>/apps</code></td><td>Lista paginada. Filtros: <code>grade=A,B</code>, <code>category</code>, <code>q</code> (nome), <code>updated_since=YYYY-MM-DD</code>, <code>page</code>, <code>per_page</code> (máximo 100).</td></tr>
+                    <tr><td><code>/apps/{id}</code></td><td>A ficha de uma aplicação: nota, editor, jurisdição, licença, ligações.</td></tr>
+                    <tr><td><code>/apps/{id}/assessment</code></td><td>Detalhe da nota: pontuação, critérios, justificação, fontes, histórico.</td></tr>
+                    <tr><td><code>/apps/{id}/alternatives</code></td><td>Alternativas mais bem avaliadas.</td></tr>
+                    <tr><td><code>/grade-changes?since=</code></td><td>Mudanças de nota recentes.</td></tr>
+                    <tr><td><code>/categories</code></td><td>Categorias e número de aplicações.</td></tr>
+                    <tr><td><code>/export</code></td><td>Todo o catálogo com os detalhes, num único ficheiro.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Acrescenta <code>lang=pt</code> ou <code>lang=en</code> para obter os textos traduzidos.</p>
+        </section>
+
+        <section>
+            <h2>Exemplo de resposta</h2>
+            <p>Cada resposta contém os dados (<code>data</code>) e a licença a respeitar (<code>meta</code>):</p>
+            <pre class="code"><code>{
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;signal&quot;,
+      &quot;name&quot;: &quot;Signal&quot;,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;category&quot;: &quot;Messagerie&quot;,
+      &quot;isOpenSource&quot;: true,
+      &quot;assessment&quot;: { &quot;score&quot;: 82, &quot;assessedAt&quot;: &quot;2026-11-01&quot; },
+      &quot;trustiUrl&quot;: &quot;https://app.trusti-score.eu/?app=signal&quot;
+    }
+  ],
+  &quot;meta&quot;: {
+    &quot;license&quot;: &quot;CC-BY-4.0&quot;,
+    &quot;attribution&quot;: &quot;Source : TrustiScore (https://trusti-score.eu)&quot;,
+    &quot;pagination&quot;: { &quot;page&quot;: 1, &quot;perPage&quot;: 20, &quot;total&quot;: 205 }
+  }
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Limites de utilização</h2>
+            <ul>
+                <li><strong>60 pedidos por minuto</strong> por endereço IP.</li>
+                <li><strong>20 exportações completas por hora</strong>: para uma cópia local, basta uma exportação e depois <code>updated_since</code> uma vez por dia.</li>
+                <li>Acima disso, a API responde <code>429</code> com um cabeçalho <code>Retry-After</code> (segundos de espera).</li>
+            </ul>
+            <p>Precisas de mais para um projeto sério? <a href="mailto:contact@trusti-score.eu?subject=API%20TrustiScore%3A%20quota">Escreve-nos</a>: uma chave dedicada dá uma quota mais alta.</p>
+        </section>
+
+        <section>
+            <h2>Licença e atribuição</h2>
+            <p>Os dados são publicados com a licença Creative Commons Atribuição 4.0. Podes copiá-los, transformá-los e usá-los comercialmente com uma condição: citar a fonte, de forma visível, junto às notas que mostras.</p>
+            <p>Por exemplo:</p>
+            <pre class="code"><code>&lt;p&gt;Source: TrustiScore (&lt;a href=&quot;https://trusti-score.eu&quot;&gt;trusti-score.eu&lt;/a&gt;), CC BY 4.0&lt;/p&gt;</code></pre>
+        </section>
+
+        <section>
+            <h2>Documentação técnica</h2>
+            <p>A especificação completa (OpenAPI 3.1) descreve cada campo e cada erro: <a href="https://api.trusti-score.eu/api/v1/openapi.json">openapi.json</a>. Importa-a no Postman, no Insomnia ou num gerador de clientes.</p>
+            <p>Compromisso de estabilidade: na versão 1, nenhum campo é removido ou renomeado. Podem surgir novos campos.</p>
+            <p>Uma pergunta, uma ideia, um erro? <a href="https://matrix.to/#/%23trusti-score:matrix.org" target="_blank" rel="noopener noreferrer">Falemos no Matrix</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <nav class="footer-links" aria-label="Informações legais">
+            <a href="index.html">Início</a>
+            <a href="mentions-legales.html">Aviso legal</a>
+            <a href="confidentialite.html">Privacidade</a>
+            <a href="https://github.com/notsogeek87/trusti" target="_blank" rel="noopener noreferrer">Código-fonte</a>
+        </nav>
+        <nav class="lang-switch" aria-label="Idioma"><a href="../developpeurs.html" hreflang="fr" lang="fr" title="Français">FR</a><a href="../en/developpeurs.html" hreflang="en" lang="en" title="English">EN</a><a href="../de/developpeurs.html" hreflang="de" lang="de" title="Deutsch">DE</a><a href="../es/developpeurs.html" hreflang="es" lang="es" title="Español">ES</a><a href="../it/developpeurs.html" hreflang="it" lang="it" title="Italiano">IT</a><a href="../nl/developpeurs.html" hreflang="nl" lang="nl" title="Nederlands">NL</a><a href="../pl/developpeurs.html" hreflang="pl" lang="pl" title="Polski">PL</a><a href="developpeurs.html" hreflang="pt" lang="pt" title="Português" aria-current="true">PT</a></nav>
+        <p>&copy; 2026 TrustiScore - Pela soberania digital europeia</p>
+    </footer>
+    <script src="../assets/i18n.js" defer></script>
+    <!-- Mention d'hébergement : présente seulement sur l'image Hyperfluid -->
+    <script src="/assets/hosting.js" defer></script>
+</body>
+</html>

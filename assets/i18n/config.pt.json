@@ -1,0 +1,245 @@
+{
+    "footer": {
+        "copyright": "© 2026 TrustiScore - Pela soberania digital europeia",
+        "additionalInfo": "Dados alojados na Europa | Conforme com o RGPD | Código aberto"
+    },
+    "criteria": {
+        "controle": {
+            "name": "Controlo técnico",
+            "options": [
+                { "label": "4 pts - Totalmente aberto", "description": "Código 100% aberto, reversibilidade total, stack independente" },
+                { "label": "3 pts - Parcialmente aberto", "description": "Componentes principais de código aberto, exportação de dados padrão" },
+                { "label": "2 pts - Dep. menores", "description": "Dependências menores das Big Tech, exportação possível com algum esforço" },
+                { "label": "1 pt - Dep. fortes", "description": "Fortes dependências de infraestruturas estrangeiras" },
+                { "label": "0 pt - Cativo", "description": "Ecossistema totalmente proprietário, sem reversibilidade" }
+            ],
+            "description": "Código aberto, reversibilidade e independência face às Big Tech",
+            "gradeAExample": "Código aberto, reversível, sem dependência das Big Tech (Google, Apple, Facebook, Amazon, Microsoft)",
+            "gradeEExample": "Serviços críticos nos EUA, na China…",
+            "detailedDescription": "🔧 Controlo técnico (20%)"
+        },
+        "conformite": {
+            "name": "Conformidade e certificações",
+            "options": [
+                { "label": "4 pts - RGPD+Certif.", "description": "RGPD completo (EPD, AIPD), certificações SecNumCloud, ISO 27001, HDS" },
+                { "label": "3 pts - RGPD básico", "description": "RGPD respeitado, EPD designado, certificações básicas (ISO 27001)" },
+                { "label": "2 pts - Mínimo", "description": "Conformidade mínima com o RGPD, documentação incompleta" },
+                { "label": "1 pt - Incompleto", "description": "Conformidade parcial, informação insuficiente" },
+                { "label": "0 pt - Não conforme", "description": "Nenhuma conformidade visível com o RGPD, sem EPD" }
+            ],
+            "description": "Conformidade com o RGPD, um encarregado de proteção de dados (EPD), certificações (SecNumCloud, ISO 27001...)",
+            "gradeAExample": "RGPD completo (EPD, AIPD), normas como SecNumCloud/ISO",
+            "gradeEExample": "Informação mínima ou inexistente",
+            "detailedDescription": "✅ Conformidade e certificações (20%)"
+        },
+        "gouvernance": {
+            "name": "Governação e jurisdição",
+            "options": [
+                { "label": "4 pts - FR/UE", "description": "Empresa francesa ou da União Europeia, capital maioritariamente europeu, sem riscos extraterritoriais" },
+                { "label": "3 pts - UE misto", "description": "Filial europeia de um grupo misto, proteção parcial contra as leis extraterritoriais" },
+                { "label": "2 pts - Filial", "description": "Filial europeia de um grupo estrangeiro, exposição moderada às leis extraterritoriais" },
+                { "label": "1 pt - Garantias", "description": "Empresa estrangeira com algumas garantias contratuais mínimas" },
+                { "label": "0 pt - CLOUD Act", "description": "Empresa sujeita ao CLOUD Act ou a outras leis extraterritoriais, sem proteções" }
+            ],
+            "description": "Localização da sede, estrutura acionista e exposição às leis extraterritoriais",
+            "gradeAExample": "Sede/acionistas em França ou na União Europeia, sem leis intrusivas",
+            "gradeEExample": "Sede nos EUA ou na China, riscos extraterritoriais",
+            "detailedDescription": "🗺️ Governação e jurisdição (20%)"
+        },
+        "localisation": {
+            "name": "Localização dos dados",
+            "options": [
+                { "label": "4 pts - 100% UE", "description": "Todos os dados guardados exclusivamente na União Europeia" },
+                { "label": "3 pts - ≥90% UE", "description": "Pelo menos 90% dos dados na UE, dados críticos só na UE" },
+                { "label": "2 pts - ≥70% UE", "description": "Pelo menos 70% dos dados na UE, alguns dados fora da UE com garantias" },
+                { "label": "1 pt - <50% UE", "description": "Menos de 50% dos dados na UE, armazenamento multirregião" },
+                { "label": "0 pt - Mundial", "description": "Dados guardados sobretudo fora da UE, sem garantias" }
+            ],
+            "description": "Local físico onde os dados são guardados e respeito pelas normas europeias",
+            "gradeAExample": "100% na União Europeia (cloud soberana qualificada)",
+            "gradeEExample": "Armazenamento mundial sem garantias RGPD",
+            "detailedDescription": "💾 Localização dos dados (25%)"
+        },
+        "transparence": {
+            "name": "Transparência",
+            "options": [
+                { "label": "4 pts - Relatórios detalhados", "description": "Relatórios de transparência regulares, termos de utilização claros, procedimentos documentados" },
+                { "label": "3 pts - Termos claros", "description": "Termos de utilização e política de privacidade compreensíveis, informação acessível, direito ao esquecimento respeitado" },
+                { "label": "2 pts - Padrão", "description": "Documentação padrão, informação conforme mínima" },
+                { "label": "1 pt - Opacos", "description": "Termos de utilização e política de privacidade complexos, procedimentos pouco claros" },
+                { "label": "0 pt - Sem info", "description": "Nenhuma transparência, sem termos de utilização nem política de privacidade acessíveis" }
+            ],
+            "description": "Clareza dos termos de utilização, relatórios anuais, procedimentos de direito ao esquecimento",
+            "gradeAExample": "Relatórios detalhados, procedimentos de direito ao esquecimento conhecidos",
+            "gradeEExample": "Termos de utilização e política de privacidade opacos, sem compromissos",
+            "detailedDescription": "📜 Transparência (15%)"
+        }
+    },
+    "homepage": {
+        "sections": [
+            {
+                "title": "🎯 Porque existe o TrustiScore?",
+                "content": [
+                    {
+                        "text": "Na era digital, dependemos de aplicações e serviços online para tudo: comunicar, trabalhar, divertirmo-nos. Mas <strong>sabemos realmente onde acabam os nossos dados pessoais?</strong>"
+                    },
+                    {
+                        "text": "<strong>O que está em jogo é crucial:</strong> a maioria dos editores não europeus (as Big Tech à cabeça) guarda as nossas informações fora da UE, sob leis extraterritoriais como o <strong>CLOUD Act norte-americano</strong> (acesso forçado aos dados pelas autoridades dos EUA, mesmo quando estão alojados na Europa). O resultado? Perdemos o controlo sobre as nossas fotos, mensagens, históricos..."
+                    },
+                    {
+                        "text": "Como começou tudo?"
+                    },
+                    {
+                        "text": "Tudo começou com um desafio pessoal: criar um smartphone «limpo» ao máximo das aplicações das Big Tech. Depois de muitos testes, surgiu a ideia de levar a experiência mais longe, partilhando-a: porque não criar <strong>uma aplicação que avalie de forma objetiva a «soberania digital» das outras aplicações?</strong>"
+                    },
+                    {
+                        "text": "Depois de muito trabalho, eis o <strong>TrustiScore</strong>: uma aplicação de código aberto, feita para crescer <strong>com a comunidade</strong> (contribuições no GitHub bem-vindas!). A nossa missão? Ajudar-te a escolher ferramentas que respeitem a tua privacidade e a soberania europeia."
+                    },
+                    {
+                        "text": "Mas antes: o que é a soberania digital?"
+                    },
+                    {
+                        "text": "<strong>A soberania digital</strong> é a capacidade de um Estado, um serviço, uma pessoa, uma aplicação, etc. de manter o controlo jurídico, técnico e económico sobre os seus próprios dados, sem uma dependência excessiva de potências estrangeiras."
+                    },
+                    {
+                        "text": "Para a Europa, isto significa cumprir o Regulamento Geral sobre a Proteção de Dados (RGPD), manter os dados na UE e limitar o risco de aplicação de regulamentações estrangeiras como o CLOUD Act…"
+                    },
+                    {
+                        "text": "Parece complicado? <strong>O TrustiScore simplifica tudo por ti!</strong>"
+                    }
+                ]
+            },
+            {
+                "title": "🔍 Como funciona? (Simples e eficaz)",
+                "content": [
+                    {
+                        "text": "Sem complicações:"
+                    },
+                    {
+                        "items": [
+                            "<strong>Pesquisa uma aplicação ou um serviço</strong> (ex.: Tuta Mail, ChatGPT, Vinted…).",
+                            "<strong>Consulta o seu TrustiScore</strong>: uma nota global de <strong>A a E</strong>, com distintivos coloridos (🟢 A = excelente, 🔴 E = arriscado).",
+                            "<strong>Explora os detalhes</strong>: explicações completas e a justificação da nota.",
+                            "<strong>Pensa numa alternativa</strong>: sugestões de aplicações que respeitam mais a soberania digital, com o seu TrustiScore.",
+                            "<strong>Partilha a tua experiência</strong>: sugere tu também aplicações, com um TrustiScore baseado na grelha de avaliação."
+                        ]
+                    },
+                    {
+                        "text": "<strong>Depois do Nutri-Score… o TrustiScore</strong>: tal como no rótulo alimentar europeu, basta um olhar para decidir. Não é preciso ser especialista: o TrustiScore torna acessível a todos a informação sobre a forma como as aplicações respeitam a soberania digital."
+                    },
+                    {
+                        "text": "Exemplos concretos"
+                    },
+                    {
+                        "items": [
+                            "<strong>Tuta Mail (A)</strong>: alojado na Alemanha, encriptado, código aberto",
+                            "<strong>TikTok (E)</strong>: transfere dados para fora da UE, gestão dos dados opaca"
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "O sistema de avaliação (transparente e equilibrado)",
+                "content": [
+                    {
+                        "text": "Avaliamos <strong>cada aplicação segundo 5 critérios-chave</strong>, pontuados de <strong>0 a 4 pontos</strong> (ponderados numa pontuação em 100 e convertidos em A-E). Este método rigoroso inspira-se diretamente nas normas europeias (SecNumCloud, ISO 27001)."
+                    },
+                    {
+                        "text": "<strong>Metodologia rigorosa:</strong> cada critério é avaliado de forma objetiva com base em documentos públicos, análises técnicas e auditorias independentes. As notas são atualizadas regularmente para refletir a evolução das práticas das empresas."
+                    }
+                ]
+            },
+            {
+                "title": "🧮 E ao contrário… Testa a tua própria aplicação com o simulador!",
+                "content": [
+                    {
+                        "text": "<strong>Programadores, isto é para vocês!</strong> Usa o nosso <strong>simulador gratuito</strong> para avaliar o teu próprio projeto durante o desenvolvimento. Responde a algumas perguntas simples (5 min no máximo) sobre as tuas escolhas técnicas e jurídicas:"
+                    },
+                    {
+                        "text": "Porque é ótimo?"
+                    },
+                    {
+                        "items": [
+                            "<strong>Autodiagnóstico de soberania:</strong> uma pontuação A-E imediata para verificares que a tua aplicação segue ao máximo os princípios da UE (RGPD, dados na UE).",
+                            "<strong>Boas práticas de imediato:</strong> conselhos à medida (ex.: «Passa para uma cloud com qualificação SecNumCloud para +15 pts!»).",
+                            "<strong>Melhoria contínua:</strong> deteta cedo os pontos fracos e sobe a tua nota antes do lançamento."
+                        ]
+                    },
+                    {
+                        "text": "<strong>🚀 Passa de C para A num sprint!</strong> Exemplos:<ul style=\"margin-top: 0.5rem; margin-bottom: 0;\"><li>Alojamento na OVHcloud (FR) = +Governação.</li><li>Acrescentar um EPD visível = +Conformidade.</li></ul>"
+                    }
+                ]
+            },
+            {
+                "title": "🤝 Junta-te à comunidade!",
+                "content": [
+                    {
+                        "text": "O TrustiScore é <strong>de código aberto</strong>: assinala aplicações, sugere atualizações, vota os critérios. Juntos, vamos construir a ferramenta de referência para a <strong>privacidade soberana na Europa</strong>."
+                    },
+                    {
+                        "text": "O nosso compromisso"
+                    },
+                    {
+                        "text": "O TrustiScore compromete-se a fornecer avaliações <strong>independentes, objetivas e transparentes</strong>. Não estamos ligados a nenhuma empresa e não recebemos qualquer pagamento dos serviços que avaliamos."
+                    },
+                    {
+                        "text": "Os nossos princípios"
+                    },
+                    {
+                        "items": [
+                            "<strong>Independência total:</strong> nenhum conflito de interesses com as empresas avaliadas",
+                            "<strong>Objetividade:</strong> avaliações baseadas apenas em factos verificáveis",
+                            "<strong>Transparência:</strong> uma metodologia pública e explicações detalhadas para cada nota",
+                            "<strong>Atualização contínua:</strong> reavaliação regular para acompanhar a evolução dos serviços",
+                            "<strong>Respeito pela privacidade:</strong> praticamos o que defendemos"
+                        ]
+                    },
+                    {
+                        "text": "<strong>Junta-te ao movimento pela soberania digital europeia.</strong> Ao usar o TrustiScore, contribuis ativamente para construir uma Internet que respeita mais os teus direitos e a tua privacidade."
+                    }
+                ]
+            }
+        ]
+    },
+    "simulator": {
+        "title": "Simulador TrustiScore",
+        "subtitle": "Calcula a tua nota",
+        "introTitle": "🧮 Testa a tua aplicação!",
+        "resultTitle": "O teu TrustiScore",
+        "submitButton": "🧮 Calcular o TrustiScore",
+        "introDescription": [
+            "<strong>Programadores, isto é para vocês!</strong> Usa este simulador gratuito para avaliar o teu próprio projeto durante o desenvolvimento.",
+            "Responde a algumas perguntas simples (5 min no máximo) sobre as tuas escolhas técnicas e jurídicas e obtém uma pontuação A-E imediata para verificares que a tua aplicação segue ao máximo os princípios da UE (RGPD, dados na UE).",
+            "<strong>🚀 Passa de C para A num sprint!</strong> Identifica o que podes melhorar e sobe a tua nota antes do lançamento."
+        ],
+        "resultDetailsTitle": "Detalhes da avaliação"
+    },
+    "siteTagline": "Recupera a tua soberania digital europeia",
+    "gradeDescriptions": {
+        "A": {
+            "title": "Soberania exemplar",
+            "description": "Esta aplicação oferece uma proteção ótima da tua privacidade. Alojamento europeu e/ou local, transparência total e pleno respeito pelos teus dados. Recomendada sem reservas.",
+            "shortDescription": "Ex.: capital maioritariamente europeu sem filial nem empresa-mãe num país com risco jurídico (China, EUA...), dados alojados exclusivamente num centro de dados certificado na UE, código maioritariamente aberto, reversibilidade simples para exportar os teus dados, sem dependência das Big Tech, sem risco de CLOUD Act, plena conformidade com o RGPD, relatórios detalhados..."
+        },
+        "B": {
+            "title": "Muito boa, com alguns limites",
+            "description": "Boas práticas gerais. Alguma margem de melhoria, mas fiável em geral para o dia a dia.",
+            "shortDescription": "Ex.: dados alojados sobretudo na UE, sede na UE mas parceiros e/ou investidores em parte sujeitos a leis extraterritoriais, boa conformidade geral com o RGPD, transparência satisfatória com uma política de privacidade acessível, reversibilidade razoável mas num formato restritivo..."
+        },
+        "C": {
+            "title": "Média, aceitável mas a vigiar",
+            "description": "Um serviço aceitável, mas com riscos moderados. É preciso melhorar alguns aspetos da soberania digital.",
+            "shortDescription": "Ex.: dados repartidos entre a UE e regiões fora da UE (uma cloud norte-americana, por exemplo) com garantias RGPD limitadas, sede europeia mas holding ou serviços técnicos fora da UE, conformidade mínima com o RGPD (cookies, aviso legal) mas falta de transparência, reversibilidade complexa..."
+        },
+        "D": {
+            "title": "Soberania fraca, utilização arriscada",
+            "description": "Problemas significativos de soberania e de proteção de dados. Aconselham-se alternativas mais respeitadoras.",
+            "shortDescription": "Ex.: dados guardados maioritariamente fora da UE sem base jurídica clara, sem garantia de reversibilidade, RGPD tratado no mínimo, falta de transparência (sobretudo sobre a revenda de dados), dependência bastante forte das Big Tech..."
+        },
+        "E": {
+            "title": "Crítica, muito arriscada para a soberania",
+            "description": "Riscos importantes para a soberania digital. Incumprimento do RGPD, exposição ao CLOUD Act ou opacidade total. Evitar a todo o custo.",
+            "shortDescription": "Ex.: dados guardados em países com elevado risco jurídico e/ou político (China, EUA), governação opaca com proprietário e acionistas difíceis de identificar, forte dependência das Big Tech, nenhum esforço visível em matéria de RGPD, termos de utilização vagos e deliberadamente pouco claros, revenda massiva de dados..."
+        }
+    }
+}

@@ -21,13 +21,13 @@ Périmètre : le site vitrine (ce dépôt). L'app web `app.trusti-score.eu` rest
 | 11 | Simulateur : ~400 caractères visibles sans JavaScript (2 000 avec) | Faible | Recommandation |
 | 12 | Liens internes en `.html` (ex. `mentions-legales.html`) alors que l'URL canonique est sans `.html` | Faible | Couvert par le canonical ; nettoyage optionnel |
 
-Déjà bon : `hreflang` FR/EN/DE complets et cohérents, `lang` correct, titres et descriptions
+Déjà bon : `hreflang` des 8 langues complets et cohérents, `lang` correct, titres et descriptions
 uniques par page et par langue, `alt` sur les images, anciennes adresses redirigées en 301
 (`www.`, `trustiscore.eu`, `trusti-score.lielu.eu`), HTTPS, mobile (viewport).
 
 ## Lever le `noindex` (le jour J)
 
-Pages à rendre indexables (FR, EN, DE) : `index`, `simulateur`, `developpeurs`,
+Pages à rendre indexables (8 langues) : `index`, `simulateur`, `developpeurs`,
 `mentions-legales`, `confidentialite` — les mêmes que dans `sitemap.xml`.
 `liens` (page pour QR code) et `presentation` (diapos) **restent** en `noindex`.
 

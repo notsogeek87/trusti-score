@@ -1,24 +1,29 @@
 /**
- * TrustiScore — langues du site (FR, EN, DE).
+ * TrustiScore — langues du site (FR, EN, DE, ES, IT, NL, PL, PT).
  *
  * - Mémorise la langue choisie dans le sélecteur (.lang-switch).
  * - Si aucun choix n'est mémorisé et que la langue préférée du navigateur est
  *   une autre langue du site, propose la page équivalente dans un bandeau discret.
  *   Jamais de redirection automatique (robots, francophones à l'étranger…).
  *
- * Les pages traduites vivent dans /en/ et /de/, voir docs/guides/traduction.md.
+ * Les pages traduites vivent dans /en/, /de/, /es/…, voir docs/guides/traduction.md.
  */
 (function () {
     'use strict';
 
-    var LANGS = ['fr', 'en', 'de'];
+    var LANGS = ['fr', 'en', 'de', 'es', 'it', 'nl', 'pl', 'pt'];
     var KEY = 'trusti-lang';
     var pageLang = (document.documentElement.lang || 'fr').slice(0, 2).toLowerCase();
 
     var BANNER = {
         fr: { text: 'Cette page existe aussi en français.', go: 'Lire en français', close: 'Non merci' },
         en: { text: 'This page is also available in English.', go: 'Read in English', close: 'No thanks' },
-        de: { text: 'Diese Seite gibt es auch auf Deutsch.', go: 'Auf Deutsch lesen', close: 'Nein danke' }
+        de: { text: 'Diese Seite gibt es auch auf Deutsch.', go: 'Auf Deutsch lesen', close: 'Nein danke' },
+        es: { text: 'Esta página también está disponible en español.', go: 'Leer en español', close: 'No, gracias' },
+        it: { text: 'Questa pagina è disponibile anche in italiano.', go: 'Leggi in italiano', close: 'No, grazie' },
+        nl: { text: 'Deze pagina bestaat ook in het Nederlands.', go: 'Lezen in het Nederlands', close: 'Nee, bedankt' },
+        pl: { text: 'Ta strona jest dostępna także po polsku.', go: 'Czytaj po polsku', close: 'Nie, dziękuję' },
+        pt: { text: 'Esta página também está disponível em português.', go: 'Ler em português', close: 'Não, obrigado' }
     };
 
     function read() {
