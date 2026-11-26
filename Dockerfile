@@ -22,6 +22,11 @@ COPY *.html robots.txt sitemap.xml ./public/
 # Versions traduites (voir docs/guides/traduction.md)
 COPY en ./public/en
 COPY de ./public/de
+COPY es ./public/es
+COPY it ./public/it
+COPY nl ./public/nl
+COPY pl ./public/pl
+COPY pt ./public/pt
 COPY assets ./public/assets
 # Mention « Hébergé en France par Hyperfluid » (script + logo récupéré par le workflow)
 COPY deploy/hyperfluid/hosting.js ./public/assets/hosting.js
